@@ -79,23 +79,16 @@
 
 
 
-<meta name="description" content="CVE-2019-14287 sudo提权漏洞本文参考博客：参考博客  看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权” sudo版本&lt;1.8.28会受到影响">
+<meta name="description" content="林老师今天介绍了Windows安全，有很多名词我都不懂，所以总结一下： 概述windows操作系统的安全标准等级为C2级，这是兼顾安全性和方便性的最高等级windows目前支持DAC和MAC两种访问控制模型，这在RBAC中介绍过：  自主访问控制（DAC）依据主体的判断力授予访问权限，客体的拥有者对客体进行管理，可以按自己的意愿有选择地与其他用户共享文件  强制访问控制（MAC）完全取决于权限，而">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CVE-2019-14287">
-<meta property="og:url" content="http://yoursite.com/2020/02/19/CVE-2019-14287/index.html">
+<meta property="og:title" content="林老师之系统安全系列一">
+<meta property="og:url" content="http://yoursite.com/2020/03/03/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%80/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="CVE-2019-14287 sudo提权漏洞本文参考博客：参考博客  看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权” sudo版本&lt;1.8.28会受到影响">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/6.png">
-<meta property="article:published_time" content="2020-02-19T12:57:42.000Z">
-<meta property="article:modified_time" content="2020-02-28T03:35:23.329Z">
+<meta property="og:description" content="林老师今天介绍了Windows安全，有很多名词我都不懂，所以总结一下： 概述windows操作系统的安全标准等级为C2级，这是兼顾安全性和方便性的最高等级windows目前支持DAC和MAC两种访问控制模型，这在RBAC中介绍过：  自主访问控制（DAC）依据主体的判断力授予访问权限，客体的拥有者对客体进行管理，可以按自己的意愿有选择地与其他用户共享文件  强制访问控制（MAC）完全取决于权限，而">
+<meta property="article:published_time" content="2020-03-03T08:02:11.000Z">
+<meta property="article:modified_time" content="2020-03-03T12:50:57.268Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/1.png">
 
 
 
@@ -125,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/19/CVE-2019-14287/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/03/林老师之系统安全系列一/"/>
 
 
 
 
 
-  <title>CVE-2019-14287 | eAzure</title>
+  <title>林老师之系统安全系列一 | eAzure</title>
   
 
 
@@ -248,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/19/CVE-2019-14287/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -265,7 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CVE-2019-14287</h1>
+          <h1 class="post-title" itemprop="name headline">林老师之系统安全系列一</h1>
         
 
         <div class="post-meta">
@@ -277,8 +270,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-19T20:57:42+08:00">
-                2020-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-03T16:02:11+08:00">
+                2020-03-03
               </time>
             
 
@@ -300,8 +293,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞分析与复现</span>
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">系统安全</span>
                   </a>
                 </span>
 
@@ -337,39 +330,32 @@
       
 
       
-        <h1 id="CVE-2019-14287-sudo提权漏洞"><a href="#CVE-2019-14287-sudo提权漏洞" class="headerlink" title="CVE-2019-14287 sudo提权漏洞"></a>CVE-2019-14287 sudo提权漏洞</h1><p>本文参考博客：<a href="http://blog.itpub.net/69912109/viewspace-2660947/" target="_blank" rel="noopener" title="参考博客">参考博客</a></p>
+        <p>林老师今天介绍了Windows安全，有很多名词我都不懂，所以总结一下：</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>windows操作系统的安全标准等级为C2级，这是兼顾安全性和方便性的最高等级<br>windows目前支持DAC和MAC两种访问控制模型，这在RBAC中介绍过：</p>
 <ul>
-<li>看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权”</li>
-<li>sudo版本&lt;1.8.28会受到影响</li>
+<li><p>自主访问控制（DAC）依据主体的判断力授予访问权限，客体的拥有者对客体进行管理，可以按自己的意愿有选择地与其他用户共享文件</p>
+</li>
+<li><p>强制访问控制（MAC）完全取决于权限，而权限由管理员设置或操作系统自动按照相关严格策略进行设置，用户所创建的资源，用户也不能完全控制。而RBAC是独立与其两者共存的。</p>
+</li>
 </ul>
-<a id="more"></a>
-<p>下面细细分析<br>先来了解下linux下的几个概念：</p>
+<h1 id="名词"><a href="#名词" class="headerlink" title="名词"></a>名词</h1><h2 id="网络驱动器"><a href="#网络驱动器" class="headerlink" title="网络驱动器"></a>网络驱动器</h2><p>这个含义就是一个设备中的磁盘被作为共享数据区域允许网络用户访问<br>这里我们根据一个博客上所说的将阿里云linux下的目录映射为主机上的网络驱动器<br>参考博客：<a href="https://www.cnblogs.com/abc36725612/p/8183490.html" target="_blank" rel="noopener" title="参考博客">参考博客</a><br>先安装samba</p>
 <ul>
-<li>root：root是系统中唯一的超级用户，具有系统中所有的权限</li>
-<li>sudo是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的root命令的工具，暂时切换到超级用户模式来执行超级用户权限，也就是说经由sudo执行的指令就好像是root在执行</li>
+<li>samba是linux和windows之间的文件传输工具</li>
 </ul>
-<p>不过通过useradd命令添加的用户，不具备能执行sudo指令的权限，需要将其加入sudo组，而本次漏洞的利用前提之一就有<font color="#FF0000">当前用户存在于sudo权限列表中</font>，所以是“特权用户”</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>实验环境如下：</p>
-<ul>
-<li>Linux kalilinux 4.17.0-kali1-amd64 #1 SMP Debian 4.17.8-1kali1 (2018-07-24) x86_64 GNU/Linux</li>
-<li>sudo版本：利用sudo -V命令，我的是1.8.23</li>
-</ul>
-<p>首先添加一个测试用户test，将其密码设置为root<br><code>useradd test</code><br><code>passwd test</code><br>然后就要对/etc/sudoers进行修改</p>
-<ul>
-<li>ps：/etc/sudoers这个文件比较敏感，我是先将其<code>chmod 777 /etc/sudoers</code>，然后修改完后，如果不把权限改回来，sudo就不可以用了，如下所示：<img src="/2020/02/19/CVE-2019-14287/1.png" alt="sudo不可用">所以要改回来<code>chmod 440 /etc/sudoers</code><br>修改内容如下：<br><img src="/2020/02/19/CVE-2019-14287/2.png" alt="修改内容"><br>含义是：test用户可以以非root身份执行/usr/bin/id，也就是其不能以root身份执行</li>
-</ul>
-<hr>
-<p>上面其实说的就是管理员的一些配置，如果管理员不这么配我们就没办法了，下面我们就要在上述配置的基础上展开操作<br>切换到test用户<code>su test</code><br>然后试图以root身份来执行/usr/bin/id<br><code>sudo id</code><br>发现出现了下面的提示：<br><img src="/2020/02/19/CVE-2019-14287/3.png" alt="无权执行"><br>然后sudo有个选项- u，是可以通过指定用户的方式来代替该用户执行后面的命令<br>比如<code>sudo -u test1 id</code>，就是此时test是以test1的身份来执行id的<br>然后当我们使用<code>sudo -u#-1 id</code>或者<code>sudo -u#4294967295 id</code>就可以触发漏洞，绕过之前的限制以root身份执行命令，4294967295（-1 的补码，其实内部是按无符号整数处理的）<br>如下所示：<br><img src="/2020/02/19/CVE-2019-14287/4.png" alt="结果"></p>
-<h2 id="漏洞原理分析"><a href="#漏洞原理分析" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h2><p>看一下官方修改的补丁<a href="https://www.sudo.ws/repos/sudo/rev/83db8dba09e7" target="_blank" rel="noopener" title="补丁网址">补丁网址</a><br><img src="/2020/02/19/CVE-2019-14287/5.png" alt="补丁截图"><br>不允许值为上述两值了<br>那为什么uid为-1和4294967295的时候，最后得到的结果是以uid为0，也就是root身份执行呢？<br>这里根据参考博客的博主学会了一个命令<code>strace</code></p>
-<ul>
-<li>strace:可以跟踪系统调用的执行，然后以一行文本输出系统调用的名字、参数和返回值，具体使用可参考这篇博客<a href="https://www.cnblogs.com/youxin/p/8837771.html" target="_blank" rel="noopener" title="linux神器strace">linux神器strace</a></li>
-</ul>
-<p>strace -u 需要root身份，切回<code>su</code><br>执行命令<code>strace -u test sudo -u#-1 id</code><br>在返回的系统调用命令中观察到：<br><img src="/2020/02/19/CVE-2019-14287/6.png" alt="系统调用"><br>根据参考博客知道，setresuid是系统调用setresuid32的封装，而setresuid32最后调用的是内核函数sys_setresuid（在kernal/sys.c文件中）<br>这里推荐一个在线查询linux源代码的网站：LXR（可以上网百度）<br>最后层层阅读，在/security/commoncap.c中找到了默认返回值（函数cap_task_fix_setuid）0</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞就是在具有sudo权限的用户被施加了某些限制（比如某些命令不能以root身份执行这样的约束），可以通过sudo的漏洞绕过限制，以root身份执行。</p>
-<h2 id="修复方法"><a href="#修复方法" class="headerlink" title="修复方法"></a>修复方法</h2><ul>
-<li>更新sudo大于1.8.27</li>
-<li>做好sudo用户列表管理</li>
-</ul>
+<p>ubuntu下<code>sudo apt-get install samba</code>，若不行则先更新一下<code>sudo apt-get update</code><br>其余参照博客进行<br>然后发现失败了，怀疑是端口未开放的原因，然后去配置阿里云<br>弄了半天，发现samba只适用于局域网，好吧就这样吧</p>
+<h2 id="SELinux"><a href="#SELinux" class="headerlink" title="SELinux"></a>SELinux</h2><p>简单来说就是Linux呢何种提供的强制访问控制（MAC）系统，是一个内核模块，可启用和禁用，安全策略可定制<br>它遵循最小权限原则，尽可能限制进程可访问的资源<br>具体可参见博文：<a href="https://blog.csdn.net/yanjun821126/article/details/80828908" target="_blank" rel="noopener" title="参考博客">参考博客</a></p>
+<h2 id="hyper-v"><a href="#hyper-v" class="headerlink" title="hyper-v"></a>hyper-v</h2><p>由微软开发的一种类似于Vmware的虚拟化产品</p>
+<h2 id="uuid"><a href="#uuid" class="headerlink" title="uuid"></a>uuid</h2><p>通用唯一识别码，目的是让分布式系统中的所有元素都能有唯一的识别信息，由算法生成，非指定，每个人都可以创建不与其它人冲突的UUID，就不需考虑数据库创建时的名称重复问题，其实也没啥具体意义，就是能很好地来标识一个对象</p>
+<h2 id="sid"><a href="#sid" class="headerlink" title="sid"></a>sid</h2><p>sid全称为security identity，用来唯一标识计算机账户、用户组和用户账号，由计算机名、当前时间、当前用户态线程的CPU耗费时间的总和三个参数决定，命令行输入<code>whoami /all</code>可查看</p>
+<h2 id="iis"><a href="#iis" class="headerlink" title="iis"></a>iis</h2><p>internet information server，微软公司开发的服务器，支持HTTP、FTP、SMTP协议</p>
+<h2 id="nginx、apache和tomcat"><a href="#nginx、apache和tomcat" class="headerlink" title="nginx、apache和tomcat"></a>nginx、apache和tomcat</h2><p>这三者均为web服务器，与iis是同一类<br>首先介绍apache和tomcat的区别与联系：<br>1、apache是web服务器，tomcat是应用（java）服务器，是一个容器，可以认为是apache的扩展；<br>2、apache和tomcat可以独立作为web服务器使用，apache只支持html静态网页，静态解析，apache不能解释java程序，但可以处理php，tomcat支持动态网页，apache可以与tomcat连通；</p>
+<p>而nginx是轻量级的，可以实现无缓存反向代理，处理静态文件速度快<br>结合用的话，一般nginx做负载均衡和反向代理，处理静态文件</p>
+<h2 id="vnc"><a href="#vnc" class="headerlink" title="vnc"></a>vnc</h2><p>虚拟网络控制台，其实就是远程控制工具，而vinagre就是GNOME下的其中一种</p>
+<h2 id="FAT、NTFS、REFS"><a href="#FAT、NTFS、REFS" class="headerlink" title="FAT、NTFS、REFS"></a>FAT、NTFS、REFS</h2><p>都是磁盘格式，可以看看U盘<br>FAT32缺点是不能设置权限，只支持4G一下的单个文件传输<br>NTFS可以设置权限，刷系统分区时建议，能有效管理磁盘空间<br>FAT64针对最大4G进行扩展<br>REFS自动校验数据并修复，但不支持引导操作系统和移动使用，只能存储数据</p>
+<h2 id="dedup"><a href="#dedup" class="headerlink" title="dedup"></a>dedup</h2><p>重复数据删除，多次备份中有相同数据，为了不占用太多空间而采用的技术，类似于复制相同的产生快捷方式而不是真复制一般</p>
+<h2 id="autorun-inf"><a href="#autorun-inf" class="headerlink" title="autorun.inf"></a>autorun.inf</h2><p>自动播放机制，但是也可以被作为病毒的自启动，因为windows在打开盘符时，若发现有这个文件则会主动去打开其指向的程序</p>
+<h2 id="kms"><a href="#kms" class="headerlink" title="kms"></a>kms</h2><p>key management service，是微软官方认可的一种系统激活方式，可以用于批量激活</p>
+<p>好了，整理到这里突然想学习逆向了</p>
 
       
     </div>
@@ -394,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/19/RBAC/" rel="next" title="RBAC">
-                <i class="fa fa-chevron-left"></i> RBAC
+              <a href="/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/" rel="next" title="计算机网络之传输层">
+                <i class="fa fa-chevron-left"></i> 计算机网络之传输层
               </a>
             
           </div>
@@ -403,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/24/%E5%9B%BE%E5%83%8F%E6%95%B0%E5%AD%97%E5%8C%96/" rel="prev" title="图像数字化">
-                图像数字化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-2019-14287-sudo提权漏洞"><span class="nav-number">1.</span> <span class="nav-text">CVE-2019-14287 sudo提权漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞复现"><span class="nav-number">1.1.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞原理分析"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞原理分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修复方法"><span class="nav-number">1.4.</span> <span class="nav-text">修复方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#名词"><span class="nav-number">2.</span> <span class="nav-text">名词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络驱动器"><span class="nav-number">2.1.</span> <span class="nav-text">网络驱动器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SELinux"><span class="nav-number">2.2.</span> <span class="nav-text">SELinux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper-v"><span class="nav-number">2.3.</span> <span class="nav-text">hyper-v</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uuid"><span class="nav-number">2.4.</span> <span class="nav-text">uuid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sid"><span class="nav-number">2.5.</span> <span class="nav-text">sid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iis"><span class="nav-number">2.6.</span> <span class="nav-text">iis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx、apache和tomcat"><span class="nav-number">2.7.</span> <span class="nav-text">nginx、apache和tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vnc"><span class="nav-number">2.8.</span> <span class="nav-text">vnc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAT、NTFS、REFS"><span class="nav-number">2.9.</span> <span class="nav-text">FAT、NTFS、REFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dedup"><span class="nav-number">2.10.</span> <span class="nav-text">dedup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#autorun-inf"><span class="nav-number">2.11.</span> <span class="nav-text">autorun.inf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kms"><span class="nav-number">2.12.</span> <span class="nav-text">kms</span></a></li></ol></li></ol></div>
             
 
           </div>
