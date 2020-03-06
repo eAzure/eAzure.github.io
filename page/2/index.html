@@ -79,23 +79,14 @@
 
 
 
-<meta name="description" content="CVE-2019-14287 sudo提权漏洞本文参考博客：参考博客  看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权” sudo版本&lt;1.8.28会受到影响">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CVE-2019-14287">
-<meta property="og:url" content="http://yoursite.com/2020/02/19/CVE-2019-14287/index.html">
+<meta name="description" content="Hacker">
+<meta property="og:type" content="website">
+<meta property="og:title" content="eAzure">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="CVE-2019-14287 sudo提权漏洞本文参考博客：参考博客  看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权” sudo版本&lt;1.8.28会受到影响">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/6.png">
-<meta property="article:published_time" content="2020-02-19T12:57:42.000Z">
-<meta property="article:modified_time" content="2020-02-28T03:35:23.329Z">
+<meta property="og:description" content="Hacker">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/02/19/CVE-2019-14287/1.png">
 
 
 
@@ -125,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/19/CVE-2019-14287/"/>
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
 
 
 
 
 
-  <title>CVE-2019-14287 | eAzure</title>
+  <title>eAzure</title>
   
 
 
@@ -150,7 +141,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -233,9 +225,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -248,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/19/CVE-2019-14287/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -265,7 +257,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CVE-2019-14287</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/18/hello-world/" itemprop="url">Hello World</a></h1>
         
 
         <div class="post-meta">
@@ -277,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-19T20:57:42+08:00">
-                2020-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-18T09:30:50+08:00">
+                2020-02-18
               </time>
             
 
@@ -300,8 +294,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">漏洞分析与复现</span>
+                  <a href="/categories/%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">测试</span>
                   </a>
                 </span>
 
@@ -337,40 +331,24 @@
       
 
       
-        <h1 id="CVE-2019-14287-sudo提权漏洞"><a href="#CVE-2019-14287-sudo提权漏洞" class="headerlink" title="CVE-2019-14287 sudo提权漏洞"></a>CVE-2019-14287 sudo提权漏洞</h1><p>本文参考博客：<a href="http://blog.itpub.net/69912109/viewspace-2660947/" target="_blank" rel="noopener" title="参考博客">参考博客</a></p>
-<ul>
-<li>看到很多博客都将该漏洞概括为“非授权的特权用户可以绕过限制获得特权”</li>
-<li>sudo版本&lt;1.8.28会受到影响</li>
-</ul>
-<a id="more"></a>
-<p>下面细细分析<br>先来了解下linux下的几个概念：</p>
-<ul>
-<li>root：root是系统中唯一的超级用户，具有系统中所有的权限</li>
-<li>sudo是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的root命令的工具，暂时切换到超级用户模式来执行超级用户权限，也就是说经由sudo执行的指令就好像是root在执行</li>
-</ul>
-<p>不过通过useradd命令添加的用户，不具备能执行sudo指令的权限，需要将其加入sudo组，而本次漏洞的利用前提之一就有<font color="#FF0000">当前用户存在于sudo权限列表中</font>，所以是“特权用户”</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>实验环境如下：</p>
-<ul>
-<li>Linux kalilinux 4.17.0-kali1-amd64 #1 SMP Debian 4.17.8-1kali1 (2018-07-24) x86_64 GNU/Linux</li>
-<li>sudo版本：利用sudo -V命令，我的是1.8.23</li>
-</ul>
-<p>首先添加一个测试用户test，将其密码设置为root<br><code>useradd test</code><br><code>passwd test</code><br>然后就要对/etc/sudoers进行修改</p>
-<ul>
-<li>ps：/etc/sudoers这个文件比较敏感，我是先将其<code>chmod 777 /etc/sudoers</code>，然后修改完后，如果不把权限改回来，sudo就不可以用了，如下所示：<img src="/2020/02/19/CVE-2019-14287/1.png" alt="sudo不可用">所以要改回来<code>chmod 440 /etc/sudoers</code><br>修改内容如下：<br><img src="/2020/02/19/CVE-2019-14287/2.png" alt="修改内容"><br>含义是：test用户可以以非root身份执行/usr/bin/id，也就是其不能以root身份执行</li>
-</ul>
-<hr>
-<p>上面其实说的就是管理员的一些配置，如果管理员不这么配我们就没办法了，下面我们就要在上述配置的基础上展开操作<br>切换到test用户<code>su test</code><br>然后试图以root身份来执行/usr/bin/id<br><code>sudo id</code><br>发现出现了下面的提示：<br><img src="/2020/02/19/CVE-2019-14287/3.png" alt="无权执行"><br>然后sudo有个选项- u，是可以通过指定用户的方式来代替该用户执行后面的命令<br>比如<code>sudo -u test1 id</code>，就是此时test是以test1的身份来执行id的<br>然后当我们使用<code>sudo -u#-1 id</code>或者<code>sudo -u#4294967295 id</code>就可以触发漏洞，绕过之前的限制以root身份执行命令，4294967295（-1 的补码，其实内部是按无符号整数处理的）<br>如下所示：<br><img src="/2020/02/19/CVE-2019-14287/4.png" alt="结果"></p>
-<h2 id="漏洞原理分析"><a href="#漏洞原理分析" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h2><p>看一下官方修改的补丁<a href="https://www.sudo.ws/repos/sudo/rev/83db8dba09e7" target="_blank" rel="noopener" title="补丁网址">补丁网址</a><br><img src="/2020/02/19/CVE-2019-14287/5.png" alt="补丁截图"><br>不允许值为上述两值了<br>那为什么uid为-1和4294967295的时候，最后得到的结果是以uid为0，也就是root身份执行呢？<br>这里根据参考博客的博主学会了一个命令<code>strace</code></p>
-<ul>
-<li>strace:可以跟踪系统调用的执行，然后以一行文本输出系统调用的名字、参数和返回值，具体使用可参考这篇博客<a href="https://www.cnblogs.com/youxin/p/8837771.html" target="_blank" rel="noopener" title="linux神器strace">linux神器strace</a></li>
-</ul>
-<p>strace -u 需要root身份，切回<code>su</code><br>执行命令<code>strace -u test sudo -u#-1 id</code><br>在返回的系统调用命令中观察到：<br><img src="/2020/02/19/CVE-2019-14287/6.png" alt="系统调用"><br>根据参考博客知道，setresuid是系统调用setresuid32的封装，而setresuid32最后调用的是内核函数sys_setresuid（在kernal/sys.c文件中）<br>这里推荐一个在线查询linux源代码的网站：LXR（可以上网百度）<br>最后层层阅读，在/security/commoncap.c中找到了默认返回值（函数cap_task_fix_setuid）0</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞就是在具有sudo权限的用户被施加了某些限制（比如某些命令不能以root身份执行这样的约束），可以通过sudo的漏洞绕过限制，以root身份执行。</p>
-<h2 id="修复方法"><a href="#修复方法" class="headerlink" title="修复方法"></a>修复方法</h2><ul>
-<li>更新sudo大于1.8.27</li>
-<li>做好sudo用户列表管理</li>
-</ul>
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
       
     </div>
     
@@ -387,32 +365,12 @@
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/02/19/RBAC/" rel="next" title="RBAC">
-                <i class="fa fa-chevron-left"></i> RBAC
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/24/%E5%9B%BE%E5%83%8F%E6%95%B0%E5%AD%97%E5%8C%96/" rel="prev" title="图像数字化">
-                图像数字化 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -422,11 +380,14 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -434,10 +395,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -458,17 +415,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -523,22 +471,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-2019-14287-sudo提权漏洞"><span class="nav-number">1.</span> <span class="nav-text">CVE-2019-14287 sudo提权漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞复现"><span class="nav-number">1.1.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞原理分析"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞原理分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修复方法"><span class="nav-number">1.4.</span> <span class="nav-text">修复方法</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -679,10 +611,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
