@@ -240,6 +240,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/" itemprop="url">《白帽子讲Web安全》学习一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T22:06:30+08:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">Web安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在学习过程中，会结合《Web安全攻防渗透测试实战指南》与《Web前端黑客技术揭秘》，在此对三本书的作者表示感谢！</p>
+<h1 id="道哥的安全观"><a href="#道哥的安全观" class="headerlink" title="道哥的安全观"></a>道哥的安全观</h1><h2 id="安全问题的本质是信任的问题"><a href="#安全问题的本质是信任的问题" class="headerlink" title="安全问题的本质是信任的问题"></a>安全问题的本质是信任的问题</h2><p>需要高信任的区域到需要低信任的区域不需要经过安全检查，但是相反的情况是需要检查的，道哥有一个很好的比喻：“将文件放在抽屉里，用锁锁上，我们会怀疑做抽屉的有没有留后门，做锁的有没有留钥匙，如果我们都不信任，那么就不会认为其是安全的”</p>
+<h2 id="安全是一个持续过程"><a href="#安全是一个持续过程" class="headerlink" title="安全是一个持续过程"></a>安全是一个持续过程</h2><p>想一劳永逸解决安全问题是不现实的</p>
+<h2 id="安全三要素"><a href="#安全三要素" class="headerlink" title="安全三要素"></a>安全三要素</h2><p>CIA</p>
+<ul>
+<li>机密性：数据防泄漏</li>
+<li>完整性：数据防篡改</li>
+<li>可用性：资源需要时可用</li>
+</ul>
+<h2 id="核心问题是数据安全"><a href="#核心问题是数据安全" class="headerlink" title="核心问题是数据安全"></a>核心问题是数据安全</h2><h2 id="安全是产品的一个属性"><a href="#安全是产品的一个属性" class="headerlink" title="安全是产品的一个属性"></a>安全是产品的一个属性</h2><h2 id="荒谬的用户体验"><a href="#荒谬的用户体验" class="headerlink" title="荒谬的用户体验"></a>荒谬的用户体验</h2><p>Windows vista新增功能UAC，在出现敏感行为时，询问用户是否允许，道哥认为，如果用户能分辨什么样的行为是安全的，还要安全软件做什么？</p>
+<h2 id="secure-by-default"><a href="#secure-by-default" class="headerlink" title="secure by default"></a>secure by default</h2><p>更多使用白名单，系统会更安全，因为在暗处的人你是看不到的<br>还有一个原则：最小特权原则，要求系统只授予主体必要的权限，而非过度授权</p>
+<h2 id="纵深防御原则"><a href="#纵深防御原则" class="headerlink" title="纵深防御原则"></a>纵深防御原则</h2><p>从不同层面、不同角度对系统做出整体的解决方案<br>还有一个要求：在正确的地方做正确的事，例如防御XSS的时候，如果单纯从过滤用户输入的角度来看，是有可能造成误伤的，例如输入1&lt;2，将&lt;过滤掉，失去了原来的意思</p>
+<h2 id="数据与代码分离"><a href="#数据与代码分离" class="headerlink" title="数据与代码分离"></a>数据与代码分离</h2><p>就是在数据区不能执行代码，在之前讨论ios安全机制时讨论过该问题</p>
+<h2 id="不可预测性"><a href="#不可预测性" class="headerlink" title="不可预测性"></a>不可预测性</h2><p>在之前ios安全机制中讨论过一种ASLR技术，就是每次程序启动后，其进程的栈基址都是不相同的，这样攻击者就不能准确找到</p>
+<h1 id="web安全的关键点"><a href="#web安全的关键点" class="headerlink" title="web安全的关键点"></a>web安全的关键点</h1><p>选自《Web前端黑客技术揭秘》与《白帽子讲Web安全》</p>
+<h2 id="数据与指令"><a href="#数据与指令" class="headerlink" title="数据与指令"></a>数据与指令</h2><p>其实就是安全应该讲究数据与代码相分离，如果数据中掺杂着指令/代码，会发生注入行为，如sql注入、XSS跨站脚本攻击</p>
+<h2 id="浏览器的同源策略"><a href="#浏览器的同源策略" class="headerlink" title="浏览器的同源策略"></a>浏览器的同源策略</h2><p>不同域的客户端脚本在没明确授权的情况下，不能读写对方的资源</p>
+<h3 id="同域还是不同域？"><a href="#同域还是不同域？" class="headerlink" title="同域还是不同域？"></a>同域还是不同域？</h3><p>同域要求两个站点同协议、同域名、同端口<br>对于当前页面来说，页面内存放JavaScript文件的域并不重要，重要的是加载JavaScript页面所在的域是什么<br>例如a.com通过以下代码：<br><code>&lt;script src=htp://b.com/b.js&gt;&lt;/script&gt;</code><br>加载了b.com上的脚本，但是该脚本是运行在a页面的，所以对于当前a页面来说，该脚本的域是a，不是b<br>下面举例说明，表中所列站点是否与<a href="http://www.foo.com同域的情况" target="_blank" rel="noopener">http://www.foo.com同域的情况</a><br><img src="/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/1.png" alt="1"></p>
+<h4 id="www？"><a href="#www？" class="headerlink" title="www？"></a>www？</h4><p>比如baidu.com是顶级域名，<a href="http://www.baidu.com是二级域名，这俩是不同的，有些人会说“我都能访问同一个网址啊”，那是因为为了人们的习惯，将这俩域名映射到了同一个IP地址上去了，只是这样，这俩还是独立的，你在其中一个登录并没有在另一个登录，这就要进行重定向，比如301重定向，统一www和不带www的" target="_blank" rel="noopener">www.baidu.com是二级域名，这俩是不同的，有些人会说“我都能访问同一个网址啊”，那是因为为了人们的习惯，将这俩域名映射到了同一个IP地址上去了，只是这样，这俩还是独立的，你在其中一个登录并没有在另一个登录，这就要进行重定向，比如301重定向，统一www和不带www的</a><br>301重定向：301转向(或叫301重定向，301跳转)是当用户或搜索引擎向网站服务器发出浏览请求时，服务器返回的HTTP数据流中头信息(header)中的状态码的一种，表示本网页永久性转移到另一个地址。<br>html中带有src属性的标签，可以跨域加载资源，相当于浏览器发起一次get请求，但是浏览器限制了js的权限，不能读写</p>
+<h3 id="客户端脚本"><a href="#客户端脚本" class="headerlink" title="客户端脚本"></a>客户端脚本</h3><p>比如javascript</p>
+<h3 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h3><p>在做网页时，经常会遇到ajax拒绝跨域访问，但是一般在springboot中添加注释<code>@CrossOrigin(origins=&quot;*&quot;)</code>即可允许所有域访问<br>只有目标站点明确返回HTTP响应头：<br>Access-Control-Allow-Origin:<a href="http://www.evil.com" target="_blank" rel="noopener">http://www.evil.com</a><br><a href="http://www.evil.com站点上的客户端脚本就有权使用ajax对目标站点的数据进行读写操作" target="_blank" rel="noopener">http://www.evil.com站点上的客户端脚本就有权使用ajax对目标站点的数据进行读写操作</a><br>而JavaScript是无法控制该HTTP头的，这是个信任基础</p>
+<h4 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h4><p>asynchronous JavaScript and xml，让数据在后台进行异步传输，常用场景：对网页的局部数据进行更新时，不需要刷新整个网页，以节省带宽资源</p>
+<h3 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h3><p>web客户端资源，如HTTP消息头、DOM树、Cookie等</p>
+<h4 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h4><p>Document Object Model，文档对象模型，浏览器将HTML/XML文档抽象为一个树形结构，树上的每个节点都代表HTML/XML中的标签、标签属性或标签内容，方便JavaScript进行读写操作</p>
+<h3 id="第三方插件的同源策略"><a href="#第三方插件的同源策略" class="headerlink" title="第三方插件的同源策略"></a>第三方插件的同源策略</h3><p>以flash为例，它是通过目标网站提供的crossdomain.xml文件来判断是否允许当前源的flash跨域访问，例如qq的<br><img src="/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/2.png" alt="2"><br>后来flash又更新了检查策略，因为黑客可通过上传crossdomain.xml来控制</p>
+<h3 id="IE8的CSS跨域漏洞"><a href="#IE8的CSS跨域漏洞" class="headerlink" title="IE8的CSS跨域漏洞"></a>IE8的CSS跨域漏洞</h3><p><img src="/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/3.png" alt="3"><br><img src="/2020/03/17/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%B8%80/4.png" alt="4"><br><code>&lt;script&gt;</code>标签只能加载资源不能读写，而这个漏洞绕过了同源策略</p>
+<h3 id="同源策略的重要性"><a href="#同源策略的重要性" class="headerlink" title="同源策略的重要性"></a>同源策略的重要性</h3><p>如果没有同源策略，当我们登录一个邮箱时，同时打开另一个站点，这个站点上的脚本就可以跨域读取我们呢邮箱里的数据了</p>
+<h2 id="信任"><a href="#信任" class="headerlink" title="信任"></a>信任</h2><p>看道哥的安全观<br>这里从余弦的这本书里摘出几个例子：</p>
+<ol>
+<li>一个web服务器里有俩网站A、B，攻A不好攻，攻B成功了，由于AB间可能过分信任，所以A也会比较容易被攻破；</li>
+<li>使用第三方的<code>&lt;script&gt;</code>的脚本，比如搜狐的获取本机IP，如果第三方被黑客挂马，自己也将受攻击，这是因为信任了第三方，还有一个浏览器插件攻击，之前尝试过，对于防护弱的是可以的</li>
+</ol>
+<h2 id="社会工程学"><a href="#社会工程学" class="headerlink" title="社会工程学"></a>社会工程学</h2><p>Google Hack、SNS垂直搜索、数据集等</p>
+<h3 id="SNS垂直搜索"><a href="#SNS垂直搜索" class="headerlink" title="SNS垂直搜索"></a>SNS垂直搜索</h3><p>Social Networking Services，社交网络服务<br>针对社交网络进行的搜索，更细分</p>
+<h2 id="浏览器沙箱机制"><a href="#浏览器沙箱机制" class="headerlink" title="浏览器沙箱机制"></a>浏览器沙箱机制</h2><p>多进程架构，将浏览器各个功能模块分开，限制不可信任的代码访问隔离区之外的资源，通信限定默认API</p>
+<h2 id="恶意网址查询平台"><a href="#恶意网址查询平台" class="headerlink" title="恶意网址查询平台"></a>恶意网址查询平台</h2><p>搜集黑名单<br>PhishTank、Google的SafeBrowsing API</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/Windows%E7%B3%BB%E7%BB%9FEFS%E5%8A%A0%E5%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1557,153 +1734,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/Arnold%E5%8F%98%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="eAzure">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/eAzure.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="eAzure">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/29/Arnold%E5%8F%98%E6%8D%A2/" itemprop="url">Arnold变换</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-29T21:01:33+08:00">
-                2020-02-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%8A%A0%E5%AF%86/" itemprop="url" rel="index">
-                    <span itemprop="name">图像加密</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本篇是迈入图像加密后所选择研究的第一个加密方法，选择这种方法的缘由是基于密码的发展过程并结合图像的存储形式所能想到最直接的便是进行像素置换，而这种方法如果单独使用的话不符合现代密码学中的Kerckhoffs准则，即算法不能公开，属于古典密码范畴<br>参考博客为：<br>1、<a href="https://www.jianshu.com/p/39727dbaffd9" target="_blank" rel="noopener" title="Arnold变换详解">Arnold变换详解</a>；<br>2、<a href="https://www.jiamisoft.com/blog/7249-erzhituxiangjiamisuanfaarnold.html" target="_blank" rel="noopener" title="二值图像加密之Arnold变换加密">二值图像加密之Arnold变换加密</a><br>非常感谢</p>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>其实这种方法本质上是将图像进行置乱，打乱其像素排列，这种变换具有周期性，即对图像连续变化后最终可以复原，变换的周期和图像尺寸、参数等相关，分为狭义变换和广义变换</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/02/29/Arnold%E5%8F%98%E6%8D%A2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1758,7 +1788,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1769,7 +1799,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
