@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="本篇文章为科普文，不涉及过多硬核知识，只是探讨一些安全思想，参考自1、“差评”公众号详情见参考链接2、freebuf细数iOS上的那些安全防护3、简书ios的安全机制4、安全客利用缓存技术：数据执行保护（DEP） 概述用过苹果手机的同学可能会知道，一般苹果手机没有像Android手机类似的手机管家，一般也不需要装杀毒软件，而苹果高层也对外宣称“苹果手机不需要清后台”，那这是为什么呢？真得就安全吗？">
+<meta name="description" content="对称密钥分发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS安全机制简论">
-<meta property="og:url" content="http://yoursite.com/2020/03/05/iOS%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E7%AE%80%E8%AE%BA/index.html">
+<meta property="og:title" content="密钥分发">
+<meta property="og:url" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="本篇文章为科普文，不涉及过多硬核知识，只是探讨一些安全思想，参考自1、“差评”公众号详情见参考链接2、freebuf细数iOS上的那些安全防护3、简书ios的安全机制4、安全客利用缓存技术：数据执行保护（DEP） 概述用过苹果手机的同学可能会知道，一般苹果手机没有像Android手机类似的手机管家，一般也不需要装杀毒软件，而苹果高层也对外宣称“苹果手机不需要清后台”，那这是为什么呢？真得就安全吗？">
-<meta property="article:published_time" content="2020-03-05T01:00:17.000Z">
-<meta property="article:modified_time" content="2020-03-05T05:18:03.596Z">
+<meta property="og:description" content="对称密钥分发">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/4.png">
+<meta property="article:published_time" content="2020-03-20T01:28:45.000Z">
+<meta property="article:modified_time" content="2020-03-20T06:10:01.854Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/05/iOS安全机制简论/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/20/密钥分发/"/>
 
 
 
 
 
-  <title>iOS安全机制简论 | eAzure</title>
+  <title>密钥分发 | eAzure</title>
   
 
 
@@ -241,7 +246,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/iOS%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E7%AE%80%E8%AE%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -258,7 +263,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS安全机制简论</h1>
+          <h1 class="post-title" itemprop="name headline">密钥分发</h1>
         
 
         <div class="post-meta">
@@ -270,8 +275,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-05T09:00:17+08:00">
-                2020-03-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T09:28:45+08:00">
+                2020-03-20
               </time>
             
 
@@ -293,8 +298,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">系统安全</span>
+                  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">密码学</span>
                   </a>
                 </span>
 
@@ -330,18 +335,32 @@
       
 
       
-        <p>本篇文章为科普文，不涉及过多硬核知识，只是探讨一些安全思想，参考自<br>1、“差评”公众号<br>详情见<a href="https://mp.weixin.qq.com/s?__biz=MzA5NDc1NzQ4MA==&mid=2653406690&idx=2&sn=1a9a27b0f48da99b81d2778bb697c152&chksm=8b9ad2e5bced5bf33871d3a5783f4b143b752a019244f2074cff3577df403c29f1ef9dfafcc1&scene=126&sessionid=1583367743&key=48e002816d05900eda9f4b5cc4c3813e0b5aae026609aef0afb60cd8ecba96bea618fffc444cfc623736162d8ba0cdcc9295fb54c929b9ae3b27b3426b6ccd4a8ec9079a59dc0eb3498606980f4db34a&ascene=1&uin=MzEzODQ4Mzc4MQ%3D%3D&devicetype=Windows+10&version=62080079&lang=zh_CN&exportkey=A6SIQx7KjiyxKSJkAmWulvs%3D&pass_ticket=GQlNfqR8GUz17TtThAG9E1VNElpiAgrJSth2%2FW6r8yKlrz3XkSSyzFzd8M9YICM8" target="_blank" rel="noopener" title="参考链接">参考链接</a><br>2、freebuf<a href="https://www.freebuf.com/articles/terminal/112811.html" target="_blank" rel="noopener" title="细数iOS上的那些安全防护">细数iOS上的那些安全防护</a><br>3、简书<a href="https://www.jianshu.com/p/6c70565b2c1f" target="_blank" rel="noopener" title="ios的安全机制">ios的安全机制</a><br>4、安全客<a href="https://www.anquanke.com/post/id/91266" target="_blank" rel="noopener" title="利用缓存技术：数据执行保护（DEP）">利用缓存技术：数据执行保护（DEP）</a></p>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>用过苹果手机的同学可能会知道，一般苹果手机没有像Android手机类似的手机管家，一般也不需要装杀毒软件，而苹果高层也对外宣称“苹果手机不需要清后台”，那这是为什么呢？真得就安全吗？</p>
-<a id="more"></a>
-<h1 id="App-Store"><a href="#App-Store" class="headerlink" title="App Store"></a>App Store</h1><p>首先，用户想要下载应用只能从App Store中下载，在App Store中下载的应用一般是经过严格审核的，并且开发iOS本身就是一件很麻烦的事情，需要符合很多iOS开发的要求<br>其次，即使你通过某些手段绕过了App Store，苹果在应用运行时也会对其进行签名检测，不是自己签的话也是不让用的</p>
-<h1 id="沙盒机制"><a href="#沙盒机制" class="headerlink" title="沙盒机制"></a>沙盒机制</h1><p>最出名的恐怕就是苹果的沙盒机制了吧，不过android好像也要有了<br>1、苹果的权限分为root级和mobile级，苹果自带的功能使用的是root级，而第三方软件都是mobile级</p>
-<p>2、iOS没有公共数据存储区，每一个App都有一个单独的文件夹，并且针对第三方app，iOS统一配备赋予了一定权限的沙盒，这个沙盒权限限制的非常严格，沙盒机制规定了应用程序只能在自己的沙盒中读取文件，不能随意跨过自己的沙盒去访问别的沙盒里的内容，如果有需要的话都需要经过权限验证</p>
-<h1 id="利用缓解"><a href="#利用缓解" class="headerlink" title="利用缓解"></a>利用缓解</h1><p>漏洞无法利用或者利用难度提高的方法被称为利用缓解</p>
-<h2 id="DEP"><a href="#DEP" class="headerlink" title="DEP"></a>DEP</h2><p>数据执行保护，如果内存页所包含的内容为数据，则将其标记为不可执行区域，反之如果为内存，则标记为可执行区域。这样当处理器试图从标记为不可执行区域的页面中执行代码时，会出现异常，最后被强制终止，这样就可以防止攻击者将恶意代码注入到内存中</p>
-<h2 id="Stack-Canaries"><a href="#Stack-Canaries" class="headerlink" title="Stack Canaries"></a>Stack Canaries</h2><p>栈金丝雀保护，在缓冲器和控制数据之间添加随机值，这被称为金丝雀值，当缓冲区溢出时，金丝雀值会被破坏，这样验证金丝雀值时会失败，就可以触发缓冲区溢出保护机制。</p>
-<h2 id="ASLR-KASLR"><a href="#ASLR-KASLR" class="headerlink" title="ASLR/KASLR"></a>ASLR/KASLR</h2><p>地址随机化，为了增加攻击者预测目的地址的难度，防止攻击者直接定位攻击代码位置，用户态进程在每次启动时的执行文件基址随机生成，每次手机重启后，内核的基址也是随机的</p>
-<h2 id="Random-Heap-Element-Address"><a href="#Random-Heap-Element-Address" class="headerlink" title="Random Heap Element Address"></a>Random Heap Element Address</h2><p>iOS系统在释放内存块的过程中，会对内存释放后在free队列中的顺序进行随机化处理，这个安全措施主要是使用攻击者无法根据堆喷接口调用的时序来预测对应元素在内核的布局。</p>
-<h1 id="并非安全，取决于使用"><a href="#并非安全，取决于使用" class="headerlink" title="并非安全，取决于使用"></a>并非安全，取决于使用</h1><p>但是我们也听说过苹果手机越狱吧，所以这一方面其实依旧不安全，只是对于普通用户来说一般也没有越狱的需求吧，另外iOS相对Android用户数量少，但是iOS每年也会爆出很多漏洞。</p>
+        <h1 id="对称密钥分发"><a href="#对称密钥分发" class="headerlink" title="对称密钥分发"></a>对称密钥分发</h1><a id="more"></a>
+<p>使用的是KDC（密钥分发中心）<br><img src="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png" alt="1"><br>过程如下：<br>有一个第三方密钥分配中心KDC，所有需要通过对称密钥进行通信的用户，都需要在KDC上注册一个只有自己和KDC知道的对称密钥，我们称为主密钥（可以用物理方式传递），主密钥持有时间较长，但也需要不断更换</p>
+<ol>
+<li>A想和B发起通信，A使用自己和KDC间的密钥对下列信息加密后传给KDC</li>
+</ol>
+<ul>
+<li>A的身份信息，一般为IP地址等</li>
+<li>B的身份信息，一般为IP地址等</li>
+<li>一个临时随机串，用作该次传输的唯一标识，防止重放攻击</li>
+</ul>
+<ol start="2">
+<li><p>KDC用与A的密钥解密信息，获取到通信双方信息后，生成用于A、B间通信的会话密钥K<sub>s</sub>，构造信息串E(K<sub>A</sub>(K<sub>s</sub>,ID<sub>A</sub>,ID<sub>B</sub>,N1,E(K<sub>B</sub>(K<sub>s</sub>,ID<sub>A</sub>))))<br>返回给A</p>
+</li>
+<li><p>A接收到信息后，利用自己和KDC间的密钥K<sub>A</sub>解密完信息后，检查N1，发现是没问题的后，将消息中包含利用K<sub>B</sub>加密的信息串E(K<sub>B</sub>(K<sub>s</sub>,ID<sub>A</sub>))传给B</p>
+</li>
+<li><p>B利用与KDC间的密钥K<sub>B</sub>解密获取到信息，可以用来判断是A想和我通信，没有出现消息发送方和通信方不一致的情况</p>
+</li>
+<li><p>为了进一步验证，没被重放攻击，B使用会话密钥K<sub>s</sub>加密一个临时随机串N2发送给A</p>
+</li>
+<li><p>A接收到信息串，使用会话密钥解开，确认无误后，再发送给B验证消息，比如N2+1，这里需要发送给B不同于N2的消息，为啥呢？<br>了解一下重放攻击</p>
+</li>
+</ol>
+<h2 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h2><p>盗取认证凭证后，重新发送给认证方，把以前窃听到的数据原封不动地重新发送给接收方，网络上传输的数据是加密过的，此时窃听者无法得到数据的准确意义。但如果他知道这些数据的作用，就可以在不知道数据内容的情况下通过再次发送这些数据达到愚弄接收端的目的</p>
+<p>了解了重放攻击后，我们便可以推测发送不同随机串的目的了，假设此时B发送给A验证消息，A被允许回复相同的随机串，那么监听方也可以回复给B相同的随机串，所以不应该允许A回复相同的随机串，此时若再有人回复给B相同的随机串，证明，是有监听人在重放信息，如下图所示，C是监听者，因为消息被加密，所以C并不懂A、B之间发的是啥，只能单纯重放<br><img src="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/2.png" alt="2"></p>
+<p>上述方式是集中式的<br>还有一种分布式的方案<br>即没有集中式的KDC，每个终端用户都作为KDC，这就增加了用户和用户间的密钥对的数量，因为之前用户和KDC间都有密钥对，适用于对KDC安全性要求高的中小系统，过程如1下图所示：<br><img src="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/3.png" alt="3"><br>Km为A与B间共享的主密钥</p>
+<h1 id="非对称密钥分发"><a href="#非对称密钥分发" class="headerlink" title="非对称密钥分发"></a>非对称密钥分发</h1><p>非对称密钥分发其实仅涉及公钥的分发，私钥都是驻留在本地的<br>使用的是CA机制，如下图所示：<br><img src="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/4.png" alt="4"></p>
 
       
     </div>
@@ -366,8 +385,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/03/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%80/" rel="next" title="林老师之系统安全系列一">
-                <i class="fa fa-chevron-left"></i> 林老师之系统安全系列一
+              <a href="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/" rel="next" title="iptables学习">
+                <i class="fa fa-chevron-left"></i> iptables学习
               </a>
             
           </div>
@@ -375,10 +394,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/06/Windows%E5%9F%9F%E5%AE%9E%E9%AA%8C%E4%B8%80/" rel="prev" title="Windows域实验一">
-                Windows域实验一 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -515,7 +530,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#App-Store"><span class="nav-number">2.</span> <span class="nav-text">App Store</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#沙盒机制"><span class="nav-number">3.</span> <span class="nav-text">沙盒机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用缓解"><span class="nav-number">4.</span> <span class="nav-text">利用缓解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DEP"><span class="nav-number">4.1.</span> <span class="nav-text">DEP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stack-Canaries"><span class="nav-number">4.2.</span> <span class="nav-text">Stack Canaries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASLR-KASLR"><span class="nav-number">4.3.</span> <span class="nav-text">ASLR&#x2F;KASLR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Random-Heap-Element-Address"><span class="nav-number">4.4.</span> <span class="nav-text">Random Heap Element Address</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并非安全，取决于使用"><span class="nav-number">5.</span> <span class="nav-text">并非安全，取决于使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对称密钥分发"><span class="nav-number">1.</span> <span class="nav-text">对称密钥分发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重放攻击"><span class="nav-number">1.1.</span> <span class="nav-text">重放攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非对称密钥分发"><span class="nav-number">2.</span> <span class="nav-text">非对称密钥分发</span></a></li></ol></div>
             
 
           </div>
