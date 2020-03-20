@@ -85,22 +85,22 @@
 <meta property="og:url" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="eAzure">
 <meta property="og:description" content="这里推荐一位博主，个人感觉其写的有关iptables的介绍比较通俗易懂推荐博客">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/6.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/7.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/8.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/9.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/10.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/11.png">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-03-18T10:54:42.000Z">
 <meta property="article:modified_time" content="2020-03-18T13:01:38.814Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -352,7 +352,7 @@
 <li>raw：不再让iptables做数据包的链接跟踪处理</li>
 </ul>
 <p>解释一下链接跟踪处理，比如针对每一个连接都需要记录源地址、目的地址和连接状态等，尤其是网络地址转换时，而不再让iptables做数据包的链接跟踪处理的意思就是不再记录连接状态了，所以这样的规则一般适用于不需要做nat的情况下，这样可以提升性能<br>所以我们配置规则，也就是增删改符合这四条表上的规则</p>
-<p>iptables工作在网络层，处理数据包，当我们启用iptables后，所有本机接收的数据包都会被限定在一个内核框架中传输<br>这个内核框架的形式如下所示（借助参考博客）：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/1.png" alt="1"><br>图中的方块是数据包所经过的不同阶段，每个阶段被称为链<br>iptables支持自定义链，但是该链必须要被嵌入到原有的链上</p>
+<p>iptables工作在网络层，处理数据包，当我们启用iptables后，所有本机接收的数据包都会被限定在一个内核框架中传输<br>这个内核框架的形式如下所示（借助参考博客）：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/1.png" alt="1"><br>图中的方块是数据包所经过的不同阶段，每个阶段被称为链<br>iptables支持自定义链，但是该链必须要被嵌入到原有的链上</p>
 <h2 id="表如何应用到链上？"><a href="#表如何应用到链上？" class="headerlink" title="表如何应用到链上？"></a>表如何应用到链上？</h2><p>因为数据包是要经过这几条链的，所以自然我们会想到链上是有一些规则的，而这规则是定义在上面那四张表里的<br>但是每条链上并不是都有四张表里的规则的</p>
 <ul>
 <li>prerouting链：只有raw、mangle和nat表上的规则可以在其上定义</li>
@@ -361,7 +361,7 @@
 <li>output链：四张表上的规则都可以在其上定义</li>
 <li>POSTROUTING链：只有mangle、nat表上的规则可以在其上定义</li>
 </ul>
-<p>每条链上有对应的规则表，这些表被匹配也是有顺序和优先级的<br>优先级：<br>raw&gt;mangle&gt;nat&gt;filter<br>所以可以把上图改造为下图表链结合（借助参考博客）：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/2.png" alt="2"></p>
+<p>每条链上有对应的规则表，这些表被匹配也是有顺序和优先级的<br>优先级：<br>raw&gt;mangle&gt;nat&gt;filter<br>所以可以把上图改造为下图表链结合（借助参考博客）：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/2.png" alt="2"></p>
 <h2 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h2><p>数据包到达本机网卡后，会首先经过PREROUTING链，先经过raw表的处理，前面说过raw表的作用是不再让iptables做数据包的链接跟踪处理，如果raw表没有进行处理，那么则要进行链接跟踪，随后经过mangle和nat表的处理<br>然后根据目的地，判断路由，看目标主机是否为本主机</p>
 <h3 id="本主机"><a href="#本主机" class="headerlink" title="本主机"></a>本主机</h3><p>如果目标主机是本主机，则进入input链，依次经过mangle、filter表的处理，然后交给本主机的应用程序进行处理，然后判断路由，看其发往哪，然后进入outpu链，依次经过四张表的处理，然后进入postrouting链，依次经过mangle、nat表的处理，进入到出口的网卡，结束</p>
 <h3 id="其他主机"><a href="#其他主机" class="headerlink" title="其他主机"></a>其他主机</h3><p>不进input链，进入forward链，依次经过mangle、filter链的处理，进入postrouting链，经过mangle、nat表的处理，进入到出口的网卡，结束</p>
@@ -387,11 +387,11 @@
 <p>好了，iptables的基本原理算是了解了，具体指令不再探讨，下面看一个课程所要求做的一个实验</p>
 <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>用netfilter/iptables可以将Linux 虚拟机配置成路由器，这需要用iptables命令将网卡设置成转发(NAT)模式。将 一台ubuntu虚拟机设置成路由器(配置2个虚拟网卡，内网和外网)，一台windows虚拟机配置成客户端(内网)，通过路由器访问Internet。</p>
 <h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p>Vmware（Ubuntu(16.0.4 4核4G)+Windows7）</p>
-<h2 id="实验步骤与内容"><a href="#实验步骤与内容" class="headerlink" title="实验步骤与内容"></a>实验步骤与内容</h2><h3 id="为linux虚拟机配置双网卡"><a href="#为linux虚拟机配置双网卡" class="headerlink" title="为linux虚拟机配置双网卡"></a>为linux虚拟机配置双网卡</h3><p>首先按照实验要求，该虚拟机需要有两个网卡，一个用于连接内网，一个用于连接外网，也就是内网网卡接受的数据经外网网卡转发出去<br>所以首先我在vmware下配置该虚拟机的网卡<br>增加两个网络适配器，一个NAT模式（用于连接外网），一个仅主机模式<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/3.png" alt="3"><br>查看网卡信息：<br>输入命令“ifconfig”<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/4.png" alt="4"><br>发现有两个网卡，ens33和ens38<br>ens33信息：<br>IP地址：192.168.98.146<br>子网掩码：255.255.255.0<br>查看网关：192.168.98.2<br>ens38信息：<br>IP地址：192.168.109.131<br>子网掩码：255.255.255.0<br>ens33用于连接外网，ens38用于连接内网，为啥呢？因为ens33对应nat模式的适配器，可以通过查看适配器的属性来确认。<br>然后编辑/etc/network/interfaces文件设置网卡信息<br>打开发现里面并没有ens33和ens38，所以手动添加，添加后如下所示，与ipconfig信息相对应：</p>
+<h2 id="实验步骤与内容"><a href="#实验步骤与内容" class="headerlink" title="实验步骤与内容"></a>实验步骤与内容</h2><h3 id="为linux虚拟机配置双网卡"><a href="#为linux虚拟机配置双网卡" class="headerlink" title="为linux虚拟机配置双网卡"></a>为linux虚拟机配置双网卡</h3><p>首先按照实验要求，该虚拟机需要有两个网卡，一个用于连接内网，一个用于连接外网，也就是内网网卡接受的数据经外网网卡转发出去<br>所以首先我在vmware下配置该虚拟机的网卡<br>增加两个网络适配器，一个NAT模式（用于连接外网），一个仅主机模式<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/3.png" alt="3"><br>查看网卡信息：<br>输入命令“ifconfig”<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/4.png" alt="4"><br>发现有两个网卡，ens33和ens38<br>ens33信息：<br>IP地址：192.168.98.146<br>子网掩码：255.255.255.0<br>查看网关：192.168.98.2<br>ens38信息：<br>IP地址：192.168.109.131<br>子网掩码：255.255.255.0<br>ens33用于连接外网，ens38用于连接内网，为啥呢？因为ens33对应nat模式的适配器，可以通过查看适配器的属性来确认。<br>然后编辑/etc/network/interfaces文件设置网卡信息<br>打开发现里面并没有ens33和ens38，所以手动添加，添加后如下所示，与ipconfig信息相对应：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># interfaces(5) file used by ifup(8) and if down(8)</span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line">auto ens33</span><br><span class="line">iface ens33 inet static</span><br><span class="line">address 192.168.98.146</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.98.2</span><br><span class="line">dns-nameservers 114.114.114.114</span><br><span class="line"></span><br><span class="line">auto ens38</span><br><span class="line">iface ens38 inet static</span><br><span class="line">address 192.168.109.131</span><br><span class="line">netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
 <p>注意只能有一个网关，所以设置连接外网的<br>修改后，reboot设置生效</p>
-<h3 id="更改Windows虚拟机设置"><a href="#更改Windows虚拟机设置" class="headerlink" title="更改Windows虚拟机设置"></a>更改Windows虚拟机设置</h3><p>将Windows网络适配器选项改为仅主机模式<br>利用ipconfig查看信息：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/5.png" alt="5"><br>IP地址：192.168.109.129<br>子网掩码：255.255.255.0<br>默认网关：192.168.109.131<br>控制面板-&gt;网络和Internet-&gt;网络和共享中心-&gt;本地连接-&gt;属性-&gt;Internet协议版本4（TCP/IPv4）-&gt;属性<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/6.png" alt="6"><br>使用IP地址192.168.109.129<br>子网掩码：255.255.255.0<br>将默认网关设为ubuntu的内网网卡的IP地址：192.168.109.131<br>DNS服务器使用如下两个：<br>114.114.114.114和8.8.8.8<br>此时Windows可以ping通ubuntu<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/7.png" alt="7"><br>但ubuntu无法ping通Windows，此时可以更改Windows下的防火墙设置<br>控制面板-&gt;系统和安全-&gt;Windows防火墙-&gt;高级设置-&gt;入站规则-&gt;文件和打印机共享（回显请求-ICMPv4-In）-&gt;右键-&gt;启用规则<br>此时可以ping通：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/8.png" alt="8"></p>
-<h3 id="利用iptables进行地址转发"><a href="#利用iptables进行地址转发" class="headerlink" title="利用iptables进行地址转发"></a>利用iptables进行地址转发</h3><p>默认情况下，ubuntu是禁用路由转发的，所以首先应开启路由转发功能：<br>将/etc/sysctl.conf中的net.ipv4.ip_forward=1注释取消，后reboot<br>在ubuntu下输入以下命令：<br>sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE<br>sudo iptables -A FORWARD -i ens 38 -j ACCEPT<br>-t 使用该表<br>-A 针对该链<br>-o output<br>-j 动作<br>这个意思就是说构建一条规则：接收内网网卡ens38的数据并对其进行转发，将其来源地址伪装成外网网卡ens33的地址后通过外网网卡ens33转发出去，符合SNAT的使用情况，伪装源地址，以便后来外网网卡响应时仍能找到<br>后在Windows虚拟机中发现ping百度成功，即证明ubuntu实现了路由功能<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/9.png" alt="9"><br>通过sudo iptables -t nat -L -nv –line-number与sudo iptables -L -nv –line-number可以查看目前的规则<br>-L 列出表中所有规则<br>-n 直接显示IP地址，不进行解析<br>-v 显示更详细的信息<br>–line-number 显示行号<br>nat表中：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/10.png" alt="10"><br>不加-t默认为filter表：<br><img src="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/11.png" alt="11"></p>
+<h3 id="更改Windows虚拟机设置"><a href="#更改Windows虚拟机设置" class="headerlink" title="更改Windows虚拟机设置"></a>更改Windows虚拟机设置</h3><p>将Windows网络适配器选项改为仅主机模式<br>利用ipconfig查看信息：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/5.png" alt="5"><br>IP地址：192.168.109.129<br>子网掩码：255.255.255.0<br>默认网关：192.168.109.131<br>控制面板-&gt;网络和Internet-&gt;网络和共享中心-&gt;本地连接-&gt;属性-&gt;Internet协议版本4（TCP/IPv4）-&gt;属性<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/6.png" alt="6"><br>使用IP地址192.168.109.129<br>子网掩码：255.255.255.0<br>将默认网关设为ubuntu的内网网卡的IP地址：192.168.109.131<br>DNS服务器使用如下两个：<br>114.114.114.114和8.8.8.8<br>此时Windows可以ping通ubuntu<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/7.png" alt="7"><br>但ubuntu无法ping通Windows，此时可以更改Windows下的防火墙设置<br>控制面板-&gt;系统和安全-&gt;Windows防火墙-&gt;高级设置-&gt;入站规则-&gt;文件和打印机共享（回显请求-ICMPv4-In）-&gt;右键-&gt;启用规则<br>此时可以ping通：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/8.png" alt="8"></p>
+<h3 id="利用iptables进行地址转发"><a href="#利用iptables进行地址转发" class="headerlink" title="利用iptables进行地址转发"></a>利用iptables进行地址转发</h3><p>默认情况下，ubuntu是禁用路由转发的，所以首先应开启路由转发功能：<br>将/etc/sysctl.conf中的net.ipv4.ip_forward=1注释取消，后reboot<br>在ubuntu下输入以下命令：<br>sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE<br>sudo iptables -A FORWARD -i ens 38 -j ACCEPT<br>-t 使用该表<br>-A 针对该链<br>-o output<br>-j 动作<br>这个意思就是说构建一条规则：接收内网网卡ens38的数据并对其进行转发，将其来源地址伪装成外网网卡ens33的地址后通过外网网卡ens33转发出去，符合SNAT的使用情况，伪装源地址，以便后来外网网卡响应时仍能找到<br>后在Windows虚拟机中发现ping百度成功，即证明ubuntu实现了路由功能<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/9.png" alt="9"><br>通过sudo iptables -t nat -L -nv –line-number与sudo iptables -L -nv –line-number可以查看目前的规则<br>-L 列出表中所有规则<br>-n 直接显示IP地址，不进行解析<br>-v 显示更详细的信息<br>–line-number 显示行号<br>nat表中：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/10.png" alt="10"><br>不加-t默认为filter表：<br><img src="/images/load.gif" data-original="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/11.png" alt="11"></p>
 
       
     </div>
@@ -777,5 +777,5 @@
 
   
 
-</body>
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
 </html>

@@ -85,17 +85,17 @@
 <meta property="og:url" content="http://yoursite.com/2020/02/29/E-Scan/index.html">
 <meta property="og:site_name" content="eAzure">
 <meta property="og:description" content="将本扫描平台命名为E-Scan 平台搭建背景需求进行网络安全扫描，和对文件系统进行杀毒扫描一样，杀毒扫描需要病毒特征库，网络安全扫描需要漏洞攻击库，而且这些库都在各自更新，除了可以自由使用的版本，有的还有昂贵的商业版本。因此，仅用一款扫描工具是不够的，要尽量多找不同的工具、使用不同来源的漏洞攻击库。因此，需要建立一个综合各种扫描工具、支持多种漏洞攻击库的集成系统，服务于生产，也可以服务教学需求。">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/29/E-Scan/6.png">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-02-29T11:59:31.000Z">
 <meta property="article:modified_time" content="2020-02-29T12:02:54.369Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/02/29/E-Scan/1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -352,15 +352,15 @@
 <h2 id="开发设想"><a href="#开发设想" class="headerlink" title="开发设想"></a>开发设想</h2><p>目前仅仅接触nmap，所以制作了一个有关nmap的在线扫描平台，后期会渐渐根据自己的使用情况逐渐增加工具并进行整合<br>初步设想是，用户在前端输入命令，后端在系统环境中执行命令，但听闻还有一种agent的高大上技术，后期会去了解</p>
 <h2 id="前端搭建"><a href="#前端搭建" class="headerlink" title="前端搭建"></a>前端搭建</h2><p>本次前端也是第一次采用vue架构，之前有了解过，但感觉这个上手可能不是太容易，但经过短时间学习和有过小程序开发经验后，基本的用法还是比较好掌握的，最重要的特点就是组件化，感觉vue是一层一层嵌套的，像最外层就是index.html来封装的，具体细节不做过多介绍，坑挺多，不过挺好用的（结合element-ui）<br>得开发结束后会将代码传至github<br>下面是界面展示：</p>
 <ul>
-<li>首页<br><img src="/2020/02/29/E-Scan/1.png" alt="首页"></li>
-<li>扫描页<br><img src="/2020/02/29/E-Scan/2.png" alt="扫描页"></li>
-<li>日志页<br><img src="/2020/02/29/E-Scan/3.png" alt="日志页"></li>
-<li>详细日志页<br><img src="/2020/02/29/E-Scan/4.png" alt="详细日志页"><br>详细日志页使用的是nmap的模板生成的html界面</li>
+<li>首页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/1.png" alt="首页"></li>
+<li>扫描页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/2.png" alt="扫描页"></li>
+<li>日志页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/3.png" alt="日志页"></li>
+<li>详细日志页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/4.png" alt="详细日志页"><br>详细日志页使用的是nmap的模板生成的html界面</li>
 </ul>
 <h2 id="后台搭建"><a href="#后台搭建" class="headerlink" title="后台搭建"></a>后台搭建</h2><p>后台用的是自己比较熟悉的springboot，也没啥好说的<br>目前数据库只有两张表user和command，结构如下</p>
 <ul>
-<li>user<br><img src="/2020/02/29/E-Scan/5.png" alt="user"></li>
-<li>command<br><img src="/2020/02/29/E-Scan/6.png" alt="command"></li>
+<li>user<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/5.png" alt="user"></li>
+<li>command<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/6.png" alt="command"></li>
 </ul>
 <p>但是由于没有搞懂springboot下的thymeleaf怎样更改到工程外文件路径，所以采用了一种简单的方式，让扫描生成的html文件能被访问到：<br><code>python -m SimpleHTTPServer 8081</code></p>
 <h2 id="后期展望"><a href="#后期展望" class="headerlink" title="后期展望"></a>后期展望</h2><p>目前先将架子建设完毕，然后测试各开源扫描工具，进行介绍与集成</p>
@@ -749,5 +749,5 @@
 
   
 
-</body>
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
 </html>
