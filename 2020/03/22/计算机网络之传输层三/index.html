@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="rdt3.0性能不好，需要改进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络之传输层三">
+<meta property="og:url" content="http://yoursite.com/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="rdt3.0性能不好，需要改进">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="article:published_time" content="2020-03-22T11:20:30.000Z">
+<meta property="article:modified_time" content="2020-03-22T14:14:47.522Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/22/计算机网络之传输层三/"/>
+
+
+
+
+
+  <title>计算机网络之传输层三 | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机网络之传输层三</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-22T19:20:30+08:00">
+                2020-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>rdt3.0性能不好，需要改进</p>
+<a id="more"></a>
+<p>主要制约在停-等协议方面，发完数据包后，需要等待ack的传回</p>
+<h1 id="流水线机制"><a href="#流水线机制" class="headerlink" title="流水线机制"></a>流水线机制</h1><p>例如连续发三个包，然后等待<br>如下图：<br><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/1.png" alt="1"><br>即允许发送方在收到ACK之前连续发送多个分组，但这需要更大的序列号范围，发送方/接收方需要更大的存储空间以缓存分组</p>
+<h2 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h2><p>窗口：用于管理那些发出去还没有确认的分组，允许使用的序列号范围<br>窗口尺寸为N，最多有N个等待确认的消息<br>滑动窗口：随着协议的运行，窗口在序列号空间内向前滑动<br><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/2.png" alt="2"><br>窗口左边绿色的部分指已经发送并且已经确认的，窗口中黄色的指已经发出去但还没有收到确认的，若第一个黄色的此时确认消息已返回，则窗口可以右移，窗口中蓝色的代表还可以使用的序列号范围，比如目前窗口大小为14，已发送8个，还有6个序号是可以用的；如果序号都用完了，则需要等待ack到达后窗口右移；白色的指还不能使用的序列号</p>
+<h3 id="GBN协议"><a href="#GBN协议" class="headerlink" title="GBN协议"></a>GBN协议</h3><p>Go-Back-N协议</p>
+<h4 id="发送方"><a href="#发送方" class="headerlink" title="发送方"></a>发送方</h4><p>分组头部包含k-bit序列号，也就是有2<sup>k</sup>个序列号可用<br>窗口尺寸为N，即最多允许N个分组未确认<br><font color="red">累积确认机制</font><br>ACK(n)：确认到序列号n(包含n)的分组均已被正确接收<br>超时的情况，假设最近一次接收到的ack为n，n+1分组确认消息的接收时间超过时间限制，则重传序列号大于n的并且还没有收到ack的所有分组，可能会造成资源的浪费</p>
+<p><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/3.png" alt="3"></p>
+<h4 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h4><p><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/4.png" alt="4"><br>expectedseqnum代表当前期望收到的序列号分组<br>发送拥有最高序列的、已被正确接收的分组的ACK，对于乱序到达的分组：<br>直接丢弃-&gt;接收方没有缓存|重新确认序列号最大的、按序到达的分组</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/5.png" alt="5"><br>假定窗口大小为4<br>此时依次发送0-3号分组，但是2号分组在发送的过程中丢失了，0号分组被正确接收后接收方返回ACK0，并且接收方此时想要接收的分组的序号改为1；1号分组被正确接收后接收方返回ACK1，并且接收方此时想要接受的分组的序号改为2；有人会问了，接收方没有缓存，其实就是一个一个回复的呀，为啥还叫累积确认，并且有些时候ack返回的序号不连续呢？其实不连续已经很好地解释了为什么是累积确认，因为中途ack有丢失的<br>当3号分组到达接收方时，此时接收方想要接收序号为2的分组，一看不是，则将3号分组丢弃，此时仍然返回一个ACK1（这个ACK1返回时，发送方直接丢弃）<br>注意根据自动状态机我们知道，当0号分组发出的时候计时器启动，当三号分组发出时，nextseqnum=4，当ACK0返回时，base=1，此时窗口右移一位，如果还有数据要发的话，再发一个4号分组，nextseqnum=5；当ACK1返回时，base=2，此时窗口右移一位，如果还有数据要发的话，再发一个5号分组，nextseqnum=6，但是迟迟没有等到ACK2传回，所以此时计时器超时，重传2、3、4、5号分组</p>
+<h4 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h4><p>数据链路层采用后退N帧(GBN)协议，发送方已经发送了编号为0-7的帧时候计时器超时，若发送方此时只收到0、2、3号帧的确认，则发送方需要重发的帧数是多少，分别是哪几个帧？<br>解：根据GBN协议工作原理，GBN协议的确认是累计确认，所以此时发送端需要重发的帧数是4个，依次分别是4、5、6、7号帧</p>
+<h3 id="Selective-Repeat协议"><a href="#Selective-Repeat协议" class="headerlink" title="Selective Repeat协议"></a>Selective Repeat协议</h3><h4 id="GBN缺陷？"><a href="#GBN缺陷？" class="headerlink" title="GBN缺陷？"></a>GBN缺陷？</h4><p>当GBN要进行重传的时候，GBN要重复传输很多个分组</p>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><p>接收方对每个分组单独进行确认，设置缓存机制，缓存乱序到达的分组<br>发送方只重传那些没收到ACK的分组，为每个分组都设置计时器<br>多了一个接收方的窗口<br><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/6.png" alt="6"><br>灰色代表希望收到，但还没收到；红色代表乱序收到的，缓存起来并且发送了ACK<br>发送方窗口的位置与接收方窗口的位置并不同步<br>向上图所示的，此时接收窗口最前面的灰的所对应的发送窗口黄的分组前面还有未收到ack的，但是此时接收窗口已经向前移动了，这是为啥呢？是因为ack丢失了，而接收窗口以为发过去了窗口前移导致的，此时若前面那俩黄的超时了，则重传，此时接收窗口依然在收到后为其发送相对应序号的ack</p>
+<h4 id="发送方-1"><a href="#发送方-1" class="headerlink" title="发送方"></a>发送方</h4><ol>
+<li>数据要发送时，检查在此窗口内是否有可用的序号，若有，则用该序号发送；</li>
+<li>当一个分组n它的计时器超时了，则将其重发，并且重启它的计时器；</li>
+<li>当一个分组n的ack到达了，标记该分组被收到，如果该分组之前被标记为最小的未收到ack的分组，则此时将这个称号移交给下一个没收到ack的分组，并且此时窗口移动到下一个最小的未收到ack的分组</li>
+</ol>
+<h4 id="接收方-1"><a href="#接收方-1" class="headerlink" title="接收方"></a>接收方</h4><ol>
+<li>收到一个分组n，n位于接收窗口内，则发送ack(n)，如果此时n不是顺序的，即n前面依然有分组未发到接收方的，此时接受方将其缓存；如果此时n是顺序的，则将n连同之后连续且受到的分组提交给应用层，接收窗口前移；</li>
+<li>像前面所说的，此时收到分组n，但是n的序号要小于接收窗口最前端的序号，此时是因为之前的ack(n)丢失且窗口前移所致，此时重现发送ack(n)即可；</li>
+<li>其他情况忽略</li>
+</ol>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/7.png" alt="7"><br>窗口大小为4，发送方依次发送0-3号分组<br>0号分组正确发送，接收方接收，窗口前移，并且返回ACK0；<br>1号分组正确发送，接收方接收，窗口前移，并且返回ACK1；<br>2号分组丢失；3号分组正确接收，但是因为2号还未接收，所以此时接收窗口不移动，将其缓存，返回ACK3；<br>ACK0被发送方接收，窗口前移，此时若有数据发送，则发送4号分组；<br>ACK1被发送方接收，窗口前移，此时若有数据发送，则发送5号分组；<br>4号分组被接收，但此时2号还未接收，所以接收窗口不移动将其缓存，返回ACK4；<br>5号分组被接受，但此时2号还未接收，所以此时窗口不移动将其缓存，返回ACK5；<br>因为ACK2迟迟未收到，超过计时器，此时发送方重发2号分组，此时ACK3返回，但因为ACK2还未返回，所以将其标记为已接受ack，窗口不移动；<br>2号分组到达接收方，接收方将其与缓存的3、4、5号分组同时发送给应用层，此时接收窗口前移</p>
+<h4 id="困境"><a href="#困境" class="headerlink" title="困境"></a>困境</h4><p><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/8.png" alt="8"><br><img src="/images/load.gif" data-original="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/9.png" alt="9"><br>像第一个图所示，若窗口大小为3，当发送完0-2号分组后，接收方正确接收，并且窗口移动情况如上所示，并且此时ack全部遗失，此时发送方重新发送0号分组，在第二张图中，也是发送方发送了0分组<br>开了上帝视角的我们知道是怎么回事，sr协议是无法区分上述两种情况的，即它不知道这个0序号分组是因为ack丢包导致的发送方重发还是正常的发送方发送，由此出现协议状态不唯一，出现不可靠的情况<br>之所以会导致这个问题，是因为可用序号较少，而窗口又相对较大<br>序列号空间大小(k bit)与窗口尺寸之间需要满足这种关系：<br>N<sub>S</sub>+N<sub>R</sub>&lt;=2<sup>k</sup></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/" rel="next" title="计算机网络之传输层二">
+                <i class="fa fa-chevron-left"></i> 计算机网络之传输层二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#流水线机制"><span class="nav-number">1.</span> <span class="nav-text">流水线机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动窗口协议"><span class="nav-number">1.1.</span> <span class="nav-text">滑动窗口协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GBN协议"><span class="nav-number">1.1.1.</span> <span class="nav-text">GBN协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发送方"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">发送方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收方"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">接收方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习题"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">练习题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selective-Repeat协议"><span class="nav-number">1.1.2.</span> <span class="nav-text">Selective Repeat协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GBN缺陷？"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">GBN缺陷？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送方-1"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">发送方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收方-1"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">接收方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#示例-1"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#困境"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">困境</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>
