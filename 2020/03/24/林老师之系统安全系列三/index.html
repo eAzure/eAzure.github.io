@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这次我们主要来学一下linux中ls -l的信息、chmod和real userId;effective userId;saved set-userId">
+<meta property="og:type" content="article">
+<meta property="og:title" content="林老师之系统安全系列三">
+<meta property="og:url" content="http://yoursite.com/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="这次我们主要来学一下linux中ls -l的信息、chmod和real userId;effective userId;saved set-userId">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="article:published_time" content="2020-03-24T12:25:04.000Z">
+<meta property="article:modified_time" content="2020-03-25T07:56:03.651Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/24/林老师之系统安全系列三/"/>
+
+
+
+
+
+  <title>林老师之系统安全系列三 | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">林老师之系统安全系列三</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T20:25:04+08:00">
+                2020-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">系统安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这次我们主要来学一下linux中ls -l的信息、chmod和real userId;effective userId;saved set-userId</p>
+<a id="more"></a>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://forum.huawei.com/enterprise/zh/thread-297827.html" target="_blank" rel="noopener" title="Linux的用户和组之详解用户和组的分类">Linux的用户和组之详解用户和组的分类</a><br><a href="https://blog.csdn.net/sjzs5590/article/details/8254527" target="_blank" rel="noopener" title="linux ls -l 详解">linux ls -l 详解</a><br><a href="https://unix.stackexchange.com/questions/22394/why-are-hard-links-to-directories-not-allowed-in-unix-linux" target="_blank" rel="noopener" title="为什么硬链接不能指向目录">为什么硬链接不能指向目录</a><br><a href="http://c.biancheng.net/view/2852.html" target="_blank" rel="noopener" title="Linux一切皆文件（包含好处和弊端）">Linux一切皆文件（包含好处和弊端）</a><br><a href="https://blog.csdn.net/renlinyu3495/article/details/80963679" target="_blank" rel="noopener" title="Linux一切皆文件">Linux一切皆文件</a><br><a href="https://blog.csdn.net/imkelt/article/details/53054309" target="_blank" rel="noopener" title="深入Linux文件权限 SUID/SGID/SBIT">深入Linux文件权限 SUID/SGID/SBIT</a><br><a href="https://zh.wikipedia.org/wiki/%E7%94%A8%E6%88%B7ID" target="_blank" rel="noopener" title="用户ID">用户ID</a></p>
+<h1 id="ls-l"><a href="#ls-l" class="headerlink" title="ls -l"></a>ls -l</h1><p><img src="/images/load.gif" data-original="/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/1.png" alt="1"><br>total:当前目录下所有文件所占空间总和<br>例如：drwxr-xr-x  12 root root  4096 Mar  4 21:06 var<br>第1个字段的首字母：文件属性字段</p>
+<ul>
+<li>-：代表是一个普通文件</li>
+<li>d：代表是一个目录</li>
+<li>l：代表是一个链接文件，如快捷方式类似的</li>
+<li>b：块设备文件，一般在/dev文件夹下，是普通文件和程序访问硬件设备的入口，没有大小，与硬盘、光盘等相关，只有一个主设备号和一个辅设备号，一次传输数据为一整块的成为块设备</li>
+<li>c：字符设备文件，置于/dev下，没有大小，与键盘等相关，依次传输一个字节的设备成为字符设备</li>
+<li>p：命令管道文件，与shell编程有关</li>
+<li>s：socket文件，与shell编程有关</li>
+</ul>
+<h2 id="软链接和硬链接"><a href="#软链接和硬链接" class="headerlink" title="软链接和硬链接"></a>软链接和硬链接</h2><p>在linux文件系统中，磁盘在分区时被分为inode区和datablock区，保存在磁盘中的文件都对应着一个索引节点inode，inode是文件在文件系统中的唯一标识，在读取文件时，会先读取这个文件所对应的inode，inode中包含的信息有：唯一标识、创建时间（ctime）、修改时间(mtime)、文件大小、属主、归属的用户组、读写权限、数据所在block号等信息</p>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><p>软链接是新建一个文件，会有与其相对应的一个新的inode，该文件是用来专门指向别的文件的，和Windows下的快捷方式类似，删了这个软链接文件，没啥影响，但是删了它所指向的文件后，该软链接也不可用了</p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>不会新建一个inode，即它所指向的文件的inode也会指向它，inode的链接文件数+1，硬链接实际上是为所指向的文件建立了一个别名，本质是同一文件，它们俩的inode是相同的，而在删除硬链接或指向文件时，只要inode所对应的文件数&gt;0，该inode就不会消失，文件内容也不会丢失，相当于删除了一个inode所指向文件的索引<br>文件系统中的每一个文件默认具有一个硬链接</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
+<li>软链接可以跨文件系统，硬链接不可以，因为inode是在当前分区中的索引值，当linux挂载多个文件系统后，可能会出现inode号重复的现象；</li>
+<li>软链接可以对一个不存在的文件建立链接（自动新建），硬链接不可；</li>
+<li>软链接可以对目录进行链接，硬链接不可以，如果硬链接可以指向目录，会打破文件系统间有向无环的结构，目录可以看作是包含很多指向inode节点的文件，目录中的文件就像是一个指向inode的链接，硬链接如果指向其父目录，那么该硬链接就是该父目录，产生环，导致一些列举文件的命令不可用，还有删除该目录时又会发生什么呢？；而软链接本身就是个新文件，只不过通过它可以访问父目录，但是它和父目录还是父子关系</li>
+<li>文件属性上，软链接为”l”</li>
+<li>指向文件移动，软链接找不到，硬链接相对inode来说无影响</li>
+</ol>
+<p>rwxr-xr-x：文件或目录的权限位<br>前三个为文件拥有者的权限，中间三个为文件所属组的其他成员拥有的权限，后三个为其他用户所拥有的权限</p>
+<h2 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h2><p>linux下的用户有三种，用uid标识，分别为root（权限无法无天）、系统用户（不具有登录linux系统的能力，如bin、daemon，当应用需要访问/操作/拥有系统的资源时，Linux就通过系统用户来控制）、普通用户<br>linux系统以组方式来管理用户，用户和组的关系为多对多，分为主组和附属组，主组为用户的默认组，以gid标识，用户必须有且只能有一个主组，若useradd时没有用-g指定一个已存在的组时，系统会默认创建一个和用户名相同的组<br>usermod -g（永久改变主组）<br>newgrp（短暂更改）<br>usermod -G（设置普通用户的附属组）</p>
+<p>r：读 w：写 x：可执行 t：临时文件 特殊的一类位为”s”</p>
+<h2 id="s位"><a href="#s位" class="headerlink" title="s位"></a>s位</h2><h3 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h3><p>“s”位出现在文件所有者的权限上，称为Set UID<br>执行命令<code>ls -l /bin/su</code>会出现<code>-rwsr-xr-x</code><br>该权限仅对二进制程序有用，不能用在脚本上，让本来没有相应权限的用户运行这个程序时，可以访问他没有权限访问的资源，将具有该程序拥有者的权限，不过仅在执行该程序过程中有效<br>比如su，/bin/su的拥有者为root，但是三个组用户具有执行该程序的权限，所以当不是root执行该程序时，都将具有root权限</p>
+<h3 id="SGID"><a href="#SGID" class="headerlink" title="SGID"></a>SGID</h3><p>“s”位出现在文件拥有者所属用户组权限位上，和SUID类似，获得的是该程序所属用户组权限，对二进制程序和目录有用；当用户对某一目录有写和执行权限时，该用户就可以在该目录下建立文件，如果该目录用SGID修饰，则该用户在这个目录下建立的文件都是属于这个目录所属的组。</p>
+<h3 id="SBIT"><a href="#SBIT" class="headerlink" title="SBIT"></a>SBIT</h3><p>“t”位出现在其他用户权限位上，只针对目录有用，当用户在该目录下建立文件或目录时，仅有自己与root才有权力删除，比如/tmp目录，任何人都可以在/tmp内增加、修改文件（因为权限全是rwx），但仅有该文件/目录建立者与 root能够删除自己的目录或文件 <code>ls -ld /tmp</code>出现<code>drwxrwxrwt</code>最后一位为t<br>这三位的设置方法，到chmod里讲</p>
+<p>第2个字段：对于目录来说，指第一级子目录的个数，新目录下默认为2，有两个隐藏子目录，一个是指向它本身的子目录，一个是指向它上级的子目录；对于文件来说，是指该文件的硬链接数<br>第3个字段：文件拥有者<br>第4个字段：文件拥有者所在的主组<br>第5个字段：文件大小（以字节为单位），如果是文件夹，则只表示该文件夹的大小，不包括它所包含的文件的大小，文件夹是一个特殊的文件，因为linux下一切皆文件</p>
+<h2 id="Linux一切皆文件"><a href="#Linux一切皆文件" class="headerlink" title="Linux一切皆文件"></a>Linux一切皆文件</h2><ul>
+<li>-：代表是一个普通文件</li>
+<li>d：代表是一个目录，目录文件包含了此目录中各个文件的文件名以及指向这些文件的指针</li>
+<li>l：代表是一个链接文件，如快捷方式类似的</li>
+<li>b：块设备文件，一般在/dev文件夹下，是普通文件和程序访问硬件设备的入口，没有大小，与硬盘、光盘等相关，只有一个主设备号和一个辅设备号，一次传输数据为一整块的成为块设备</li>
+<li>c：字符设备文件，置于/dev下，没有大小，与键盘等相关，依次传输一个字节的设备成为字符设备</li>
+<li>p：命令管道文件，与shell编程有关，用于进程间通信</li>
+<li>s：socket文件，与shell编程有关，用于进程间的网络通信</li>
+</ul>
+<p><img src="/images/load.gif" data-original="/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/2.png" alt="2"><br>VFS向上，对应用层提供一个标准的文件操作接口；对下，对文件系统提供一个标准的接口，以便其他操作系统的文件系统可以方便的移植到Linux上；<br>General Block Device Layer隐藏不同硬件设备细节，为内核提供统一的IO操作接口</p>
+<p>第6个字段：文件/目录最近访问/修改的时间<br>第7个字段：文件名，若为链接文件（即软链接）则追加显示其链接的原文件的路径，用-&gt;追加</p>
+<h1 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h1><p>由<code>ls -l</code>我们看到一个文件的权限是针对三类群体的：文件拥有者；文件所在组的其他用户；其他用户<br>而chmod是用来修改文件权限的，使用权限为文件拥有者和root<br>在这里上述三类群体被表示为ugo<br>u - 文件拥有者<br>g - 文件所在组的其他成员<br>o - 其他成员<br>a - 所有人<br>使用+ -来增加和撤销权利(r w x)<br>比如<code>chmod ugo+r file.txt</code>或者<code>chmod ug+w,o-w file1.txt file2.txt</code><br>还有其他参数：<br>-R:对目前目录下的所有文件与子目录进行相同的权限变更<br>还可以用数字表示<br>r=4 w=2 x=1<br>对于某一类用户，就将他所拥有的权限的值加起来，按文件拥有者；文件所在组的其他用户；其他用户顺序连在一起<br>比如:<code>chmod 777 file.txt</code><br>那如何设置SUID、SGID、SBIT呢？SUID：4；SGID：2；SBIT：1<br>在之前的例如777前面增加一位即可<br><code>chmod 4777 test</code>SUID<br><code>chmod u+s test</code>SUID<br><code>chmod g+srw test</code>SGID<br><code>chmod o+t test</code>SBIT</p>
+<h1 id="real-userId-effective-userId-saved-set-userId"><a href="#real-userId-effective-userId-saved-set-userId" class="headerlink" title="real userId;effective userId;saved set-userId"></a>real userId;effective userId;saved set-userId</h1><p>linux在创建进程时会给其分配三个用户Id：分别是real userId;effective userId;saved set-userId<br>real userId:该进程是哪个用户调用的，就是那个用户的user Id<br>effective userId：判定该进程是否对于某个文件有权限，就得参考该Id，我们之前所说的SUID和SGID的作用就在这，当某一个程序被设置了SUID或者SGID后，该程序的effective userId就是该程序拥有者的id，比如su、/usr/bin/passwd的effective userId就是root；如果没有设置SUID或SGID，那就是调用程序的用户Id<br>那还有一个saved set-userId这个是干啥的呢？<br>暂存用户ID（Saved UID，即SUID）用以提升权限运行的进程暂时需要做一些不需特权的操作时使用，这种情况下进程会暂时将自己的effective userId从特权用户（常为root）对应的UID变为某个非特权用户对应的UID，而后将原有的特权用户UID复制为SUID暂存；之后当进程完成不需特权的操作后，进程使用SUID的值重置EUID以重新获得特权。在这里需要说明的是，无特权进程的EUID值只能设为与RUID、SUID与EUID（也即不改变）之一相同的值。<br>这个作用给人的感觉就是给effective userId增加更多的设置选项。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/24/melissa%E7%97%85%E6%AF%92/" rel="next" title="melissa病毒">
+                <i class="fa fa-chevron-left"></i> melissa病毒
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">1.</span> <span class="nav-text">参考博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls-l"><span class="nav-number">2.</span> <span class="nav-text">ls -l</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#软链接和硬链接"><span class="nav-number">2.1.</span> <span class="nav-text">软链接和硬链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软链接"><span class="nav-number">2.1.1.</span> <span class="nav-text">软链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬链接"><span class="nav-number">2.1.2.</span> <span class="nav-text">硬链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适用场景"><span class="nav-number">2.1.3.</span> <span class="nav-text">适用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户组"><span class="nav-number">2.2.</span> <span class="nav-text">用户组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#s位"><span class="nav-number">2.3.</span> <span class="nav-text">s位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SUID"><span class="nav-number">2.3.1.</span> <span class="nav-text">SUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGID"><span class="nav-number">2.3.2.</span> <span class="nav-text">SGID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SBIT"><span class="nav-number">2.3.3.</span> <span class="nav-text">SBIT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux一切皆文件"><span class="nav-number">2.4.</span> <span class="nav-text">Linux一切皆文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chmod"><span class="nav-number">3.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#real-userId-effective-userId-saved-set-userId"><span class="nav-number">4.</span> <span class="nav-text">real userId;effective userId;saved set-userId</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>

