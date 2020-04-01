@@ -79,21 +79,16 @@
 
 
 
-<meta name="description" content="对称密钥分发">
+<meta name="description" content="如题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="密钥分发">
-<meta property="og:url" content="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/index.html">
+<meta property="og:title" content="不要想太多，去做就好">
+<meta property="og:url" content="http://yoursite.com/2020/04/01/%E4%B8%8D%E8%A6%81%E6%83%B3%E5%A4%AA%E5%A4%9A%EF%BC%8C%E5%8E%BB%E5%81%9A%E5%B0%B1%E5%A5%BD/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="对称密钥分发">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="article:published_time" content="2020-03-20T01:28:45.000Z">
-<meta property="article:modified_time" content="2020-03-20T06:10:01.854Z">
+<meta property="og:description" content="如题">
+<meta property="article:published_time" content="2020-04-01T07:45:44.000Z">
+<meta property="article:modified_time" content="2020-04-01T08:06:57.117Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -123,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/20/密钥分发/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/01/不要想太多，去做就好/"/>
 
 
 
 
 
-  <title>密钥分发 | eAzure</title>
+  <title>不要想太多，去做就好 | eAzure</title>
   
 
 
@@ -246,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/01/%E4%B8%8D%E8%A6%81%E6%83%B3%E5%A4%AA%E5%A4%9A%EF%BC%8C%E5%8E%BB%E5%81%9A%E5%B0%B1%E5%A5%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -263,10 +258,14 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">密钥分发</h1>
+          <h1 class="post-title" itemprop="name headline">不要想太多，去做就好</h1>
         
 
         <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=ff5f56>置顶</font>
+            <span class="post-meta-divider">|<span>
           
           <span class="post-time">
             
@@ -276,8 +275,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T09:28:45+08:00">
-                2020-03-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T15:45:44+08:00">
+                2020-04-01
               </time>
             
 
@@ -300,8 +299,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">密码学</span>
+                  <a href="/categories/%E4%B8%80%E4%BA%9B%E6%84%9F%E6%83%B3/" itemprop="url" rel="index">
+                    <span itemprop="name">一些感想</span>
                   </a>
                 </span>
 
@@ -337,32 +336,11 @@
       
 
       
-        <h1 id="对称密钥分发"><a href="#对称密钥分发" class="headerlink" title="对称密钥分发"></a>对称密钥分发</h1><a id="more"></a>
-<p>使用的是KDC（密钥分发中心）<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png" alt="1"><br>过程如下：<br>有一个第三方密钥分配中心KDC，所有需要通过对称密钥进行通信的用户，都需要在KDC上注册一个只有自己和KDC知道的对称密钥，我们称为主密钥（可以用物理方式传递），主密钥持有时间较长，但也需要不断更换</p>
-<ol>
-<li>A想和B发起通信，A使用自己和KDC间的密钥对下列信息加密后传给KDC</li>
-</ol>
-<ul>
-<li>A的身份信息，一般为IP地址等</li>
-<li>B的身份信息，一般为IP地址等</li>
-<li>一个临时随机串，用作该次传输的唯一标识，防止重放攻击</li>
-</ul>
-<ol start="2">
-<li><p>KDC用与A的密钥解密信息，获取到通信双方信息后，生成用于A、B间通信的会话密钥K<sub>s</sub>，构造信息串E(K<sub>A</sub>(K<sub>s</sub>,ID<sub>A</sub>,ID<sub>B</sub>,N1,E(K<sub>B</sub>(K<sub>s</sub>,ID<sub>A</sub>))))<br>返回给A</p>
-</li>
-<li><p>A接收到信息后，利用自己和KDC间的密钥K<sub>A</sub>解密完信息后，检查N1，发现是没问题的后，将消息中包含利用K<sub>B</sub>加密的信息串E(K<sub>B</sub>(K<sub>s</sub>,ID<sub>A</sub>))传给B</p>
-</li>
-<li><p>B利用与KDC间的密钥K<sub>B</sub>解密获取到信息，可以用来判断是A想和我通信，没有出现消息发送方和通信方不一致的情况</p>
-</li>
-<li><p>为了进一步验证，没被重放攻击，B使用会话密钥K<sub>s</sub>加密一个临时随机串N2发送给A</p>
-</li>
-<li><p>A接收到信息串，使用会话密钥解开，确认无误后，再发送给B验证消息，比如N2+1，这里需要发送给B不同于N2的消息，为啥呢？<br>了解一下重放攻击</p>
-</li>
-</ol>
-<h2 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h2><p>盗取认证凭证后，重新发送给认证方，把以前窃听到的数据原封不动地重新发送给接收方，网络上传输的数据是加密过的，此时窃听者无法得到数据的准确意义。但如果他知道这些数据的作用，就可以在不知道数据内容的情况下通过再次发送这些数据达到愚弄接收端的目的</p>
-<p>了解了重放攻击后，我们便可以推测发送不同随机串的目的了，假设此时B发送给A验证消息，A被允许回复相同的随机串，那么监听方也可以回复给B相同的随机串，所以不应该允许A回复相同的随机串，此时若再有人回复给B相同的随机串，证明，是有监听人在重放信息，如下图所示，C是监听者，因为消息被加密，所以C并不懂A、B之间发的是啥，只能单纯重放<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/2.png" alt="2"></p>
-<p>上述方式是集中式的<br>还有一种分布式的方案<br>即没有集中式的KDC，每个终端用户都作为KDC，这就增加了用户和用户间的密钥对的数量，因为之前用户和KDC间都有密钥对，适用于对KDC安全性要求高的中小系统，过程如1下图所示：<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/3.png" alt="3"><br>Km为A与B间共享的主密钥</p>
-<h1 id="非对称密钥分发"><a href="#非对称密钥分发" class="headerlink" title="非对称密钥分发"></a>非对称密钥分发</h1><p>非对称密钥分发其实仅涉及公钥的分发，私钥都是驻留在本地的<br>使用的是CA机制，如下图所示：<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/4.png" alt="4"></p>
+        <p>如题</p>
+<a id="more"></a>
+<p>突然间，又开始抑郁，觉得自己一直在浪费时间，效率为啥这么低呢？<br>几天前还在为考研准备看的概率论又被我放了起来，从网上找的各种书也是只打开了几页就尘封文件夹了<br>想做的事太多，想做做林老师的、做做侯老师的、再做做其他老师的，可是一眨眼啥都基本没做，时间全都过去了</p>
+<hr>
+<p>我知道再这样下去，研也别想考得好，其他方面也别想做的好<br>所以真得不要再想太多了，不要再浪费时间看手机了<br>想一想高中时候的自己吧，做什么都游刃有余<br>因为那时的自己有着明确的目标，就是高考，就是考上一所好大学<br>真的，高中未完成的梦，为什么不继续做呢，想去北京上海的名校，那就认真准备啊<br>别人能做到的，你肯定也行，真得，沉下心来，去做就好！</p>
 
       
     </div>
@@ -387,8 +365,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/18/iptables%E5%AD%A6%E4%B9%A0/" rel="next" title="iptables学习">
-                <i class="fa fa-chevron-left"></i> iptables学习
+              <a href="/2020/03/30/%E5%9F%BA%E4%BA%8ELogistic%E6%B7%B7%E6%B2%8C%E5%BA%8F%E5%88%97%E7%9A%84%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="next" title="基于Logistic混沌序列的灰度图像加密算法">
+                <i class="fa fa-chevron-left"></i> 基于Logistic混沌序列的灰度图像加密算法
               </a>
             
           </div>
@@ -396,10 +374,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/" rel="prev" title="计算机网络之传输层二">
-                计算机网络之传输层二 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -451,17 +425,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,22 +491,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对称密钥分发"><span class="nav-number">1.</span> <span class="nav-text">对称密钥分发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重放攻击"><span class="nav-number">1.1.</span> <span class="nav-text">重放攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非对称密钥分发"><span class="nav-number">2.</span> <span class="nav-text">非对称密钥分发</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
