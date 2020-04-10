@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一直都听老师和同学们在说docker好啊，之前也用过，但是又忘了，现在进行一些总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://yoursite.com/2020/04/09/docker/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="一直都听老师和同学们在说docker好啊，之前也用过，但是又忘了，现在进行一些总结。">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="article:published_time" content="2020-04-09T12:30:47.000Z">
+<meta property="article:modified_time" content="2020-04-10T08:56:34.860Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/09/docker/"/>
+
+
+
+
+
+  <title>docker | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker</h1>
+        
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-09T20:30:47+08:00">
+                2020-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一直都听老师和同学们在说docker好啊，之前也用过，但是又忘了，现在进行一些总结。</p>
+<a id="more"></a>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://www.cnblogs.com/sujing/p/11012115.html" target="_blank" rel="noopener" title="博客园">博客园</a><br><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="noopener" title="如何通俗解释Docker是什么？">如何通俗解释Docker是什么？</a><br><a href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html" target="_blank" rel="noopener" title="Docker 入门教程">Docker 入门教程</a></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>“Docker是一个开源的应用容器引擎，Docker能够让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，方便快捷。”这是CSDN说的<a href="https://baijiahao.baidu.com/s?id=1635202357189273873&wfr=spider&for=pc" target="_blank" rel="noopener" title="云计算时代，你真的懂Docker吗？">云计算时代，你真的懂Docker吗？</a><br>每一次都感觉最难的往往是在理解这个概念上<br>我们去知乎看看<br><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="noopener" title="如何通俗解释Docker是什么？">如何通俗解释Docker是什么？</a></p>
+<h2 id="直观理解V1-0"><a href="#直观理解V1-0" class="headerlink" title="直观理解V1.0"></a>直观理解V1.0</h2><p>参照知乎高赞回答——刘允鹏的回答<br>回答者是根据docker的图标来着，docker的图标是一个鲸鱼托着集装箱<br>我们想象现在的那些大轮船，上面的货物都被分类用集装箱装起来了，因为集装箱的存在，所以船上装的东西可以是各式各样的。<br>而docker就相比于这个鲸鱼，而container才是集装箱（原文作者说的有点儿问题）<br>考虑两个场景：<br>不同的应用程序可能需要不同的运行环境，有可能会造成冲突，这个时候我们肯定不能让它们在同一台机子上跑了，这个时候可以将它们部署到不同的虚拟机上，但是虚拟机开销大，而docker又可以实现隔离应用环境的功能，所以此时可以开docker；<br>比如开发者写的一个程序可能到另外一个人的系统上可能不能正常运行，因为环境的差异可能导致这类问题较多，如果重新配置环境会花费较长的时间，所以此时可以使用docker<br>可是看完了感觉还不是很清晰</p>
+<h2 id="理解V1-1"><a href="#理解V1-1" class="headerlink" title="理解V1.1"></a>理解V1.1</h2><p>看了好多回答，感觉有一些理解，下面总结一下<br>先看看docker和常用的虚拟机之间的架构区别：<br><img src="/images/load.gif" data-original="1.png" alt="1"><br>可以看到虚拟机是通过hypervisor来进行硬件层模拟和虚拟化，然后在其上再跑各自的系统，而docker中的各容器是共用一套内核/系统的，类比于合租<br>Docker本身并不是容器，它是创建容器的工具，是容器引擎，容器在docker上运行<br>Docker中有几个概念：</p>
+<ol>
+<li>镜像Image，相当于一个软件包，里面打包了应用程序和它运行时的执行环境（比如说依赖），然后该镜像就可以分发给别人</li>
+<li>容器Container，就是用镜像创建的运行实例，一个很好的类比是，镜像是类，而容器就是类实例化的对象，同一个 image 文件，可以生成多个同时运行的容器实例</li>
+<li>仓库Repository，存储各镜像的地方</li>
+</ol>
+<p>也就是说镜像相当于别人弄好的模板，然后到你这，你跑起来就成了容器<br>由此看来，Docker相当于一个管理机构，可创建容器、可销毁容器等<br>Docker可以使其上运行的容器简单隔，采用的是linux的cgroup机制实现的资源隔离（啥时候看看再详细学一下cgroup技术）<br>Docker采用的是C/S架构，可从S端pull人家上传的镜像，如下图所示：<br><img src="/images/load.gif" data-original="2.png" alt="2"><br>最左边是docker客户端，是用户与docker服务交互的窗口<br>中间的是docker后台运行的服务，docker daemon是一个进程，docker deamon监听着客户端的请求，并且管理着docker的镜像、容器、网络、磁盘（图中只列出了镜像与容器）等对象。同样，docker的客户端与服务可以运行在同一机器上，也可以用某台机器上的客户端远程连接另一台机器上的docker服务。<br>右边是镜像仓库</p>
+<p>由此再给docker下个定义：docker是以容器技术为核心的一套应用的构建、分发和执行的体系和生态。<br>看了腾讯的一节课，上面的老师分享的经验是：</p>
+<ol>
+<li>一个容器只运行一个应用</li>
+<li>分层构建镜像，任何镜像的创建会基于其他的父镜像，也就是说镜像是一层套一层，比如一个tomcat镜像，需要运行在centos/ubuntu上，那我们的tomcat镜像就会基于centos/ubuntu镜像创建</li>
+<li>善于使用dockerfile来生成镜像，而不是用docker commit</li>
+<li>不要把它当成虚拟机来用</li>
+</ol>
+<p>感觉差不多知道是个啥了，下面我们来实际操作一下docker</p>
+<h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p>我们来安装一下docker<br>我的实验环境是在ubuntu16.04虚拟机上<br>Windows上也可以使用docker，但是需要先开启Hyper-V，这个目的就是虚拟出一个Linux来，然后在其上运行docker<br>参考博客<a href="https://blog.csdn.net/jinking01/article/details/82490688" target="_blank" rel="noopener" title="docker安装">docker安装</a>还可以参考官方文档啊，这篇文档其实就是从官方那翻译来的</p>
+<ol>
+<li>由于apt官方库里的docker版本可能比较旧，所以先卸载可能存在的旧版本<br><code>$ sudo apt-get remove docker docker-engine docker-ce docker.io</code></li>
+<li>更新apt包索引<br><code>$ sudo apt-get update</code></li>
+<li>安装以下包以使apt可以通过HTTPS使用存储库（repository）<br><code>$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common</code><br>(<code>apt-get install -y</code>如果有yes/no，默认yes)</li>
+<li>添加Docker官方的GPG密钥<br><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</code></li>
+<li>为了验证你有这个9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88指纹，可以查看指纹的最后8个字符<br><code>$ sudo apt-key fingerprint 0EBFCD88</code></li>
+<li>使用下面的命令来设置stable存储库<br><code>$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</code></li>
+<li>再更新一下apt包索引<br><code>$ sudo apt-get update</code></li>
+<li>安装最新版本的Docker CE<br><code>$ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></li>
+<li>查看docker服务是否启动<br><code>$ systemctl status docker</code></li>
+<li>若未启动，则启动docker服务<br><code>$ sudo systemctl start docker</code></li>
+<li>验证<br><code>$ sudo docker run hello-world</code><br>出现下图代表安装成功了<br><img src="/images/load.gif" data-original="3.png" alt="3"><h1 id="还可以使用镜像加速"><a href="#还可以使用镜像加速" class="headerlink" title="还可以使用镜像加速"></a>还可以使用镜像加速</h1>参考博客<a href="https://www.runoob.com/docker/docker-mirror-acceleration.html" target="_blank" rel="noopener" title="Docker镜像加速">Docker镜像加速</a><h1 id="用docker开一个mysql服务"><a href="#用docker开一个mysql服务" class="headerlink" title="用docker开一个mysql服务"></a>用docker开一个mysql服务</h1>参考博客<a href="https://www.cnblogs.com/linjiqin/p/8864981.html" target="_blank" rel="noopener" title="Docker上运行MySQL服务">Docker上运行MySQL服务</a>通过这个例子，我们来学习一下docker的简单使用<br><code>sudo docker images</code>，可以看到此时有一个hello-world的镜像<br><code>sudo docker container ls</code>可以看到此时的container是空的<br>搜索MySQL镜像<code>sudo docker search mysql</code><br>我们选第一个星最多且是官方的<br><code>sudo docker pull mysql</code><br>发现此时命令中说的是Using default tag:latest，也就是下的是最新版本<br>要想指定版本呢？<br>可以去docker的镜像仓库里找，可视化界面<br><a href="https://hub.docker.com/" target="_blank" rel="noopener" title="docker仓库">docker仓库</a><br>然后<code>sudo docker pull mysql:1.1</code>这条命令是假设的啊<br>不行太慢了，转回去使用加速<br>速度果然飞快<br><code>sudo dcoker images</code>发现此时有了mysql的镜像<br>下面就要运行该镜像创建容器了<br><code>docker run -d --name test-mysql -e MYSQL_ROOT_PASSWORD=password mysql</code><br>docker run有很多参数，可以自行百度，这里的-d指的是后台运行容器并返回容器id</li>
+</ol>
+<p>–name就是为容器指定一个名字；-e设置环境变量，这里设置的是root的密码为password，最后面跟的就是镜像<br>但是如果简单的使用上述命令创建容器的话，会导致容器删除后数据丢失，并且此时外界连不上该数据库，只能到容器内部使用，所以需要改进<br>具体过程如下：</p>
+<ol>
+<li>创建宿主机数据存放目录<code>mkdir -p /opt/data/mysql</code></li>
+<li>查看本机3306端口是否被进程占用<code>lsof -i:3306</code></li>
+<li>创建容器<code>docker run -d -v /opt/data/mysql/:/var/lib/mysql -p 3306:3306 --name test-mysql -e MYSQL_ROOT_PASSWORD=password mysql</code></li>
+</ol>
+<p>-v /opt/data/mysql:/var/lib/mysql-&gt;把宿主机/opt/data/mysql/目录映射到容器的/var/lib/mysql目录<br>-p 3306:3306-&gt;把容器的mysql端口3306映射到宿主机的3306端口，这样想访问mysql就可以直接访问宿主机的3306端口，如果3306被占用了可以使用别的端口<br>4. 用位于虚拟机外的navicat链接发现报2059错误，上网上找了一篇解决方案<br><a href="https://blog.csdn.net/jabony/article/details/81436635" target="_blank" rel="noopener" title="解决方案">解决方案</a><br>这是由于新版本的MySQL使用的是caching_sha2_password验证方式，但此时的navicat还没有支持这种验证方式。<br>5. 进入容器<code>docker exec -it test-mysql /bin/bash</code>也可以使用run命令，不过run命令一般用在创建的时候，然后以命令行交互；exec是在运行的容器中执行命令<br>这里有一个问题需要注意“这里-t给容器绑上了一个伪终端并绑定到容器的标准输入上, -i则让容器的标准输入保持打开”，还可以<code>docker exec test-mysql ls</code>,/bin/bash是打开容器内的一个终端近程,又因为it的等待 所以就会一直以终端连接的方式停留在容器内部<br>6. 进入数据库<code>mysql -u root -p</code>;选择数据库<code>use mysql;</code>;查看用户加密规则<code>select user,plugin from user where user=&#39;root&#39;;</code>;更改加密方式<code>alter user &#39;root&#39;@&#39;%&#39; identified by &#39;password&#39; password expire never;</code>和<code>alter user &#39;root&#39;@&#39;%&#39; identified with mysql_native_password by &#39;password&#39;;</code>;再次查看用户加密规则<code>select user,plugin from user where user=&#39;root&#39;;</code>;刷新权限<code>flush privileges;</code><br>注意远程连接为‘root’@’%’，本地连接为‘root’@’localhost’</p>
+<p>然后navicat可以连接使用了<br>退出容器输入<code>exit</code><br>查看容器日志可输入<code>docker logs test-mysql</code><br>停止容器<code>docker stop test-mysql</code>；启动被停止的容器<code>docker start tets-mysql</code>；重启是restart<br><code>docker ps</code>列出正在运行的容器，-a :显示所有的容器，包括未运行的。<br><code>docker create</code> ：创建一个新的容器但不启动它，用法同run<br><code>docker rm 容器id</code>和<code>docker rmi 镜像id</code> -f 强制删除<br>我先把test-mysql暂停了，后续再用<br>好了，关于docker的简单使用先介绍这些，像dockerfile（制作镜像地就没有用过），如果啥时候又用了，或者又有新的理解了，再补充吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/09/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%BA%8C-%E4%BF%AE%E6%94%B9/" rel="next" title="林老师之系统安全系列二-修改">
+                <i class="fa fa-chevron-left"></i> 林老师之系统安全系列二-修改
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">1.</span> <span class="nav-text">参考博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直观理解V1-0"><span class="nav-number">2.1.</span> <span class="nav-text">直观理解V1.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解V1-1"><span class="nav-number">2.2.</span> <span class="nav-text">理解V1.1</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装docker"><span class="nav-number">3.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#还可以使用镜像加速"><span class="nav-number">4.</span> <span class="nav-text">还可以使用镜像加速</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用docker开一个mysql服务"><span class="nav-number">5.</span> <span class="nav-text">用docker开一个mysql服务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>
