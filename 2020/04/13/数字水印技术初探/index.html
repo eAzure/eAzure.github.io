@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="TCP协议">
+<meta name="description" content="前面介绍了一些关于图像加密的算法，现在我们来了解一下数字水印技术，本文主要介绍关于图像的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机网络之传输层四">
-<meta property="og:url" content="http://yoursite.com/2020/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E5%9B%9B/index.html">
+<meta property="og:title" content="数字水印技术初探">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="TCP协议">
+<meta property="og:description" content="前面介绍了一些关于图像加密的算法，现在我们来了解一下数字水印技术，本文主要介绍关于图像的">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="article:published_time" content="2020-03-25T09:15:48.000Z">
-<meta property="article:modified_time" content="2020-03-26T00:44:09.820Z">
+<meta property="article:published_time" content="2020-04-13T01:28:27.000Z">
+<meta property="article:modified_time" content="2020-04-13T08:55:29.557Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/load.gif">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/25/计算机网络之传输层四/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/13/数字水印技术初探/"/>
 
 
 
 
 
-  <title>计算机网络之传输层四 | eAzure</title>
+  <title>数字水印技术初探 | eAzure</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E5%9B%9B/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">计算机网络之传输层四</h1>
+          <h1 class="post-title" itemprop="name headline">数字水印技术初探</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T17:15:48+08:00">
-                2020-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T09:28:27+08:00">
+                2020-04-13
               </time>
             
 
@@ -297,8 +297,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
+                  <a href="/categories/%E5%9B%BE%E5%83%8F%E5%8A%A0%E5%AF%86/" itemprop="url" rel="index">
+                    <span itemprop="name">图像加密</span>
                   </a>
                 </span>
 
@@ -334,27 +334,25 @@
       
 
       
-        <p>TCP协议</p>
+        <p>前面介绍了一些关于图像加密的算法，现在我们来了解一下数字水印技术，本文主要介绍关于图像的</p>
 <a id="more"></a>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>TCP协议有以下几个特点：</p>
+<h1 id="数字水印技术是干啥的？"><a href="#数字水印技术是干啥的？" class="headerlink" title="数字水印技术是干啥的？"></a>数字水印技术是干啥的？</h1><p>我们之前经常听说过图像水印，在有些网站上下载的图片往往会被打上一个明显的标记，只有你交了钱或者开了会员才给你去掉水印，这种被称为可见水印；那么为什么要好端端地给一张图片打上水印呢？为了版权保护或者图片信息完整性保证，宣示对这张图片的主权，但是可见水印很明显，这往往会吸引攻击者的注意；另外为了图片的正常使用，可见水印一旦去除后，便可以被所有人大摇大摆地使用，甚至另外贴上标签，所以不可见水印在某些用途上要更符合需求，当然可见水印有时候是为了逼迫用户打钱使用的hh。<br>有人可能会说给图像加密不好吗？给图像加密，为了使用需要解密，一旦解密后不就和可见水印去除后效果一样了嘛。<br>版权保护好理解，那图片信息完整性保证是咋解决的呢？<br>这就要牵涉到数字水印技术的几个特征了：</p>
 <ol>
-<li>点对点，只有一个发送方和一个接收方；</li>
-<li>可靠的、按序的字节流；</li>
-<li>流水线机制，TCP拥塞控制和流量控制机制动态设置窗口尺寸；</li>
-<li>发送方/接收方缓存，既类似于GBN，也类似于SR；</li>
-<li>全双工，即同一连接中，能够双向传输数据流；</li>
-<li>面向连接，通信双方在发送数据之前必须建立连接；因为是端到端连接，连接状态只在连接两端中维护，在沿途的节点中并不维护状态；TCP连接包括：两台主机上的缓存、连接状态变量、socket等</li>
-<li>流量控制机制</li>
+<li>不可见性：即嵌入水印后的图像在感官上不会发生可被感知到的变化；</li>
+<li>鲁棒性：当图像经过某种改动（图像增强、压缩、调整对比度等）后，水印信息仍能被检测到，并保持一定的完整性；</li>
+<li>可证明性：能证明图像的权属；</li>
+<li>安全性：水印信息难以被篡改和伪造，并且没有权限的用户不能提取到水印信息；水印遭破坏后，图像也应该失真不可用了</li>
 </ol>
-<h1 id="段结构"><a href="#段结构" class="headerlink" title="段结构"></a>段结构</h1><p><img src="/images/load.gif" data-original="/2020/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E5%9B%9B/1.png" alt="1"></p>
-<h2 id="序列号"><a href="#序列号" class="headerlink" title="序列号"></a>序列号</h2><p>初始序列号是根据算法随机选择的，为啥呢？<br>目前知道两个原因：</p>
-<ol>
-<li>防止在网络中滞留的失效报文段被新的连接错误接收<br>假定A、B主机间频繁地建立连接，并且每一次建立连接时，都选择相同的、固定的初始序列号，然后在一次连接中，A给B发送了一些报文段，但是这些报文段在网络中滞留了，而本次连接在一段时间后已经断掉，并且新的连接已经建立，但是这些报文段又发给了B，那就有可能导致在新的连接里接收到了旧的连接所发送的无效的数据报文段，导致出错，所以TCP在建立新的连接时所选择的初始序号一定要和前面的一些连接所使用过的序号不一样</li>
-<li>防止黑客易于伪造序列号攻击，称为tcp序列号欺骗<br>在所冒充的被信任的用户方不能正常工作时，推测出从服务器方返回的初始序列号，然后伪装成用户方IP，从而与服务器等建立连接</li>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>可见水印和不可见水印自然是一种分类方式；还可以分为稳健水印、半脆弱水印和脆弱水印。<br>在进行图像信息认证和完整性检验时，通常采用脆弱水印，脆弱水印是指当图象被改动后，即使是微小改动（一个像素），都会导致水印被破坏，因此可以验证信息的完整性。</p>
+<h2 id="数字水印的应用"><a href="#数字水印的应用" class="headerlink" title="数字水印的应用"></a>数字水印的应用</h2><ol>
+<li>版权保护：这个好理解</li>
+<li>数字指纹：版权所有人可以向分发给不同用户的作品中嵌入不同的水印以标识用户的信息。该水印可根据用户的序号和相关的信息生成，一旦发现未经授权的拷贝，就可以根据此拷贝所恢复出的指纹来确定它的来源。</li>
+<li>认证和完整性校验：上面解释了</li>
+<li>信息隐藏，可以把需要隐藏的信息作为水印嵌入至图像内，这和CTF中的图片隐写不太一样，图片隐写往往是根据图片格式的特性往里面注入信息，不具有鲁棒性，一旦图片被破坏了，就可能啥也恢复不出来了，如LSB算法（嵌入信息至像素最低有效位）</li>
 </ol>
-<h2 id="ACKs："><a href="#ACKs：" class="headerlink" title="ACKs："></a>ACKs：</h2><p>希望接收到的下一个字节的序列号，采用的是累积确认，该序列号之前的所有字节均已被正确接收到</p>
-<h1 id="TCP可靠数据传输"><a href="#TCP可靠数据传输" class="headerlink" title="TCP可靠数据传输"></a>TCP可靠数据传输</h1><p>TCP在IP层提供的不可靠服务的基础上实现可靠数据传输服务，采用的是流水线机制和累积确认，使用单一重传定时器</p>
-<h2 id="设置定时器的超时时间"><a href="#设置定时器的超时时间" class="headerlink" title="设置定时器的超时时间"></a>设置定时器的超时时间</h2><p>大于RTT(Rount Trip Time 往返时延)？<br>RTT是不断变化的<br>设置短一点儿？<br>可能造成不必要的重传<br>设置长一点儿？<br>对段丢失时间反应慢，效率低</p>
+<p>数字水印一般包括嵌入和检测这两个过程</p>
+<h2 id="嵌入和检测的一般过程"><a href="#嵌入和检测的一般过程" class="headerlink" title="嵌入和检测的一般过程"></a>嵌入和检测的一般过程</h2><p><img src="/images/load.gif" data-original="%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/1.png" alt="1"></p>
+<h1 id="数字水印算法分类"><a href="#数字水印算法分类" class="headerlink" title="数字水印算法分类"></a>数字水印算法分类</h1><h2 id="空间域"><a href="#空间域" class="headerlink" title="空间域"></a>空间域</h2><p>我这里不太想去探讨一个具体的实现算法，我有一个疑惑？如果一个图像被原作者打上了数字水印，那另外一个人拿到图像后也给它打上自己的水印？那最后如何判定该照片到底是属于谁的？目前能想到的是引入第三方可信机构</p>
 
       
     </div>
@@ -379,8 +377,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/24/%E6%9E%97%E8%80%81%E5%B8%88%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E4%B8%89/" rel="next" title="林老师之系统安全系列三">
-                <i class="fa fa-chevron-left"></i> 林老师之系统安全系列三
+              <a href="/2020/04/11/Vulhub/" rel="next" title="Vulhub">
+                <i class="fa fa-chevron-left"></i> Vulhub
               </a>
             
           </div>
@@ -388,10 +386,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/27/%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5/" rel="prev" title="常用链接">
-                常用链接 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -528,7 +522,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#段结构"><span class="nav-number">2.</span> <span class="nav-text">段结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列号"><span class="nav-number">2.1.</span> <span class="nav-text">序列号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACKs："><span class="nav-number">2.2.</span> <span class="nav-text">ACKs：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP可靠数据传输"><span class="nav-number">3.</span> <span class="nav-text">TCP可靠数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置定时器的超时时间"><span class="nav-number">3.1.</span> <span class="nav-text">设置定时器的超时时间</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数字水印技术是干啥的？"><span class="nav-number">1.</span> <span class="nav-text">数字水印技术是干啥的？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字水印的应用"><span class="nav-number">1.2.</span> <span class="nav-text">数字水印的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入和检测的一般过程"><span class="nav-number">1.3.</span> <span class="nav-text">嵌入和检测的一般过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数字水印算法分类"><span class="nav-number">2.</span> <span class="nav-text">数字水印算法分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#空间域"><span class="nav-number">2.1.</span> <span class="nav-text">空间域</span></a></li></ol></li></ol></div>
             
 
           </div>
