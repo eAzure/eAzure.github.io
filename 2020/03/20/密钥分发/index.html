@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-03-20T01:28:45.000Z">
-<meta property="article:modified_time" content="2020-04-15T13:57:50.477Z">
+<meta property="article:modified_time" content="2020-04-15T14:09:34.273Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/load.gif">
@@ -338,7 +338,7 @@
 
       
         <h1 id="对称密钥分发"><a href="#对称密钥分发" class="headerlink" title="对称密钥分发"></a>对称密钥分发</h1><a id="more"></a>
-<p>使用的是KDC（密钥分发中心）<br><img src="/images/load.gif" data-original="%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png" alt="1"><br>过程如下：<br>有一个第三方密钥分配中心KDC，所有需要通过对称密钥进行通信的用户，都需要在KDC上注册一个只有自己和KDC知道的对称密钥，我们称为主密钥（可以用物理方式传递），主密钥持有时间较长，但也需要不断更换</p>
+<p>使用的是KDC（密钥分发中心）<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/1.png" alt="1"><br>过程如下：<br>有一个第三方密钥分配中心KDC，所有需要通过对称密钥进行通信的用户，都需要在KDC上注册一个只有自己和KDC知道的对称密钥，我们称为主密钥（可以用物理方式传递），主密钥持有时间较长，但也需要不断更换</p>
 <ol>
 <li>A想和B发起通信，A使用自己和KDC间的密钥对下列信息加密后传给KDC</li>
 </ol>
@@ -360,9 +360,9 @@
 </li>
 </ol>
 <h2 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h2><p>盗取认证凭证后，重新发送给认证方，把以前窃听到的数据原封不动地重新发送给接收方，网络上传输的数据是加密过的，此时窃听者无法得到数据的准确意义。但如果他知道这些数据的作用，就可以在不知道数据内容的情况下通过再次发送这些数据达到愚弄接收端的目的</p>
-<p>了解了重放攻击后，我们便可以推测发送不同随机串的目的了，假设此时B发送给A验证消息，A被允许回复相同的随机串，那么监听方也可以回复给B相同的随机串，所以不应该允许A回复相同的随机串，此时若再有人回复给B相同的随机串，证明，是有监听人在重放信息，如下图所示，C是监听者，因为消息被加密，所以C并不懂A、B之间发的是啥，只能单纯重放<br><img src="/images/load.gif" data-original="%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/2.png" alt="2"></p>
-<p>上述方式是集中式的<br>还有一种分布式的方案<br>即没有集中式的KDC，每个终端用户都作为KDC，这就增加了用户和用户间的密钥对的数量，因为之前用户和KDC间都有密钥对，适用于对KDC安全性要求高的中小系统，过程如1下图所示：<br><img src="/images/load.gif" data-original="%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/3.png" alt="3"><br>Km为A与B间共享的主密钥</p>
-<h1 id="非对称密钥分发"><a href="#非对称密钥分发" class="headerlink" title="非对称密钥分发"></a>非对称密钥分发</h1><p>非对称密钥分发其实仅涉及公钥的分发，私钥都是驻留在本地的<br>使用的是CA机制，如下图所示：<br><img src="/images/load.gif" data-original="%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/4.png" alt="4"><br>可能会有疑问的地方在于B在向CA注册自己的公钥时如何证明自己的身份，其实B可以将自己的公钥和身份信息用私钥进行签名，然后发给CA，CA用B给的公钥再进行解密进行验证即可。</p>
+<p>了解了重放攻击后，我们便可以推测发送不同随机串的目的了，假设此时B发送给A验证消息，A被允许回复相同的随机串，那么监听方也可以回复给B相同的随机串，所以不应该允许A回复相同的随机串，此时若再有人回复给B相同的随机串，证明，是有监听人在重放信息，如下图所示，C是监听者，因为消息被加密，所以C并不懂A、B之间发的是啥，只能单纯重放<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/2.png" alt="2"></p>
+<p>上述方式是集中式的<br>还有一种分布式的方案<br>即没有集中式的KDC，每个终端用户都作为KDC，这就增加了用户和用户间的密钥对的数量，因为之前用户和KDC间都有密钥对，适用于对KDC安全性要求高的中小系统，过程如1下图所示：<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/3.png" alt="3"><br>Km为A与B间共享的主密钥</p>
+<h1 id="非对称密钥分发"><a href="#非对称密钥分发" class="headerlink" title="非对称密钥分发"></a>非对称密钥分发</h1><p>非对称密钥分发其实仅涉及公钥的分发，私钥都是驻留在本地的<br>使用的是CA机制，如下图所示：<br><img src="/images/load.gif" data-original="/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/4.png" alt="4"><br>可能会有疑问的地方在于B在向CA注册自己的公钥时如何证明自己的身份，其实B可以将自己的公钥和身份信息用私钥进行签名，然后发给CA，CA用B给的公钥再进行解密进行验证即可。</p>
 
       
     </div>
