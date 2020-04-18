@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="近期要学习一下DHT（分布式哈希表，一种分布式存储方法），而Kademlia是DHT的一种实现方式（一种分布式存储及路由算法），其它实现方式如Chord、CAN。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kademlia">
+<meta property="og:url" content="http://yoursite.com/2020/04/16/Kademlia/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="近期要学习一下DHT（分布式哈希表，一种分布式存储方法），而Kademlia是DHT的一种实现方式（一种分布式存储及路由算法），其它实现方式如Chord、CAN。">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="article:published_time" content="2020-04-16T14:08:33.000Z">
+<meta property="article:modified_time" content="2020-04-18T07:18:40.401Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/16/Kademlia/"/>
+
+
+
+
+
+  <title>Kademlia | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/Kademlia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kademlia</h1>
+        
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-16T22:08:33+08:00">
+                2020-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期要学习一下DHT（分布式哈希表，一种分布式存储方法），而Kademlia是DHT的一种实现方式（一种分布式存储及路由算法），其它实现方式如Chord、CAN。</p>
+<a id="more"></a>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf" target="_blank" rel="noopener" title="提出论文">提出论文</a><br><a href="https://zhuanlan.zhihu.com/p/38425656" target="_blank" rel="noopener" title="Kademlia协议">Kademlia协议</a><br><a href="https://www.jianshu.com/p/f2c31e632f1d" target="_blank" rel="noopener" title="易懂分布式 | Kademlia算法">易懂分布式 | Kademlia算法</a><br><a href="https://blog.csdn.net/cz_hyf/article/details/5076988" target="_blank" rel="noopener" title="P2P之Kademlia">P2P之Kademlia</a><br><a href="http://codemacro.com/2013/05/19/crawl-dht/" target="_blank" rel="noopener" title="P2P中DHT网络爬虫">P2P中DHT网络爬虫</a><br><a href="https://shuwoom.com/?p=721" target="_blank" rel="noopener" title="P2P技术是什么">P2P技术是什么</a><br><a href="https://blog.csdn.net/changtao381/article/details/8995658" target="_blank" rel="noopener" title="P2P网络中DHT算法分析">P2P网络中DHT算法分析</a><br><a href="https://shuwoom.com/?p=813" target="_blank" rel="noopener" title="KADEMLIA算法学习">KADEMLIA算法学习</a><br>向所有大佬表示感谢！本文目前不研究工程上是如何实现的，比如一些DHT爬虫。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="P2P"><a href="#P2P" class="headerlink" title="P2P"></a>P2P</h2><p>首先我们来想一下P2P中的文件资源共享网络的发展：</p>
+<ol>
+<li>第一代P2P网络有一个中央数据库，被称为集中式对等网络，如napster，中央数据库中记载了哪些资源存在于哪些节点上，然后节点想要某个资源去查询中央数据库，找到对方的节点位置，然后再去与对方连接，存在单点故障和性能瓶颈问题；</li>
+<li>第二代采用了泛洪搜索算法，被称为非结构化的分布式网络，如Gnutella，每次搜索都把要查询的消息广播给网络上的所有节点。当一个节点要下载某个文件的时候，这个节点会以文件名或者关键字生成一个查询，并把查询发送给所有跟他相连的节点。如果这些节点存在文件，则跟这个节点建立连接，如果不存在，则继续向相邻的节点转发这个查询，直到找到文件位置，这种网络结构的缺点在于严重消耗网络带宽和系统资源，效率很低；</li>
+<li>第三代采用的就是DHT，被称为结构化的分布式网络，它将资源分散到整个网络中，一个很好的例子是比如原先图书都是存于图书馆里的，现在去掉图书馆，将图书分散到所有学生手里，每个学生手里都有一些图书（资源），与第二代的区别主要是在查询方式与节点信息存储的不同；</li>
+</ol>
+<h3 id="结构化P2P网络与非结构化P2P网络的区别"><a href="#结构化P2P网络与非结构化P2P网络的区别" class="headerlink" title="结构化P2P网络与非结构化P2P网络的区别"></a>结构化P2P网络与非结构化P2P网络的区别</h3><p>结构化的P2P网络中的节点只存储特定的信息或特定信息的索引，当用户想要获取信息时，他们必须知道这些信息（或资源）可能存在于哪些节点中，避免了泛洪查询，提高了查询效率；非结构化的P2P网络中的节点存储自身的信息或信息的索引(如指针和IP地址)，用户获取信息时并不知道这些信息会在哪个节点上存储，所以智能采用类似于泛洪的算法。<br>看到这里可能会有所疑问，在结构化的P2P网络结构中，用户是如何知道信息可能存储于哪些节点上呢？<br>这就是设计的精妙所在了，简单说来，DHT将存储对象的关键字进行hash，这样就将所有的对象映射到了一个具体的数值范围中，然后网络中的每个节点负责存储与其对应的特定数值范围内的对象，因为节点的节点号范围和对象范围基本一致，比如100节点存100-200范围内的对象。</p>
+<p>看完了P2P中网络发展的历程，我们会发现，每一代都需要解决寻找资源和如何创建网络的（节点加入、退出等）问题。<br>下面我们来具体看一下Kademlia是如何实现的吧！</p>
+<h2 id="Kademlia-v1-0"><a href="#Kademlia-v1-0" class="headerlink" title="Kademlia-v1.0"></a>Kademlia-v1.0</h2><p>主要参考的博客，最后参照论文进行修改，发现大部分的文章都不是按照我想的思路写的，并且有些写的就有问题，看论文还是靠谱，但看博客先让你建立一个大体框架。</p>
+<h3 id="网络基本元素"><a href="#网络基本元素" class="headerlink" title="网络基本元素"></a>网络基本元素</h3><p>作为文件资源共享的P2P网络，需要包括以下基本元素：</p>
+<ol>
+<li>对等节点（peer node）</li>
+<li>资源，资源分散在每个对等节点上</li>
+</ol>
+<h4 id="对等节点"><a href="#对等节点" class="headerlink" title="对等节点"></a>对等节点</h4><p>对等节点中有下列属性：</p>
+<ol>
+<li>NodeID：在Kademlia中NodeID是通过sha-1产生的，范围为160位的2进制，都是唯一的；</li>
+<li>IP Address和port：该节点在Internet中的位置，别人通过NodeID找到该节点后，得到IP和port以用于建立连接；</li>
+<li>{key-value}：本节点所维护的那部分网络中的资源，类似于文件名和文件内容；</li>
+<li>路由表：路由表中包含一部分其他节点的NodeID和IP地址、UDP端口（节点间采用UDP通信）等信息；</li>
+</ol>
+<h3 id="资源的分发存储"><a href="#资源的分发存储" class="headerlink" title="资源的分发存储"></a>资源的分发存储</h3><p>上面提到了DHT是一种结构化的P2P网络，当用户想要获取信息时，他们必须知道这些信息（或资源）可能存在于哪些节点中，这是如何做到的呢？<br>在Kademlia中资源是通过{key-value}键值对的形式表示的，其中的每个资源都对应着一个key值，这个key值也是通过sha-1计算得到的，范围也为160位的2进制，和节点的NodeID范围一致，因此该资源就会被存储在NodeID∈[key-k,key+k]（原论文中说的是存储在距离key最近的k个节点中）这样一个范围内的所有节点上，所以当寻找资源时，只要找到这些节点即可，那如何找到这些节点呢？这就是精髓和神奇所在了！</p>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p>作者用了二叉树来表示网络中各节点的分布情况，然后二叉树中的叶子节点就是网络中的节点，这个和Huffman树用作编码时有些相似。<br>在这里为了简化空间范围，我们用3位2进制代替160位2进制进行说明。<br>3位2进制最多表示8个节点，如下图所示：<br><img src="/images/load.gif" data-original="/2020/04/16/Kademlia/1.png" alt="1"><br>然后节点与节点之间的距离用NodeID的异或值度量</p>
+<h4 id="Kademlia中的距离"><a href="#Kademlia中的距离" class="headerlink" title="Kademlia中的距离"></a>Kademlia中的距离</h4><p>比如点100和点101之间的距离为100⊕101为1，100与011之间的距离为100⊕011为111，然后用十进制表示即为7，然后异或距离有以下性质：</p>
+<ol>
+<li>节点和它本身之间的异或距离为0；</li>
+<li>异或距离符合对称率；</li>
+<li>符合三角形不等式，如有三个点A、B、C，d(A,B)+d(A,C)&gt;d(A,C)；</li>
+<li>符合传递性：d(A,B)⊕d(B,C)=d(A,C)；</li>
+<li>a&gt;=0,b&gt;=0,有a+b&gt;=a⊕b；</li>
+<li>单向性：对于给定的点x，给定距离d&gt;0，只有确切的一点y，使得d(x,y)=d，这保证了我们在寻找一点的时候只会沿一条大致的路径；</li>
+</ol>
+<p>然后对于每一个节点来说，它根据公共前缀相同的长度将这颗二叉树分解为一些不包含自己的子树，所以可以将这棵树划分为160棵子树，如对于上图中的100这个节点来说，整棵树可以划分为3棵子树，分别为：</p>
+<ol>
+<li>第1位不同的子树：000、001、010、011<br>该子树中所有点与100点的异或距离位于2<sup>2</sup>——2<sup>3</sup>之间（前闭后开）</li>
+<li>第1位相同，第二位不同的子树：110、111<br>该子树中所有点与100点的异或距离位于2<sup>1</sup>——2<sup>2</sup>之间（前闭后开）</li>
+<li>前2位都相同，第三位不同的子树：101<br>该子树中所有点与100点的异或距离位于2<sup>0</sup>——2<sup>1</sup>之间（前闭后开）</li>
+</ol>
+<p>我们发现每一棵子树所包含节点数量随相同位数的增多而减半，并且子树中的节点ID位于2<sup>n-r-1</sup>——2<sup>n-r</sup>之间，n为ID的范围位数（此时为3），r为公共前缀相同的长度，分别为（0、1、2）</p>
+<h3 id="路由表的构造"><a href="#路由表的构造" class="headerlink" title="路由表的构造"></a>路由表的构造</h3><p>有了上面的基础，对于每个节点来说其路由表是这样构造的：<br>将路由表分为160个bucket，每个bucket的编号从0-159，这样每个bucket中相当于容纳的是所对应的160个子树中的节点，但并不是全部，只要一些就可以了；并且每个bucket内的节点数量按协议规定有一个上限k，一旦节点数量超过了，就要淘汰某些节点，后面再说具体事项。</p>
+<h3 id="如何找到目标点呢？"><a href="#如何找到目标点呢？" class="headerlink" title="如何找到目标点呢？"></a>如何找到目标点呢？</h3><p>我们以3位2进制表示的NodeID为例，我们本点的ID为100，目标点为011，此时路由表中有3个bucket<br>首先我们计算目标点的NodeID与我们的ID的异或距离为7<br>推导异或距离所属的bucket，2<sup>2</sup>&lt;=7&lt;2<sup>3</sup>，所以此时属于bucket2，然后去bucket2里面寻找是否含有目标点，如果没有，找该bucket中距目标节点最近的节点，请求该节点帮忙寻找，此时该节点距离目标点的距离也缩短了，每次搜索都会使距离缩短一半。（因为算法设计是，如果一个节点离你越近，路由表中含有其的概率越大）<br>例如此时100中的bucket2中只有节点000，000去寻找011，此时000距011间的距离为000⊕011=3，然后它去寻找bucket1，发现此时也没有011，但有010，然后它请求010帮它寻找，010计算距011间的距离为010⊕011=1，此时它去寻找bucket0，发现找到了。</p>
+<h2 id="Kademlia-v2-0"><a href="#Kademlia-v2-0" class="headerlink" title="Kademlia-v2.0"></a>Kademlia-v2.0</h2><p>在1.0中我们介绍了基本的情况，对整个网络的结构有了初步的了解，下面进行某些部分的补充说明。</p>
+<h3 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h3><p>首先解释下RPC是啥：RPC（Remote Procedure Call），远程过程调用<br>分布式的产生促进了RPC的诞生，相对于本地过程调用而言，本地过程调用比如本地有个函数我就直接可以调用，而现在因为分布式的存在，然后我想在远端的另外一台机子上调用该咋办呢？这时候就是RPC了，啥时候看看写一篇专门的博客详细讲讲吧。<br>协议具有四个RPC：</p>
+<ol>
+<li>PING：测试一个节点是否在线；</li>
+<li>STORE：要求一个节点存储一份数据{key,value}；</li>
+<li>FIND_NODE：根据节点ID（参数）查找一个节点，返回{IP address，UDP port，Node ID}，和上文所说的一样，返回的是距目标ID已知的最近的k个节点（这k个节点可能都是来自同一个bucket，当然如果该bucket不够k个，返回的节点中就可能属于多个bucket，如果都不够k个，那就返回所能返回的）；</li>
+<li>FIND_VALUE：根据资源的key值查找资源，返回值依然为三元组{IP address，UDP port，Node ID}</li>
+</ol>
+<p>RPC的接收者必须回应160位随机的RPC ID，以防地址伪造。</p>
+<h3 id="查询补充"><a href="#查询补充" class="headerlink" title="查询补充"></a>查询补充</h3><p>在1.0中我们说开始节点在计算与目标节点的距离后，请求对应bucket中距目标节点最近的节点进行进一步的请求，实际中是平行请求α个节点，向着α个节点平行异步发送FIND_NODE，α是系统范围内的并发参数；<br>并且最后返回时，实际上查找的是k个节点，因为距离目标节点最近的k个节点范围内的节点都存储了该目标资源，当任意一个节点返回了资源时就停止了。<br>有一个总结的挺好的（感觉上面说的有点儿乱）：</p>
+<h4 id="FIND-NODE"><a href="#FIND-NODE" class="headerlink" title="FIND_NODE"></a>FIND_NODE</h4><ol>
+<li>首先由发起者确定目标ID对应路由表中的bucket位置，然后从该bucket中筛选出α个距离目标ID最近的节点，并同时向这些节点发起FIND_NODE的查询请求；</li>
+<li>被查询节点收到FIND_NODE请求后，从对应的bucket中找出自己所知道的最近的K个节点，并返回给发起者；</li>
+<li>发起者在收到这些节点后，更新自己的路由表，并再次从其中k个距离目标节点ID最近的节点，挑选未发送请求的节点，向其发送FIND_NODE的查询请求；</li>
+<li>上述步骤不断重复，直到无法获取比发起者当前已知的k个节点更接近目标节点ID的活动节点为止。</li>
+</ol>
+<h4 id="FIND-VALUE"><a href="#FIND-VALUE" class="headerlink" title="FIND_VALUE"></a>FIND_VALUE</h4><ol>
+<li>首先发起者会查找自己是否存储了{key,value}数据对，如果存在则直接返回，否则就返回k个距离key值最近的节点，并向这k个节点ID发起FIND_VALUE请求；</li>
+<li>收到FIND_VALUE请求的节点，首先也是检查自己是否存储了{key,value}数据对，如果有直接返回value，如果没有，则在自己的对应的bucket中返回k个距离key值最近的节点；</li>
+<li>发起者如果收到value则结束查询过程，否则发起者在收到这些节点后，更新自己的路由表，并再次从其中k个距离key值最近的节点，挑选未发送请求的节点再次发起FIND_VALUE请求；</li>
+<li>上述步骤不断重复，直到获取到value或者无法获取比发起者当前已知的k个节点更接近key值的活动节点为止，这时就表示未找到value值。</li>
+</ol>
+<p>如果上述FIND_VALUE最终找到value值，则{key,value}数据对会缓存在没有返回value值的最近节点上，这样下次再查询相同的key值时就可以加快查询速度，但该节点与key的距离可能大于k，会造成过度缓存，此时该数据对最多能保留24小时，如果没有再次获取，该数据对就会消失。<br>当节点收到一个{key,value}的数据时，它的存储过程如下：</p>
+<ol>
+<li>发起者首先定位k个距离目标key值最近的节点；</li>
+<li>然后发起者对这k个节点发起STORE请求；</li>
+<li>接收到STORE请求的节点将保存{key, value}数据；</li>
+<li>同时，执行STORE操作的k个节点每小时重发布自己所有的{key,value}对数据，先发的为准，其他k-1个节点不再重复发布</li>
+</ol>
+<h3 id="bucket补充"><a href="#bucket补充" class="headerlink" title="bucket补充"></a>bucket补充</h3><p>在一些实现中，并不是一开始新建好了160个bucket，而这个bucket是动态创建和分裂的，每个节点刚开始只有一个bucket，这个bucket涵盖所有的ID范围，当有一个新的节点的时候，当bucket未满时节点直接插入不分裂，满的时候如果该bucket覆盖范围包含了该节点的ID，则把该bucket分裂为两个大小相同的新bucket，并对原bucket内的节点信息按照新的bucket桶前缀值进行重新分配。</p>
+<h3 id="新节点加入"><a href="#新节点加入" class="headerlink" title="新节点加入"></a>新节点加入</h3><p>这一步很神奇，一个节点N刚刚加入，会为其分配一个种子节点S，即N把S加入到自己的路由表中，然后N通过S查询（在Kademlia中查询分两种，一种是查询节点，一种是查询资源）自己（神奇吧），然后在查询补充中我们说过S会找到k个距离N最近的节点供N查询，同时S将N加入到自己的路由表里，然后N也会将这k个节点加入自身的路由表里，然后再对这些刚储存的节点重复查询自己，自己扩充路由表的同时，也让其他节点来更新自己的路由表，用N替换掉不在线的节点，逐步就将自己融入到了这个网络中，通过上面的步骤我们可以知道，这就是为什么一个节点的路由表中含有距离其近的节点数量多的缘故。</p>
+<h4 id="资源此时如何分配？"><a href="#资源此时如何分配？" class="headerlink" title="资源此时如何分配？"></a>资源此时如何分配？</h4><p>我们说过某一特定资源往往分布在与其相对应的某个范围的节点上，那新加入的节点上的资源该如何分配呢？<br>如果新增一个节点N​，在某个资源O应该被分配的节点范围内时，因为N在刚建立的时候会委托S去查询自己，S会返回距离N比较近的点，然后N再去委托那些节点去查询自己，同时那些节点会判断是否将N纳入到自己的路由表中，并且判断N是否和自己的距离小于等于k，如果小于等于k的话，就需要向N发起STORE的RPC请求把本节点存储的{key-value}发送过去。​</p>
+<h3 id="节点离开"><a href="#节点离开" class="headerlink" title="节点离开"></a>节点离开</h3><p>节点离开后，别的节点如果请求它，发现它离线了，那么就将它从路由表中删除，慢慢地它就和这个网络没啥关系了。</p>
+<h3 id="路由表的更新维护机制"><a href="#路由表的更新维护机制" class="headerlink" title="路由表的更新维护机制"></a>路由表的更新维护机制</h3><p>节点每次执行四个指令中的任意一个都会触发更新，每个节点的路由表中的bucket中的节点都按照最后一次接触（这里的接触是指一个节点请求它或者回复它）的时间倒序排列（最不常访问的节点在头部，最近访问的在尾部），如果接触了一个节点，判断其是否在所对应的bucket中，如果在，将其移至bucket的最后；如果不在，并且此时所对应的bucket并不满则将其加入到该bucket的尾部，如果满了，使用PING去判断该bucket中的头节点是否在线，不在线将头节点删除，然后将该节点移至bucket的最后；如果在线，则舍弃要加入的节点，并将头节点移至该bucket的最后。<br>由上述更新机制，我们便可以知道，一直存活的节点是永远不会被从bucket中移出的（做出这种策略的原因是因为一个节点存活的时间越长，它继续存活的可能性越大）。<br>而且这种更新机制居然可以抵抗dos攻击，即使添加很多新的节点进入网络中也不会造成啥影响，因为只要旧的节点还存活，旧的节点就不会被从bucket中删除，即旧节点不会遭到新节点的排斥。</p>
+<p>感觉还是有些乱，论文不太好懂。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/13/%E6%95%B0%E5%AD%97%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/" rel="next" title="数字水印技术初探">
+                <i class="fa fa-chevron-left"></i> 数字水印技术初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">1.</span> <span class="nav-text">参考博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P2P"><span class="nav-number">2.1.</span> <span class="nav-text">P2P</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构化P2P网络与非结构化P2P网络的区别"><span class="nav-number">2.1.1.</span> <span class="nav-text">结构化P2P网络与非结构化P2P网络的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kademlia-v1-0"><span class="nav-number">2.2.</span> <span class="nav-text">Kademlia-v1.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络基本元素"><span class="nav-number">2.2.1.</span> <span class="nav-text">网络基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对等节点"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">对等节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源的分发存储"><span class="nav-number">2.2.2.</span> <span class="nav-text">资源的分发存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">2.2.3.</span> <span class="nav-text">网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kademlia中的距离"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">Kademlia中的距离</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由表的构造"><span class="nav-number">2.2.4.</span> <span class="nav-text">路由表的构造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何找到目标点呢？"><span class="nav-number">2.2.5.</span> <span class="nav-text">如何找到目标点呢？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kademlia-v2-0"><span class="nav-number">2.3.</span> <span class="nav-text">Kademlia-v2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC"><span class="nav-number">2.3.1.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询补充"><span class="nav-number">2.3.2.</span> <span class="nav-text">查询补充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FIND-NODE"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">FIND_NODE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FIND-VALUE"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">FIND_VALUE</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bucket补充"><span class="nav-number">2.3.3.</span> <span class="nav-text">bucket补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新节点加入"><span class="nav-number">2.3.4.</span> <span class="nav-text">新节点加入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#资源此时如何分配？"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">资源此时如何分配？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点离开"><span class="nav-number">2.3.5.</span> <span class="nav-text">节点离开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由表的更新维护机制"><span class="nav-number">2.3.6.</span> <span class="nav-text">路由表的更新维护机制</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>
