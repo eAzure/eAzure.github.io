@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本来想学习以下git hook，发现对git还不是很理解，所以将git-hook的博客删了，重新先学习一下git。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git">
+<meta property="og:url" content="http://yoursite.com/2020/04/19/git/index.html">
+<meta property="og:site_name" content="eAzure">
+<meta property="og:description" content="本来想学习以下git hook，发现对git还不是很理解，所以将git-hook的博客删了，重新先学习一下git。">
+<meta property="article:published_time" content="2020-04-19T01:22:18.000Z">
+<meta property="article:modified_time" content="2020-04-19T08:40:39.553Z">
+<meta property="article:author" content="eAzure">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/19/git/"/>
+
+
+
+
+
+  <title>git | eAzure</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">eAzure</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/19/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="eAzure">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/eAzure.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="eAzure">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">git</h1>
+        
+
+        <div class="post-meta">
+          
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T09:22:18+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本来想学习以下git hook，发现对git还不是很理解，所以将git-hook的博客删了，重新先学习一下git。</p>
+<a id="more"></a>
+<h1 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h1><p>主要想知道的是git那几个命令到底干了啥，如add、commit等</p>
+<h1 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h1><p><a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener" title="廖雪峰git教程">廖雪峰git教程</a>写得很详细啊！最起码能让人熟悉使用git的一些常用命令，但我今天的目的不在于此，可以作为平时查阅文档用，我也不期望将这些命令都记下来；<br><a href="https://www.zhihu.com/question/20093241" target="_blank" rel="noopener" title="如何理解 Git 的分布式？-pansz的回答">如何理解 Git 的分布式？-pansz的回答</a><br><a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%AE%80%E4%BB%8B" target="_blank" rel="noopener" title="Git分支-分支简介">Git分支-分支简介</a></p>
+<h1 id="git简介"><a href="#git简介" class="headerlink" title="git简介"></a>git简介</h1><p>git是一个开源的分布式版本控制系统<br>廖雪峰举的一个例子“如果有一个软件，不但能自动帮我记录每次文件的改动，还可以让同事协作编辑，这样就不用自己管理一堆类似的文件了，也不需要把文件传来传去。如果想查看某次改动，只需要在软件里瞄一眼就可以，岂不是很方便？”<br>回顾git的诞生，我们更容易看到git到底是干啥的，事情的经过是这样的“linux开发了linux，并将其开源，然后无数仁人志士开始开发linux，但一开始linux反对像cvs、svn这种集中式的版本控制系统，也反对那些付费的，所以一开始代码管理都是由linux手工完成，后来因为太过庞大，所以linux自己写了一个分布式的版本控制系统！！！”</p>
+<h2 id="集中式版本控制系统"><a href="#集中式版本控制系统" class="headerlink" title="集中式版本控制系统"></a>集中式版本控制系统</h2><p>像cvs、svn之类的是属于集中式的版本控制系统，版本库是集中存放在中央服务器上的，中央服务器相当于一个图书馆，你要改一本书，必须先从图书馆借出来，然后回到家自己改，改完了再放回图书馆。<br>缺点是容易出现单点故障和网络带宽限制。</p>
+<h2 id="分布式版本控制系统"><a href="#分布式版本控制系统" class="headerlink" title="分布式版本控制系统"></a>分布式版本控制系统</h2><p>像git就是分布式版本控制系统，没有中央服务器，每个人的电脑上都是一个完整的版本库，可是我感觉我现在上课用git，很类似于集中式版本控制系统，将自己新修改的内容推至老师那边的git仓库，然后如果有更新的话，需要pull，着如何理解呢？还有如果公司只有一个文件去维护，那这冲突咋解决呢？</p>
+<h3 id="如何理解git的分布式？"><a href="#如何理解git的分布式？" class="headerlink" title="如何理解git的分布式？"></a>如何理解git的分布式？</h3><p>看了很多博客，目前理解的老师上课采取的方式是指分布式版本控制系统通常也有一台充当“中央服务器”的电脑（如github），但这个服务器的作用仅仅是用来方便“交换”大家的修改，没有它大家也一样干活，只是交换修改不方便而已；没有它的话两两之间进行传递；<br>另外git分布式与svn等集中式版本控制的区别体现在git本地有完整的版本库<br>svn的模式是：</p>
+<ol>
+<li>写代码；</li>
+<li>从服务器拉回服务器的当前版本库，并解决服务器版本库与本地代码的冲突；</li>
+<li>将代码提交到服务器上</li>
+</ol>
+<p>git的模式是：</p>
+<ol>
+<li>写代码；</li>
+<li>提交到本地版本库；</li>
+<li>从服务器拉回服务器的当前版本库，并解决服务器版本库与本地代码的冲突；</li>
+<li>将远程库与本地代码合并结果提交到本地版本库；</li>
+<li>将本地版本库推到服务器</li>
+</ol>
+<p>因此git是有本地版本管理的，在提交到远程仓库之前可以任意提交修改，形成多个本地版本，而svn在提交给远程服务器时，只能在一个版本上不断修改，不能回滚啥的，一旦服务器有问题，就算找到一个最新的代码上去，也是只能以当前时间为节点作为新的项目去使用，之前所有的提交历史记录无法看到</p>
+<h3 id="如何理解冲突？"><a href="#如何理解冲突？" class="headerlink" title="如何理解冲突？"></a>如何理解冲突？</h3><p>冲突不管是集中式还是分布式都会产生的，如果双方都修改了同一个文件的同一个部分，那就产生冲突了，得手动解决，否则可以自动合并。</p>
+<h1 id="那些命令都干了啥？-如commit、add等"><a href="#那些命令都干了啥？-如commit、add等" class="headerlink" title="那些命令都干了啥？(如commit、add等)"></a>那些命令都干了啥？(如commit、add等)</h1><h2 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h2><p>首先我们需要知道的一个概念是暂存区与工作区，工作区就是我们的git所在的目录，但是.git不算，.git是git的版本库<br>然后版本库里有一个暂存区<br>然后git add就是将当前工作区下被修改（添加、移除和修改）的所有文件添加到暂存区（stage）<br>利用git status可以查看工作区和暂存区里的差别，例如我在工作区里新建一个test1.txt并且不做任何其他操作，执行git status：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        test1.txt</span><br></pre></td></tr></table></figure>
+<p>执行git add .：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Changes to be committed:</span><br><span class="line">  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)</span><br><span class="line">        new file:   test1.txt</span><br></pre></td></tr></table></figure>
+<p>此时已被加入缓存区，但是还没加入本地库</p>
+<h2 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h2><p>git commit就是将暂存区内容添加至本地仓库的当前分支（如果没有新建和切换分支，默认是在master分支）<br>常用的就是<code>git commit -m</code>，我比较常用的是<code>git commit -am</code></p>
+<h3 id="git-commit-m与git-commit-am的区别？"><a href="#git-commit-m与git-commit-am的区别？" class="headerlink" title="git commit -m与git commit -am的区别？"></a>git commit -m与git commit -am的区别？</h3><p>此时我修改test1.txt里面的内容，然后<code>git status</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        modified:   test1.txt</span><br></pre></td></tr></table></figure>
+<p>此时有两种做法：</p>
+<ol>
+<li><code>git add .</code>与<code>git commit -m</code></li>
+<li>只有<code>git commit -am</code></li>
+</ol>
+<p>也就是说对于存在文件的修改（修改与删除），-am可以等同于add与-m的结合，但对于新创建的文件只能分两步；</p>
+<p>git commit相当于为此时的工作区生成了一个快照，以后可以回滚等操作，所以git提倡多commit，并且commit的信息要详细。</p>
+<h2 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h2><p>将本地仓库发送到远程仓库中对应的分支去，然后这里就会牵扯到另一个git中的重要概念——分支；<br>别急先总结一下：工作区-》暂存区-》本地仓库-》远程仓库；</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/16/Kademlia/" rel="next" title="Kademlia">
+                <i class="fa fa-chevron-left"></i> Kademlia
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/19/git%E5%88%86%E6%94%AF/" rel="prev" title="git分支">
+                git分支 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/eAzure.jpg"
+                alt="eAzure" />
+            
+              <p class="site-author-name" itemprop="name">eAzure</p>
+              <p class="site-description motion-element" itemprop="description">Hacker</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/eAzure" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前序"><span class="nav-number">1.</span> <span class="nav-text">前序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考博客"><span class="nav-number">2.</span> <span class="nav-text">参考博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git简介"><span class="nav-number">3.</span> <span class="nav-text">git简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#集中式版本控制系统"><span class="nav-number">3.1.</span> <span class="nav-text">集中式版本控制系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式版本控制系统"><span class="nav-number">3.2.</span> <span class="nav-text">分布式版本控制系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何理解git的分布式？"><span class="nav-number">3.2.1.</span> <span class="nav-text">如何理解git的分布式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何理解冲突？"><span class="nav-number">3.2.2.</span> <span class="nav-text">如何理解冲突？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#那些命令都干了啥？-如commit、add等"><span class="nav-number">4.</span> <span class="nav-text">那些命令都干了啥？(如commit、add等)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-add"><span class="nav-number">4.1.</span> <span class="nav-text">git add</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-commit"><span class="nav-number">4.2.</span> <span class="nav-text">git commit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-m与git-commit-am的区别？"><span class="nav-number">4.2.1.</span> <span class="nav-text">git commit -m与git commit -am的区别？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-push"><span class="nav-number">4.3.</span> <span class="nav-text">git push</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">eAzure</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script>!function(e){var c=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function i(){for(var r=0;r<c.length;r++)t=c[r],0<=(n=t.getBoundingClientRect()).bottom&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=c[r];t=o,n=function(){c=c.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}i(),e.addEventListener("scroll",function(){var t,n;t=i,n=e,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)})}(this);</script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script></body>
+</html>
