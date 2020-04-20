@@ -351,7 +351,7 @@
 <li>切换回主分支<code>git checkout master</code></li>
 <li>发现test1.txt没有任何变化</li>
 </ol>
-<p>我觉得git官方上画的图和解释的比较清楚：<br>创建testing分支并切换到testing分支时：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/1.png" alt="1"><br>testing分支有commit操作时：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/2.png" alt="2"><br>切换回主分支后：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/3.png" alt="3"><br>指针所指的正是我们的commit快照，都有一个commitID（sha1算法产生的）</p>
+<p>我觉得git官方上画的图和解释的比较清楚：<br>创建testing分支并切换到testing分支时：<br><img src="/images/load.gif" data-original="1.png" alt="1"><br>testing分支有commit操作时：<br><img src="/images/load.gif" data-original="2.png" alt="2"><br>切换回主分支后：<br><img src="/images/load.gif" data-original="3.png" alt="3"><br>指针所指的正是我们的commit快照，都有一个commitID（sha1算法产生的）</p>
 <h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p>现在我们把dev分支上的工作合并到主分支上：<br><code>git merge dev</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Updating 4b194ea..535f59d</span><br><span class="line">Fast-forward</span><br><span class="line"> test1.txt | 1 +</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure>
 <p>采用的是Fast-Forward方式，即此时将master指向dev的当前提交，所以合并速度非常快。</p>
@@ -362,12 +362,12 @@
 <li>切回到主分支，修改test1.txt的第一行内容为678910；</li>
 <li>执行add和commit</li>
 </ol>
-<p>此时分支结构变为了下图：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/4.png" alt="4"><br>这种情况下我们进行合并<code>git merge dev</code>：</p>
+<p>此时分支结构变为了下图：<br><img src="/images/load.gif" data-original="4.png" alt="4"><br>这种情况下我们进行合并<code>git merge dev</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Auto-merging test1.txt</span><br><span class="line">CONFLICT (content): Merge conflict in test1.txt</span><br><span class="line">Automatic merge failed; fix conflicts and then commit the result.</span><br></pre></td></tr></table></figure>
 <p>出现合并冲突了，无法自动合并了，<code>git status</code>也可以查看更多信息：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">On branch master</span><br><span class="line">Your branch is ahead of &#39;origin&#x2F;master&#39; by 2 commits.</span><br><span class="line">  (use &quot;git push&quot; to publish your local commits)</span><br><span class="line">You have unmerged paths.</span><br><span class="line">  (fix conflicts and run &quot;git commit&quot;)</span><br><span class="line">  (use &quot;git merge --abort&quot; to abort the merge)</span><br><span class="line">Unmerged paths:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to mark resolution)</span><br><span class="line">        both modified:   test1.txt</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and&#x2F;or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
-<p>此时test1.txt变成了下列内容：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/5.png" alt="5"><br>标出了不同分支的内容，此时我们将主分支的内容改为12345，再add和commit<br>然后合并分支发现可以了<br>现在分支结构变为了：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/6.png" alt="6"><br>使用git log也可以查看到分支的合并情况:<br><code>git log --graph --pretty=oneline --abbrev-commit</code></p>
-<h2 id="不使用FAST-FORWARD方式合并"><a href="#不使用FAST-FORWARD方式合并" class="headerlink" title="不使用FAST-FORWARD方式合并"></a>不使用FAST-FORWARD方式合并</h2><p>我们之前讲过了自动合并使用的是FAST-FORWARD方式，此时将master指向dev的当前提交，所以合并速度非常快。<br>如下图所示：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/7.png" alt="7"><br>但是这样会存在一个问题，删除分支后，会丢掉分支信息。<br>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。<br><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code>，但是我刚才试了试，发现只有第一个文件的合并采用的Fast forward模式，后来都是没采用，如下图所示分支结构为：<br><img src="/images/load.gif" data-original="/2020/04/19/git%E5%88%86%E6%94%AF/8.png" alt="8"></p>
+<p>此时test1.txt变成了下列内容：<br><img src="/images/load.gif" data-original="5.png" alt="5"><br>标出了不同分支的内容，此时我们将主分支的内容改为12345，再add和commit<br>然后合并分支发现可以了<br>现在分支结构变为了：<br><img src="/images/load.gif" data-original="6.png" alt="6"><br>使用git log也可以查看到分支的合并情况:<br><code>git log --graph --pretty=oneline --abbrev-commit</code></p>
+<h2 id="不使用FAST-FORWARD方式合并"><a href="#不使用FAST-FORWARD方式合并" class="headerlink" title="不使用FAST-FORWARD方式合并"></a>不使用FAST-FORWARD方式合并</h2><p>我们之前讲过了自动合并使用的是FAST-FORWARD方式，此时将master指向dev的当前提交，所以合并速度非常快。<br>如下图所示：<br><img src="/images/load.gif" data-original="7.png" alt="7"><br>但是这样会存在一个问题，删除分支后，会丢掉分支信息。<br>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。<br><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code>，但是我刚才试了试，发现只有第一个文件的合并采用的Fast forward模式，后来都是没采用，如下图所示分支结构为：<br><img src="/images/load.gif" data-original="8.png" alt="8"></p>
 <h2 id="git-push推送的是哪一个分支？"><a href="#git-push推送的是哪一个分支？" class="headerlink" title="git push推送的是哪一个分支？"></a>git push推送的是哪一个分支？</h2><p>现在我们本地有两个分支主分支和dev分支，现在要推送至远程仓库里，就要使用git push命令，其实我们之前所使用的git push命令默认都是在主分支，然后默认也是推送给仓库里的主分支上的<br>现在进行细化：<br>如果想推送某一分支到远程仓库的某一分支：</p>
 <ol>
 <li>切换到对应分支，如<code>git checkout dev</code></li>
@@ -413,6 +413,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/20/git-hook/" rel="prev" title="git-hook">
+                git-hook <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -493,7 +497,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
