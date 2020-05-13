@@ -79,19 +79,16 @@
 
 
 
-<meta name="description" content="本次实例的任务是从中国电影网上爬取2019年所有上映电影的海报，并按月分类">
+<meta name="description" content="前面在《林老师之系统安全系列三》这篇文章中曾经介绍过SUID这种机制，但是这种方式也存在着安全隐患，例如vim如果不小心被suid修饰，那么它就可以去修改&#x2F;etc&#x2F;shadow这个文件，另外如果一个被suid修饰的二进制程序存在漏洞，就可能会被利用，root权限外流。所以今天讨论一种能力（capability）机制。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python爬虫实例:爬取电影海报">
-<meta property="og:url" content="http://yoursite.com/2020/03/24/python%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B-%E7%88%AC%E5%8F%96%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5/index.html">
+<meta property="og:title" content="Linux-capability">
+<meta property="og:url" content="http://yoursite.com/2020/05/08/Linux-capability/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="本次实例的任务是从中国电影网上爬取2019年所有上映电影的海报，并按月分类">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="article:published_time" content="2020-03-24T01:32:39.000Z">
-<meta property="article:modified_time" content="2020-03-24T01:50:15.467Z">
+<meta property="og:description" content="前面在《林老师之系统安全系列三》这篇文章中曾经介绍过SUID这种机制，但是这种方式也存在着安全隐患，例如vim如果不小心被suid修饰，那么它就可以去修改&#x2F;etc&#x2F;shadow这个文件，另外如果一个被suid修饰的二进制程序存在漏洞，就可能会被利用，root权限外流。所以今天讨论一种能力（capability）机制。">
+<meta property="article:published_time" content="2020-05-08T06:35:39.000Z">
+<meta property="article:modified_time" content="2020-05-08T09:09:48.156Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -121,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/24/python爬虫实例-爬取电影海报/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/08/Linux-capability/"/>
 
 
 
 
 
-  <title>python爬虫实例:爬取电影海报 | eAzure</title>
+  <title>Linux-capability | eAzure</title>
   
 
 
@@ -244,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/python%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B-%E7%88%AC%E5%8F%96%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/Linux-capability/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -261,7 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python爬虫实例:爬取电影海报</h1>
+          <h1 class="post-title" itemprop="name headline">Linux-capability</h1>
         
 
         <div class="post-meta">
@@ -274,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T09:32:39+08:00">
-                2020-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T14:35:39+08:00">
+                2020-05-08
               </time>
             
 
@@ -298,8 +295,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">系统安全</span>
                   </a>
                 </span>
 
@@ -340,14 +337,26 @@
       
 
       
-        <p>本次实例的任务是从中国电影网上爬取2019年所有上映电影的海报，并按月分类</p>
+        <p>前面在《林老师之系统安全系列三》这篇文章中曾经介绍过SUID这种机制，但是这种方式也存在着安全隐患，例如<code>vim</code>如果不小心被suid修饰，那么它就可以去修改/etc/shadow这个文件，另外如果一个被suid修饰的二进制程序存在漏洞，就可能会被利用，root权限外流。所以今天讨论一种能力（capability）机制。</p>
 <a id="more"></a>
-<p>2019年电影日历：<a href="https://www.1905.com/mdb/film/calendaryear/2019" target="_blank" rel="noopener" title="链接">链接</a></p>
-<h1 id="网页结构"><a href="#网页结构" class="headerlink" title="网页结构"></a>网页结构</h1><p>F12查看html文件，看到网页结构非常友好：<br><img src="/images/load.gif" data-original="/2020/03/24/python%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B-%E7%88%AC%E5%8F%96%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5/1.png" alt="1"><br>每一个月份下的所有电影都在一个div class=”film-col layout”下面的dl class=”clear”中的&lt;dd&gt;标签下，但是此时里面包含的是对应该部电影的链接<br>点进去查看下一层网页的结构<br><img src="/images/load.gif" data-original="/2020/03/24/python%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B-%E7%88%AC%E5%8F%96%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5/2.png" alt="2"><br>我们可以看到海报图片位于img class=”poster”下，这其实比较好爬</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>根据网页结构的分析，我们采用requests+bs4(BeautifulSoup4)库即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import time</span><br><span class="line">import os</span><br><span class="line">def getFilmHTMLText(url,code&#x3D;&#39;utf-8&#39;):</span><br><span class="line">    try:</span><br><span class="line">        #加上头部信息后可避免有时候抓取为空的情况</span><br><span class="line">        headers &#x3D; &#123;&#39;User-Agent&#39;: &#39;Mozilla&#x2F;5.0 (Windows NT 6.1; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;58.0.3029.110 Safari&#x2F;537.36&#39;&#125;</span><br><span class="line">        r&#x3D;requests.get(url,timeout&#x3D;30,headers&#x3D;headers)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding&#x3D;code</span><br><span class="line">        return r.text</span><br><span class="line">    except:</span><br><span class="line">        return &quot;&quot;</span><br><span class="line">def getThePicture(url,month,countInMonth):</span><br><span class="line">    print(url)</span><br><span class="line">    #解析具体每个电影的页面获取其海报</span><br><span class="line">    #爬取完图片后睡眠5s</span><br><span class="line">    html&#x3D;getFilmHTMLText(url)</span><br><span class="line">    soup&#x3D;BeautifulSoup(html,&#39;html.parser&#39;)</span><br><span class="line">    img&#x3D;soup.find_all(&#39;img&#39;,&#123;&quot;class&quot;:&quot;poster&quot;&#125;)</span><br><span class="line">    print(img[0].attrs[&#39;src&#39;])</span><br><span class="line">    try:</span><br><span class="line">        headers &#x3D; &#123;&#39;User-Agent&#39;: &#39;Mozilla&#x2F;5.0 (Windows NT 6.1; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;58.0.3029.110 Safari&#x2F;537.36&#39;&#125;</span><br><span class="line">        r&#x3D;requests.get(img[0].attrs[&#39;src&#39;],timeout&#x3D;30,headers&#x3D;headers)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        filePath&#x3D;&#39;E:&#x2F;大学课程&#x2F;大三下学期&#x2F;数据可视化&#x2F;电影海报&#x2F;&#39;+str(month)+&#39;月&#x2F;&#39;+str(countInMonth)+&#39;.jpg&#39;</span><br><span class="line">        with open(filePath,&#39;wb&#39;) as f:</span><br><span class="line">                f.write(r.content)</span><br><span class="line">    except:</span><br><span class="line">        print(&quot;出现异常！&quot;)</span><br><span class="line"></span><br><span class="line">    time.sleep(5)</span><br><span class="line"></span><br><span class="line">def getTheFilm(lst,filmURL):</span><br><span class="line">    html&#x3D;getFilmHTMLText(filmURL)</span><br><span class="line">    soup&#x3D;BeautifulSoup(html,&#39;html.parser&#39;)</span><br><span class="line">    dl&#x3D;soup.find_all(&#39;dl&#39;,&#123;&quot;class&quot;:&quot;clear&quot;&#125;)</span><br><span class="line">    count&#x3D;1</span><br><span class="line">    for f in dl:</span><br><span class="line">        x&#x3D;f.find_all(&#39;a&#39;,&#123;&quot;class&quot;:&quot;film&quot;&#125;)</span><br><span class="line">        print(&quot;月份&quot; + str(count))</span><br><span class="line">        countInMounth&#x3D;0</span><br><span class="line">        for pic in x:</span><br><span class="line">            #https:&#x2F;&#x2F;www.1905.com</span><br><span class="line">            #get the concrete film&#39;s url</span><br><span class="line">            url&#x3D;&quot;https:&#x2F;&#x2F;www.1905.com&quot;+pic.attrs[&#39;href&#39;]</span><br><span class="line">            getThePicture(url,count,countInMounth)</span><br><span class="line">            countInMounth+&#x3D;1</span><br><span class="line">        count+&#x3D;1</span><br><span class="line">    print(&quot;下载海报完成！&quot;)</span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    filmURL&#x3D;&quot;https:&#x2F;&#x2F;www.1905.com&#x2F;mdb&#x2F;film&#x2F;calendaryear&#x2F;2019&quot;</span><br><span class="line">    flist&#x3D;[]</span><br><span class="line">    getTheFilm(flist,filmURL)</span><br></pre></td></tr></table></figure>
-<p>这里需要注意的是在使用requests库的时候最好加上头部信息，否则可能爬取的内容是空的，还有BeautifulSoup的find_all函数真好用</p>
-
+<p>为什么SUID机制不安全呢？主要原因是因为SUID对于权限控制太过粗放，一旦被修饰了s位，便拥有了root的权限，如果程序没有漏洞，那么就以root身份安分地执行该做的事；如果该程序存在漏洞，那么可能就会突破程序本身所涉及的范围，以root权限去干一些其他的事情；所以权限需要细分，目前二进制程序只在需要特权的时候才将自己的euid设为0，这里应该就是对应我们曾说过的Saved UID（暂存用户ID），还有一种实现按需授权的能力（capability）机制。</p>
+<h3 id="capability"><a href="#capability" class="headerlink" title="capability"></a>capability</h3><p>该机制将root的权限进行功能组细分，可以分别启用或禁用，在执行特权操作时，如果euid不是0，便去检查该进程是否具有该特权操作所具有的capability，capability细分到线程。</p>
+<h4 id="常见的capability"><a href="#常见的capability" class="headerlink" title="常见的capability"></a>常见的capability</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CAP_AUDIT_CONTROL 启用和禁用内核审计；改变审计过滤规则；检索审计状态和过滤规则</span><br><span class="line">CAP_AUDIT_READ 允许通过multicast netlink套接字读取审计日志</span><br><span class="line">CAP_AUDIT_WRITE 将记录写入内核审计日志</span><br><span class="line">CAP_BLOCK_SUSPEND 使用可以阻止系统挂起的特性</span><br><span class="line">CAP_CHOWN 修改文件所有者的权限</span><br><span class="line">CAP_DAC_OVERRIDE 忽略文件的DAC访问限制</span><br><span class="line">CAP_DAC_READ_SEARCH 忽略文件读及目录搜索的DAC访问限制</span><br><span class="line">CAP_FOWNER 忽略文件属主ID必须和进程用户ID相匹配的限制</span><br><span class="line">CAP_FSETID 允许设置文件的setuid位</span><br><span class="line">CAP_IPC_LOCK 允许锁定共享内存片段</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>更多可参考<a href="http://man7.org/linux/man-pages/man7/capabilities.7.html" target="_blank" rel="noopener" title="capabilities">capabilities</a></p>
+<p>capability可以在进程执行时赋予，也可以从父进程中继承。</p>
+<h3 id="线程的capabilities"><a href="#线程的capabilities" class="headerlink" title="线程的capabilities"></a>线程的capabilities</h3><p>每一个线程，对应着5个capabilities集合，每一个集合包含0个或多个capability，分别是：</p>
+<ul>
+<li>Permitted</li>
+<li>Effective</li>
+<li>Inheritable</li>
+<li>Bounding</li>
+<li>Ambient</li>
+</ul>
+<h4 id="Permitted"><a href="#Permitted" class="headerlink" title="Permitted"></a>Permitted</h4><p>该集合定义了线程所能拥有的特权上限，不在该集合中的capability，该线程就不能使用这个capability所对应的特权操作。</p>
+<h4 id="Effective"><a href="#Effective" class="headerlink" title="Effective"></a>Effective</h4><p>检查线程是否拥有执行某种特权的capability时，检查的是该集合，那Permitted这个集合是干啥的呢？Effective集合是Permitted集合的子集，可以删除Effective集合中的某个capability，在需要时，再从Permitted集合中移入，可以达到临时禁用的目的。</p>
+<h4 id="Inheritable"><a href="#Inheritable" class="headerlink" title="Inheritable"></a>Inheritable</h4><p>通过execve启动的新程序可以继承的集合。</p>
+<h4 id="Bounding"><a href="#Bounding" class="headerlink" title="Bounding"></a>Bounding</h4><p>如果某个capability不在Bounding集合中，即使它在Permitted集合中，该线程也不能将该capability添加到它的Inheritable集合中（也就是说Bounding里的才是可以往下继承的，而Permitted里的不一定能往下继承）。Bounding集合在执行fork系统调用时会传递给子进程的Bounding集合，并且在执行execve系统调用后保持不变。</p>
+<h4 id="Ambient"><a href="#Ambient" class="headerlink" title="Ambient"></a>Ambient</h4>
       
     </div>
     
@@ -371,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%B8%89/" rel="next" title="计算机网络之传输层三">
-                <i class="fa fa-chevron-left"></i> 计算机网络之传输层三
+              <a href="/2020/04/26/%E6%AF%8F%E6%97%A5%E8%8B%B1%E8%AF%AD/" rel="next" title="每日英语">
+                <i class="fa fa-chevron-left"></i> 每日英语
               </a>
             
           </div>
@@ -380,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/24/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96-%E7%BB%9F%E8%AE%A1%E7%94%B5%E5%BD%B1%E6%B5%B7%E6%8A%A5%E9%A2%9C%E8%89%B2/" rel="prev" title="数据可视化-统计电影海报颜色">
-                数据可视化-统计电影海报颜色 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +525,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网页结构"><span class="nav-number">1.</span> <span class="nav-text">网页结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#capability"><span class="nav-number">1.</span> <span class="nav-text">capability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的capability"><span class="nav-number">1.1.</span> <span class="nav-text">常见的capability</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的capabilities"><span class="nav-number">2.</span> <span class="nav-text">线程的capabilities</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Permitted"><span class="nav-number">2.1.</span> <span class="nav-text">Permitted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Effective"><span class="nav-number">2.2.</span> <span class="nav-text">Effective</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Inheritable"><span class="nav-number">2.3.</span> <span class="nav-text">Inheritable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bounding"><span class="nav-number">2.4.</span> <span class="nav-text">Bounding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ambient"><span class="nav-number">2.5.</span> <span class="nav-text">Ambient</span></a></li></ol></li></ol></div>
             
 
           </div>
