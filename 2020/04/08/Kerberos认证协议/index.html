@@ -85,10 +85,14 @@
 <meta property="og:url" content="http://yoursite.com/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="eAzure">
 <meta property="og:description" content="今天上课，老师问了一个问题，知道哪些关于认证的协议？然后弹幕中缓缓飘过Kerberos，那我们就去了解一下这个协议">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
+<meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-04-08T08:00:25.000Z">
-<meta property="article:modified_time" content="2020-04-08T11:32:12.074Z">
+<meta property="article:modified_time" content="2020-05-27T09:39:51.519Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -340,7 +344,14 @@
         <p>今天上课，老师问了一个问题，知道哪些关于认证的协议？然后弹幕中缓缓飘过Kerberos，那我们就去了解一下这个协议</p>
 <a id="more"></a>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="https://blog.csdn.net/wulantian/article/details/42418231" target="_blank" rel="noopener" title="kerberos认证原理---讲的非常细致，易懂">kerberos认证原理—讲的非常细致，易懂</a><br>确实讲得挺细的，缺点就是图没了hh</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Kerberos是MIT提出的一种网络身份验证协议，通过使用密钥技术为客户端/服务器应用程序提供强身份验证。</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Kerberos是MIT提出的一种网络身份验证协议，通过使用密钥技术为分布式环境中客户端/服务器应用程序提供<font color="red">相互的</font>强身份验证。</p>
+<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>在一个开放的分布式网络环境中，用户通过工作站访问服务器提供的服务，有很多问题：</p>
+<ul>
+<li>工作站上的用户可以冒充另一用户操作；</li>
+<li>用户可以改变工作站地址冒充另一台工作站；</li>
+<li>用户可以窃听并回放他人的信息交换，获得对于某种服务的访问权或中断服务的运行；</li>
+<li>使用假冒服务器从而骗得用户的机密信息</li>
+</ul>
 <h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>首先，我们先知道一个最基本的如何确定他人身份的机制，即最基本的认证机制。<br>如果一个秘密仅被A和B知道，那么有人向B说他是A，那么B让他出示该秘密，如果是对的，那么B就可以认为这个人就是A。<br>进一步引入密钥的话，例如此时有一个Client和一个Server，双方共同知道一个密钥key，该密钥还仅被这两个人知道，那么Server验证Client的身份时，让Client出示自身身份信息和被key加密后的身份信息，然后Server端解密后进行比对。</p>
 <h1 id="引入KDC"><a href="#引入KDC" class="headerlink" title="引入KDC"></a>引入KDC</h1><p>在基本框架中，c和s两端，需要一个仅双方知道的key，这个key从哪儿来呢，我们已如kdc(Kerberos Distribution Center)，它是Client和Server共同信任的第三方。<br>而Kerberos起源于希腊神话，是一只长着3个头颅的神犬，所以三个头颅分别代表Client、Server和KDC。<br>后面的session key的分发过程其实和我们之前所了解的密钥分发中的对称密钥分发的过程基本上是一致的<br>附上我之前写过的文章的链接<a href="https://eazure.github.io/2020/03/20/%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91/" target="_blank" rel="noopener" title="密钥分发">密钥分发</a><br>但是要更完善一些，我仅针对我对于参考文章的理解和顺序整理，进行简单总结</p>
 <h1 id="Client与KDC的交互过程"><a href="#Client与KDC的交互过程" class="headerlink" title="Client与KDC的交互过程"></a>Client与KDC的交互过程</h1><p>在密钥分发过程中，我们知道Client首先要去向KDC请求会话密钥，这个过程在Kerberos里面比较完善<br>Client想要从KDC那里获取与Server的会话密钥前，需要先获得一个TGT(Ticket Granting Ticket)，TGT的分发方仍是KDC，过程如下：</p>
@@ -361,6 +372,47 @@
 <li>Server接收到这两部分信息后，用自己的主密钥去解密M2，获得会话密钥和Client的一些信息(C-Info1)，后去解密另一部分得到Authenticator信息，然后比较C-Info1与Authenticator中的Client的一些信息，从而进行认证<br>那为啥需要时间戳呢？也是为了避免重放攻击，Server得到Authenticator信息中的时间戳后与当前时间进行比较，如果偏差超过一个可以接受的时间范围时，便断开与该Client的连接，不信任它（Server维护着一个列表，这个列表记录着在这个可接受的时间范围内所有进行认证的Client和认证的时间。对于时间偏差在这个可接受的范围中的Client，Server会从这个这个列表中获得最近一个该Client的认证时间，只有当Authenticator中的Timestamp晚于通过一个Client的最近的认证时间的情况下，Server采用进行后续的认证流程。）括号里的从参考博客里摘的，意思就是首先你Client的时间戳应该在一个时间范围内，其次我Server这边还维护着最近一次认证的时间，你又肯定不能比这个时间早了</li>
 <li>不仅Server端可以判定你Client端传来的信息是否是重放或被劫持的，Client端也可以验证Server端传来的信息是否是重放或被劫持的，如果Client需要对他访问的Server进行认证，会在它向Server发送的消息中设置一个是否需要认证的Flag。Server在对Client认证成功之后，会把Authenticator中的时间戳提取出来，通过session key进行加密，当Client接收到并使用session key进行解密之后，如果确认时间戳和原来的完全一致，那么它可以认定Server正是它试图访问的Server；为啥要单独将时间戳提取出来呢？也是为了避免重放攻击，避免监听者原样返回信息。</li>
 </ol>
+<p>大体过程是这样的，然后我在一门课上老师又介绍了一遍这个协议</p>
+<h1 id="老师版本"><a href="#老师版本" class="headerlink" title="老师版本"></a>老师版本</h1><p>老师的版本和上面的大体思路是一样的，我来总结下（都是渐进改进的）</p>
+<h2 id="简单的认证对话"><a href="#简单的认证对话" class="headerlink" title="简单的认证对话"></a>简单的认证对话</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/1.png" alt="1"><br>一些符号：<br>C——客户端   AS——认证服务器（第三方）    V——服务器<br>IDc——C的用户标识    IDv——V的标识    Pc——C的用户口令<br>ADc——C的网络地址    Kv——AS与V共享的密钥<br>过程：</p>
+<ol>
+<li>C与AS通信，C发送(IDc||Pc||IDv)</li>
+<li>AS验证C的身份（根据ID找到密钥验证）后返回一个它可以去访问V的票据Ticket<br>Ticket=Ekv[IDc||ADc||IDv]</li>
+<li>用户C与V通信，发送(IDc||Ticket)</li>
+<li>V解密Ticket得到IDv（发现是自己）和IDc进行验证</li>
+</ol>
+<p>存在的问题：</p>
+<ul>
+<li>没有设置访问有效时间</li>
+<li>在第一步中Pc是明文传递</li>
+<li>C无法验证V</li>
+<li>用户每访问一个新服务就得需要一个新票据，然后就得输入密码</li>
+<li>重放攻击威胁</li>
+</ul>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/2.png" alt="2"><br>增加一个票据许可服务器（TGS）（上面都是集中在KDC里），用户首先向AS请求一张票据许可票Ticket<sub>tgs</sub>，然后就可以凭该许可票向TGS申请访问某个服务的Ticket，这样在许可票的有限期内，即使访问新的服务也不用请求AES，直接请求TGS即可<br>具体过程如下：</p>
+<ol>
+<li>C与AS通信，此时不再传递明文密码，而传递(IDc||IDtgs)，因为TGS有多个，所以需指明是申请的哪一个；</li>
+<li>AS返给C用（用户口令导出的密钥，比如对用户口令哈希）加密的Ticket<sub>tgs</sub>，Ticket<sub>tgs</sub>=EKtgs[IDc||ADc||IDtgs||TS1||Lifetime1]<br>TS1是签发的时间戳，Lifetime1是该许可证存活的有效期</li>
+<li>此时C拿到了许可证，便可以向TGS服务器申请访问某个服务的Ticket，此时C给TGS传递(IDc||IDv||Ticket<sub>tgs</sub>)</li>
+<li>TGS拿到Ticket<sub>tgs</sub>对其进行解密验证是否有效合理，然后确认无误后返给其Ticket<br>Ticket=EKv[IDc||ADc||IDv||TS2||Lifetime2]<br>TS2也是签发的时间戳，Lifetime2是该Ticket的生存期</li>
+<li>然后C就可以使用该Ticket去访问对应的服务了</li>
+</ol>
+<p>但是仍然存在问题：</p>
+<ul>
+<li>无论是许可证还是票据的生存期长短难以选择</li>
+<li>重放攻击</li>
+<li>C仍不能验证V</li>
+</ul>
+<h2 id="进一步改进"><a href="#进一步改进" class="headerlink" title="进一步改进"></a>进一步改进</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/3.png" alt="3"></p>
+<ol>
+<li>C还是要向AS申请许可证，C向AS发送(IDc||IDtgs||TS1)，此时增加了一个TS1，这个TS1也是C申请时签发的时间戳，目的是为了允许AS验证客户端C的时钟是否与AS同步；</li>
+<li>AS验证后返给C(EKc[Kc,tgs||IDtgs||TS2||LifeTime1||Ticket^tgs])<br>Kc,tgs是C与TGS通信的会话密钥<br>Ticket<sub>tgs</sub>=EKtgs[Kc,tgs||IDc||ADc||IDtgs||TS2||Lifetime1]</li>
+<li>此时C拿到许可证后，与TGS进行通信，C向TGS传递(IDv||Ticket<sub>tgs</sub>||Authenticator)<br>Authenticator是C用Kc,tgs加密生成的认证符，用于TGS端认证<br>Authenticator=EKc,tgs[IDc||ADc||TS3]</li>
+<li>TGS端拿到后，先用Ktgs解密Ticket<sub>tgs</sub>，拿到Kc,tgs，然后用其验证Authenticator是否可以正确解开，其他信息是否正确后，返给C<br>Kc,tgs[Kc,v||IDv||TS4||Ticket]<br>Kc,v就是CyuV之间通信的密钥<br>Ticket=EKv[Kc,v||IDc||ADc||IDv||TS4||Lifetime2]</li>
+<li>C与V建立通信，C向V传递(Ticket||Authenticator)<br>Authenticator=EKc,v[IDc||ADc||TS5]</li>
+<li>V接收到后进行验证解密Ticket拿到Kc,v，验证Authenticator及其他消息无误后，为了让C也验证自己，向C传递(EKc,v[TS5+1])<br>然后C就可以确定这不是重放的消息，从而验证了V</li>
+</ol>
+<p>总体来说，一张许可证，一张票据。</p>
 
       
     </div>
@@ -478,7 +530,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -534,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本原理"><span class="nav-number">3.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引入KDC"><span class="nav-number">4.</span> <span class="nav-text">引入KDC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Client与KDC的交互过程"><span class="nav-number">5.</span> <span class="nav-text">Client与KDC的交互过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Client与Server的交互过程"><span class="nav-number">6.</span> <span class="nav-text">Client与Server的交互过程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">1.</span> <span class="nav-text">参考文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要解决的问题"><span class="nav-number">2.1.</span> <span class="nav-text">要解决的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本原理"><span class="nav-number">3.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引入KDC"><span class="nav-number">4.</span> <span class="nav-text">引入KDC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Client与KDC的交互过程"><span class="nav-number">5.</span> <span class="nav-text">Client与KDC的交互过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Client与Server的交互过程"><span class="nav-number">6.</span> <span class="nav-text">Client与Server的交互过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#老师版本"><span class="nav-number">7.</span> <span class="nav-text">老师版本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的认证对话"><span class="nav-number">7.1.</span> <span class="nav-text">简单的认证对话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进"><span class="nav-number">7.2.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步改进"><span class="nav-number">7.3.</span> <span class="nav-text">进一步改进</span></a></li></ol></li></ol></div>
             
 
           </div>

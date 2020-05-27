@@ -79,23 +79,16 @@
 
 
 
-<meta name="description" content="将本扫描平台命名为E-Scan 平台搭建背景需求进行网络安全扫描，和对文件系统进行杀毒扫描一样，杀毒扫描需要病毒特征库，网络安全扫描需要漏洞攻击库，而且这些库都在各自更新，除了可以自由使用的版本，有的还有昂贵的商业版本。因此，仅用一款扫描工具是不够的，要尽量多找不同的工具、使用不同来源的漏洞攻击库。因此，需要建立一个综合各种扫描工具、支持多种漏洞攻击库的集成系统，服务于生产，也可以服务教学需求。">
+<meta name="description" content="我又回来了，最近写疫情数据可视化有些上头。这篇博客内容不多，把《Kerberos认证协议》更新了一下，然后看到一句话“每当有想学习的念头，都有可能是未来的你在向你求救”，哇哇哇震撼了！今天老师上课提了“挑战应答”，我感觉这个名词挺熟悉的，但一下子想不起来到底是干啥的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="E-Scan">
-<meta property="og:url" content="http://yoursite.com/2020/02/29/E-Scan/index.html">
+<meta property="og:title" content="挑战应答认证机制">
+<meta property="og:url" content="http://yoursite.com/2020/05/27/%E6%8C%91%E6%88%98%E5%BA%94%E7%AD%94%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="将本扫描平台命名为E-Scan 平台搭建背景需求进行网络安全扫描，和对文件系统进行杀毒扫描一样，杀毒扫描需要病毒特征库，网络安全扫描需要漏洞攻击库，而且这些库都在各自更新，除了可以自由使用的版本，有的还有昂贵的商业版本。因此，仅用一款扫描工具是不够的，要尽量多找不同的工具、使用不同来源的漏洞攻击库。因此，需要建立一个综合各种扫描工具、支持多种漏洞攻击库的集成系统，服务于生产，也可以服务教学需求。">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="og:image" content="http://yoursite.com/images/load.gif">
-<meta property="article:published_time" content="2020-02-29T11:59:31.000Z">
-<meta property="article:modified_time" content="2020-02-29T12:02:54.369Z">
+<meta property="og:description" content="我又回来了，最近写疫情数据可视化有些上头。这篇博客内容不多，把《Kerberos认证协议》更新了一下，然后看到一句话“每当有想学习的念头，都有可能是未来的你在向你求救”，哇哇哇震撼了！今天老师上课提了“挑战应答”，我感觉这个名词挺熟悉的，但一下子想不起来到底是干啥的。">
+<meta property="article:published_time" content="2020-05-27T08:27:53.000Z">
+<meta property="article:modified_time" content="2020-05-27T10:07:40.435Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/load.gif">
 
 
 
@@ -125,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/29/E-Scan/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/27/挑战应答认证机制/"/>
 
 
 
 
 
-  <title>E-Scan | eAzure</title>
+  <title>挑战应答认证机制 | eAzure</title>
   
 
 
@@ -248,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/E-Scan/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/27/%E6%8C%91%E6%88%98%E5%BA%94%E7%AD%94%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eAzure">
@@ -265,7 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">E-Scan</h1>
+          <h1 class="post-title" itemprop="name headline">挑战应答认证机制</h1>
         
 
         <div class="post-meta">
@@ -278,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-29T19:59:31+08:00">
-                2020-02-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-27T16:27:53+08:00">
+                2020-05-27
               </time>
             
 
@@ -302,8 +295,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%89%AB%E6%8F%8F%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index">
-                    <span itemprop="name">扫描平台搭建</span>
+                  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" itemprop="url" rel="index">
+                    <span itemprop="name">密码学</span>
                   </a>
                 </span>
 
@@ -344,33 +337,18 @@
       
 
       
-        <p>将本扫描平台命名为E-Scan</p>
-<h1 id="平台搭建背景"><a href="#平台搭建背景" class="headerlink" title="平台搭建背景"></a>平台搭建背景</h1><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>进行网络安全扫描，和对文件系统进行杀毒扫描一样，杀毒扫描需要病毒特征库，网络安全扫描需要漏洞攻击库，而且这些库都在各自更新，除了可以自由使用的版本，有的还有昂贵的商业版本。因此，仅用一款扫描工具是不够的，要尽量多找不同的工具、使用不同来源的漏洞攻击库。因此，需要建立一个综合各种扫描工具、支持多种漏洞攻击库的集成系统，服务于生产，也可以服务教学需求。</p>
+        <p>我又回来了，最近写疫情数据可视化有些上头。<br>这篇博客内容不多，把《Kerberos认证协议》更新了一下，然后看到一句话“每当有想学习的念头，都有可能是未来的你在向你求救”，哇哇哇震撼了！<br>今天老师上课提了“挑战应答”，我感觉这个名词挺熟悉的，但一下子想不起来到底是干啥的。</p>
 <a id="more"></a>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>基本的期望形式是：<br>1、一个docker容器（save或export）导出的镜像包格式，这样便于发行、部署和使用；<br>2、有个Web界面；<br>3、有n个分类的、m个扫描器，可以组合使用，一键扫描；<br>4、功能或特性等方面：</p>
-<ul>
-<li>能扫描网站，也能扫描操作系统；</li>
-<li>能扫windows，也能扫linux；</li>
-<li>能黑盒模式，也能白盒模式扫描；</li>
-<li>能更新扫描库</li>
-</ul>
-<p>5、能出具关于扫描结果的综合性中文版本的报告。不要仅仅提供每个工具各自单独的扫描报告，那种看不懂；<br>6、给出安全改进建议；</p>
-<h1 id="扫描平台初步搭建（一）"><a href="#扫描平台初步搭建（一）" class="headerlink" title="扫描平台初步搭建（一）"></a>扫描平台初步搭建（一）</h1><h2 id="开发框架"><a href="#开发框架" class="headerlink" title="开发框架"></a>开发框架</h2><p>前端界面采用vue架构，后端采用springboot架构</p>
-<h2 id="开发设想"><a href="#开发设想" class="headerlink" title="开发设想"></a>开发设想</h2><p>目前仅仅接触nmap，所以制作了一个有关nmap的在线扫描平台，后期会渐渐根据自己的使用情况逐渐增加工具并进行整合<br>初步设想是，用户在前端输入命令，后端在系统环境中执行命令，但听闻还有一种agent的高大上技术，后期会去了解</p>
-<h2 id="前端搭建"><a href="#前端搭建" class="headerlink" title="前端搭建"></a>前端搭建</h2><p>本次前端也是第一次采用vue架构，之前有了解过，但感觉这个上手可能不是太容易，但经过短时间学习和有过小程序开发经验后，基本的用法还是比较好掌握的，最重要的特点就是组件化，感觉vue是一层一层嵌套的，像最外层就是index.html来封装的，具体细节不做过多介绍，坑挺多，不过挺好用的（结合element-ui）<br>得开发结束后会将代码传至github<br>下面是界面展示：</p>
-<ul>
-<li>首页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/1.png" alt="首页"></li>
-<li>扫描页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/2.png" alt="扫描页"></li>
-<li>日志页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/3.png" alt="日志页"></li>
-<li>详细日志页<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/4.png" alt="详细日志页"><br>详细日志页使用的是nmap的模板生成的html界面</li>
-</ul>
-<h2 id="后台搭建"><a href="#后台搭建" class="headerlink" title="后台搭建"></a>后台搭建</h2><p>后台用的是自己比较熟悉的springboot，也没啥好说的<br>目前数据库只有两张表user和command，结构如下</p>
-<ul>
-<li>user<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/5.png" alt="user"></li>
-<li>command<br><img src="/images/load.gif" data-original="/2020/02/29/E-Scan/6.png" alt="command"></li>
-</ul>
-<p>但是由于没有搞懂springboot下的thymeleaf怎样更改到工程外文件路径，所以采用了一种简单的方式，让扫描生成的html文件能被访问到：<br><code>python -m SimpleHTTPServer 8081</code></p>
-<h2 id="后期展望"><a href="#后期展望" class="headerlink" title="后期展望"></a>后期展望</h2><p>目前先将架子建设完毕，然后测试各开源扫描工具，进行介绍与集成</p>
+<p>简单来说就是在该认证机制中，客户端向服务器端发起认证请求，认证者（服务器）每次向被认证者（客户端）发送一个不同的“挑战”字串，客户端收到这个“挑战”字串后，按照双方事先协商好的方法应答，回答得到，挑战成功。<br>过程比如：</p>
+<ol>
+<li>客户向认证服务器发出请求，要求进行身份认证；</li>
+<li>认证服务器从用户数据库中查询用户是否是合法的用户，若不是，则不做进一步处理；</li>
+<li>认证服务器内部产生一个随机数，作为”提问”，发送给客户；</li>
+<li>客户将用户口令和随机数合并，使用单向Hash函数（例如MD5算法）生成一个字节串作为应答；</li>
+<li>认证服务器将应答串与自己的计算结果比较，若二者相同，则通过一次认证；否则，认证失败；</li>
+<li>认证服务器通知客户认证成功或失败</li>
+</ol>
+<p>比如我们在设置密保问题然后之后找回密码时是这样的。</p>
 
       
     </div>
@@ -395,8 +373,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/24/%E5%9B%BE%E5%83%8F%E6%95%B0%E5%AD%97%E5%8C%96/" rel="next" title="图像数字化">
-                <i class="fa fa-chevron-left"></i> 图像数字化
+              <a href="/2020/05/13/%E6%88%91%E7%9A%84github%E9%A1%B9%E7%9B%AE/" rel="next" title="我的github项目">
+                <i class="fa fa-chevron-left"></i> 我的github项目
               </a>
             
           </div>
@@ -404,10 +382,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/29/Arnold%E5%8F%98%E6%8D%A2/" rel="prev" title="Arnold变换">
-                Arnold变换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -459,17 +433,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -534,22 +499,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#平台搭建背景"><span class="nav-number">1.</span> <span class="nav-text">平台搭建背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.2.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扫描平台初步搭建（一）"><span class="nav-number">2.</span> <span class="nav-text">扫描平台初步搭建（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开发框架"><span class="nav-number">2.1.</span> <span class="nav-text">开发框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发设想"><span class="nav-number">2.2.</span> <span class="nav-text">开发设想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端搭建"><span class="nav-number">2.3.</span> <span class="nav-text">前端搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台搭建"><span class="nav-number">2.4.</span> <span class="nav-text">后台搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后期展望"><span class="nav-number">2.5.</span> <span class="nav-text">后期展望</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
