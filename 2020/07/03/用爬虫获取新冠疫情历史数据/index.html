@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="之前开源的新冠疫情历史数据见新冠疫情历史数据-github仓库，有好多人问我这些数据是怎么获取的，因为最近一个月一直在忙创新实训的事情，所以也一直没有时间把博客写出来，下面我来讲一下我是如何获取到这些数据的。 数据是在《数据可视化》这门课程开课初期使用python爬虫从全球新冠病毒最新实时疫情地图_丁香园爬取到的，在此非常感谢丁香园！ 第一阶段疫情数据发布平台有每日头条、腾讯网、丁香医生、国家卫健">
+<meta name="description" content="之前开源的新冠疫情历史数据见新冠疫情历史数据-github仓库，有好多人问我这些数据是怎么获取的，因为最近一个月一直在忙创新实训的事情，所以也一直没有时间把博客写出来，下面我来讲一下我是如何获取到这些数据的。 数据是在《数据可视化》这门课程开课初期使用python爬虫从全球新冠病毒最新实时疫情地图_丁香园爬取到的，在此非常感谢丁香园！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用爬虫获取新冠疫情历史数据">
 <meta property="og:url" content="http://yoursite.com/2020/07/03/%E7%94%A8%E7%88%AC%E8%99%AB%E8%8E%B7%E5%8F%96%E6%96%B0%E5%86%A0%E7%96%AB%E6%83%85%E5%8E%86%E5%8F%B2%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="eAzure">
-<meta property="og:description" content="之前开源的新冠疫情历史数据见新冠疫情历史数据-github仓库，有好多人问我这些数据是怎么获取的，因为最近一个月一直在忙创新实训的事情，所以也一直没有时间把博客写出来，下面我来讲一下我是如何获取到这些数据的。 数据是在《数据可视化》这门课程开课初期使用python爬虫从全球新冠病毒最新实时疫情地图_丁香园爬取到的，在此非常感谢丁香园！ 第一阶段疫情数据发布平台有每日头条、腾讯网、丁香医生、国家卫健">
+<meta property="og:description" content="之前开源的新冠疫情历史数据见新冠疫情历史数据-github仓库，有好多人问我这些数据是怎么获取的，因为最近一个月一直在忙创新实训的事情，所以也一直没有时间把博客写出来，下面我来讲一下我是如何获取到这些数据的。 数据是在《数据可视化》这门课程开课初期使用python爬虫从全球新冠病毒最新实时疫情地图_丁香园爬取到的，在此非常感谢丁香园！">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="og:image" content="http://yoursite.com/images/load.gif">
 <meta property="article:published_time" content="2020-07-03T08:18:23.000Z">
-<meta property="article:modified_time" content="2020-07-03T08:59:16.342Z">
+<meta property="article:modified_time" content="2020-07-03T09:03:08.275Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/load.gif">
@@ -350,6 +350,8 @@
       
         <p>之前开源的新冠疫情历史数据见<a href="https://github.com/eAzure/COVID-19-Data" target="_blank" rel="noopener" title="新冠疫情历史数据-github历史数据">新冠疫情历史数据-github仓库</a>，有好多人问我这些数据是怎么获取的，因为最近一个月一直在忙创新实训的事情，所以也一直没有时间把博客写出来，下面我来讲一下我是如何获取到这些数据的。</p>
 <p>数据是在《数据可视化》这门课程开课初期使用python爬虫从<a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_blank" rel="noopener" title="全球新冠病毒最新实时疫情地图_丁香园">全球新冠病毒最新实时疫情地图_丁香园</a>爬取到的，在此非常感谢丁香园！</p>
+<a id="more"></a>
+
 <h1 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段"></a>第一阶段</h1><p>疫情数据发布平台有每日头条、腾讯网、丁香医生、国家卫健委网站等，经过数据准确性、有无历史数据、数据发布时间、数据是否全面等考量，最终选定丁香医生的疫情实时动态（网址：<a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_blank" rel="noopener" title="网址">网址</a>）作为数据来源。<br>采用python爬虫的方式获取丁香园上的数据，下面分析丁香园的数据来源。<br>在我看来，要爬取网页数据，首先要了解网页结构和网页的数据流。<br>右键或F12查看网页源代码时会发现如下内容：<br><img src="/images/load.gif" data-original="/2020/07/03/%E7%94%A8%E7%88%AC%E8%99%AB%E8%8E%B7%E5%8F%96%E6%96%B0%E5%86%A0%E7%96%AB%E6%83%85%E5%8E%86%E5%8F%B2%E6%95%B0%E6%8D%AE/1.png" alt="1"><br>会发现这里对应着每一个国家的相关数据，如美国的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:3746165,&quot;createTime&quot;:1591183434000,&quot;modifyTime&quot;:1591183434000,&quot;tags&quot;:&quot;&quot;,&quot;countryType&quot;:2,&quot;continents&quot;:&quot;北美洲&quot;,&quot;provinceId&quot;:&quot;8&quot;,&quot;provinceName&quot;:&quot;美国&quot;,&quot;provinceShortName&quot;:&quot;&quot;,&quot;cityName&quot;:&quot;&quot;,&quot;currentConfirmedCount&quot;:1261772,&quot;confirmedCount&quot;:1831821,&quot;confirmedCountRank&quot;:1,&quot;suspectedCount&quot;:0,&quot;curedCount&quot;:463868,&quot;deadCount&quot;:106181,&quot;deadCountRank&quot;:1,&quot;deadRate&quot;:&quot;5.79&quot;,&quot;deadRateRank&quot;:35,&quot;comment&quot;:&quot;&quot;,&quot;sort&quot;:0,&quot;operator&quot;:&quot;hejiashu&quot;,&quot;locationId&quot;:971002,&quot;countryShortCode&quot;:&quot;USA&quot;,&quot;countryFullName&quot;:&quot;United States of America&quot;,&quot;statisticsData&quot;:&quot;https:&#x2F;&#x2F;file1.dxycdn.com&#x2F;2020&#x2F;0315&#x2F;553&#x2F;3402160512808052518-135.json&quot;,&quot;incrVo&quot;:&#123;&quot;currentConfirmedIncr&quot;:90,&quot;confirmedIncr&quot;:91,&quot;curedIncr&quot;:0,&quot;deadIncr&quot;:1&#125;,&quot;showRank&quot;:true&#125;</span><br></pre></td></tr></table></figure>
 
