@@ -374,7 +374,7 @@
 </ol>
 <p>大体过程是这样的，然后我在一门课上老师又介绍了一遍这个协议</p>
 <h1 id="老师版本"><a href="#老师版本" class="headerlink" title="老师版本"></a>老师版本</h1><p>老师的版本和上面的大体思路是一样的，我来总结下（都是渐进改进的）</p>
-<h2 id="简单的认证对话"><a href="#简单的认证对话" class="headerlink" title="简单的认证对话"></a>简单的认证对话</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/1.png" alt="1"><br>一些符号：<br>C——客户端   AS——认证服务器（第三方）    V——服务器<br>IDc——C的用户标识    IDv——V的标识    Pc——C的用户口令<br>ADc——C的网络地址    Kv——AS与V共享的密钥<br>过程：</p>
+<h2 id="简单的认证对话"><a href="#简单的认证对话" class="headerlink" title="简单的认证对话"></a>简单的认证对话</h2><p><img src="/images/load.gif" data-original="Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/1.png" alt="1"><br>一些符号：<br>C——客户端   AS——认证服务器（第三方）    V——服务器<br>IDc——C的用户标识    IDv——V的标识    Pc——C的用户口令<br>ADc——C的网络地址    Kv——AS与V共享的密钥<br>过程：</p>
 <ol>
 <li>C与AS通信，C发送(IDc||Pc||IDv)</li>
 <li>AS验证C的身份（根据ID找到密钥验证）后返回一个它可以去访问V的票据Ticket<br>Ticket=Ekv[IDc||ADc||IDv]</li>
@@ -389,7 +389,7 @@
 <li>用户每访问一个新服务就得需要一个新票据，然后就得输入密码</li>
 <li>重放攻击威胁</li>
 </ul>
-<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/2.png" alt="2"><br>增加一个票据许可服务器（TGS）（上面都是集中在KDC里），用户首先向AS请求一张票据许可票Ticket<sub>tgs</sub>，然后就可以凭该许可票向TGS申请访问某个服务的Ticket，这样在许可票的有限期内，即使访问新的服务也不用请求AES，直接请求TGS即可<br>具体过程如下：</p>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p><img src="/images/load.gif" data-original="Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/2.png" alt="2"><br>增加一个票据许可服务器（TGS）（上面都是集中在KDC里），用户首先向AS请求一张票据许可票Ticket<sub>tgs</sub>，然后就可以凭该许可票向TGS申请访问某个服务的Ticket，这样在许可票的有限期内，即使访问新的服务也不用请求AES，直接请求TGS即可<br>具体过程如下：</p>
 <ol>
 <li>C与AS通信，此时不再传递明文密码，而传递(IDc||IDtgs)，因为TGS有多个，所以需指明是申请的哪一个；</li>
 <li>AS返给C用（用户口令导出的密钥，比如对用户口令哈希）加密的Ticket<sub>tgs</sub>，Ticket<sub>tgs</sub>=EKtgs[IDc||ADc||IDtgs||TS1||Lifetime1]<br>TS1是签发的时间戳，Lifetime1是该许可证存活的有效期</li>
@@ -403,7 +403,7 @@
 <li>重放攻击</li>
 <li>C仍不能验证V</li>
 </ul>
-<h2 id="进一步改进"><a href="#进一步改进" class="headerlink" title="进一步改进"></a>进一步改进</h2><p><img src="/images/load.gif" data-original="/2020/04/08/Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/3.png" alt="3"></p>
+<h2 id="进一步改进"><a href="#进一步改进" class="headerlink" title="进一步改进"></a>进一步改进</h2><p><img src="/images/load.gif" data-original="Kerberos%E8%AE%A4%E8%AF%81%E5%8D%8F%E8%AE%AE/3.png" alt="3"></p>
 <ol>
 <li>C还是要向AS申请许可证，C向AS发送(IDc||IDtgs||TS1)，此时增加了一个TS1，这个TS1也是C申请时签发的时间戳，目的是为了允许AS验证客户端C的时钟是否与AS同步；</li>
 <li>AS验证后返给C(EKc[Kc,tgs||IDtgs||TS2||LifeTime1||Ticket^tgs])<br>Kc,tgs是C与TGS通信的会话密钥<br>Ticket<sub>tgs</sub>=EKtgs[Kc,tgs||IDc||ADc||IDtgs||TS2||Lifetime1]</li>

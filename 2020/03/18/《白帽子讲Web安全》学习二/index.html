@@ -366,7 +366,7 @@
 <li>Secure：默认无，有的话表明Cookie仅通过HTTPS协议传输</li>
 </ol>
 <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><p>HTML由众多标签组成，标签内有对应的各种属性，标签可不区分大小写，可以不需要闭合，属性的值可以被单引号、双引号、甚至不需要引号围住，多余的空格和Tab不影响解析，html中可以嵌入css、js等不强调分离</p>
-<h2 id="dom树"><a href="#dom树" class="headerlink" title="dom树"></a>dom树</h2><p>html文档就是一个dom树<br>如下所示：<br><img src="/images/load.gif" data-original="/2020/03/18/%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2Web%E5%AE%89%E5%85%A8%E3%80%8B%E5%AD%A6%E4%B9%A0%E4%BA%8C/1.png" alt="1"></p>
+<h2 id="dom树"><a href="#dom树" class="headerlink" title="dom树"></a>dom树</h2><p>html文档就是一个dom树<br>如下所示：<br><img src="/images/load.gif" data-original="1.png" alt="1"></p>
 <p>&lt;html&gt;是树根，其他都是树的每个节点，标签节点以&lt;xxx&gt;表示，属性节点以@xxx表示，文本节点以xxx表示，JavaScript可以对DOM树进行操作</p>
 <h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>iframe可以内嵌第三方内容，攻击者可以将iframe嵌入自己的网络木马页面，但是原网页与嵌入的网页间如何互相访问资源呢？如果两网页是同域的话，则可以互相操作dom，但是不同域的话要遵循同源策略，但是嵌入的网页依然可以对原网页的location进行写操作，可以让原网页重定向，但是不能读</p>
 <h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><p>控制前端逻辑</p>
