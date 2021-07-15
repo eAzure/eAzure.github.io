@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="eAzure">
 <meta property="og:description" content="利用暑假时间将C++从头到尾认真学习一下，特别是指针、面向对象、泛型等特性！参考书籍为《C++ Primer Plus》 拷贝构造函数拷贝构造函数用于将一个对象复制到新创建的对象中，一般会在以下情形被调用：  使用已初始化对象赋值新创建的对象； 对象作为函数参数值传递 对象从函数中值返回">
 <meta property="article:published_time" content="2021-07-08T06:42:15.000Z">
-<meta property="article:modified_time" content="2021-07-15T09:39:55.479Z">
+<meta property="article:modified_time" content="2021-07-15T10:07:14.334Z">
 <meta property="article:author" content="eAzure">
 <meta name="twitter:card" content="summary">
 
@@ -357,7 +357,7 @@
 <p>下面来看看默认的浅拷贝：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person p1=Person(<span class="string">"Xiao Hong"</span>,<span class="number">8</span>,<span class="string">"LinYi"</span>,<span class="string">'F'</span>);</span><br><span class="line">Person p2=p1;</span><br></pre></td></tr></table></figure>
 
-<p>会发现结果如下：</p>
+<p>（注意这里显式调用构造函数也会触发拷贝构造函数，但是编译器优化掉了，在本篇文章后面会进行说明）会发现结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Xiao Hong Bye Person!</span><br><span class="line">8 Bye Person!</span><br></pre></td></tr></table></figure>
 
 <p>p2在析构时name其实已经释放了</p>

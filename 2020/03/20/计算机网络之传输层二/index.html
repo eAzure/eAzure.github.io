@@ -352,34 +352,34 @@
       
         <p>可靠数据传输(rdt)原理</p>
 <a id="more"></a>
-<p>什么是可靠？不错、不丢、不乱<br>可靠数据传输对应用层、传输层和链路层来说都很重要，是网络的Top10问题之一，由于信道的不可靠特性，就决定了可靠数据传输协议(rdt)的复杂性<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/1.png" alt="1"><br>rdt_send()与deliver_data()都是单向箭头，表明应用层不管你传输层经历了怎样的过程，我只要结果<br>传输层与下层不可信信道上的传输都是双向的，双向控制</p>
-<h1 id="rdt1-0"><a href="#rdt1-0" class="headerlink" title="rdt1.0"></a>rdt1.0</h1><p>可靠信道上的可靠数据传输<br>发送方默认发出的信息会正确无误地到达接收方<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/2.png" alt="2"></p>
+<p>什么是可靠？不错、不丢、不乱<br>可靠数据传输对应用层、传输层和链路层来说都很重要，是网络的Top10问题之一，由于信道的不可靠特性，就决定了可靠数据传输协议(rdt)的复杂性<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/1.png" alt="1"><br>rdt_send()与deliver_data()都是单向箭头，表明应用层不管你传输层经历了怎样的过程，我只要结果<br>传输层与下层不可信信道上的传输都是双向的，双向控制</p>
+<h1 id="rdt1-0"><a href="#rdt1-0" class="headerlink" title="rdt1.0"></a>rdt1.0</h1><p>可靠信道上的可靠数据传输<br>发送方默认发出的信息会正确无误地到达接收方<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/2.png" alt="2"></p>
 <h1 id="rdt2-0"><a href="#rdt2-0" class="headerlink" title="rdt2.0"></a>rdt2.0</h1><p>基于产生位错误的信道，但分组不会丢失，不会乱序<br>有错误的话想要错误恢复<br>可以利用校验和检测位错误</p>
-<h2 id="如何从错误中恢复？"><a href="#如何从错误中恢复？" class="headerlink" title="如何从错误中恢复？"></a>如何从错误中恢复？</h2><p>采用确认机制（ACK，acknowledgements）：接收方显式地告知发送方分组已正确接收<br>NAK：接收方显式地告知发送方分组有错误，发送方收到NAK后重传分组<br>基于这种重传机制所设计的rdt协议称为ARQ（Automatic Repeat reQuest）协议<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/3.png" alt="3"><br>发送方此时要等待对方控制消息（ACK/NAK），称为停-等协议</p>
+<h2 id="如何从错误中恢复？"><a href="#如何从错误中恢复？" class="headerlink" title="如何从错误中恢复？"></a>如何从错误中恢复？</h2><p>采用确认机制（ACK，acknowledgements）：接收方显式地告知发送方分组已正确接收<br>NAK：接收方显式地告知发送方分组有错误，发送方收到NAK后重传分组<br>基于这种重传机制所设计的rdt协议称为ARQ（Automatic Repeat reQuest）协议<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/3.png" alt="3"><br>发送方此时要等待对方控制消息（ACK/NAK），称为停-等协议</p>
 <h1 id="rdt2-1"><a href="#rdt2-1" class="headerlink" title="rdt2.1"></a>rdt2.1</h1><h2 id="rdt2-0的缺陷？"><a href="#rdt2-0的缺陷？" class="headerlink" title="rdt2.0的缺陷？"></a>rdt2.0的缺陷？</h2><p>如果ACK/NAK在发给发送方的过程中发生了错误/被破坏会怎么样？<br>发送方没办法处理<br>解决方案：</p>
 <ol>
 <li>为ACK/NAK增加校验和，检错并纠错，难度很高，代价大</li>
 <li>发送方接收到被破坏的ACK/NAK不知道接收方发生了什么，添加额外的控制消息，发送方再去问接收方刚才发的是什么，不能从根本上解决问题，因为添加的控制消息也可能出错</li>
 <li>如果ACK/NAK坏掉（通过校验和判断），不知道做什么，发送方重传，但是简单的重传会产生重复分组，比如前一个分组已被正确接收，例如给别人转账</li>
 </ol>
-<p>第三个方法是计算机领域常用的方法，如何解决重复分组问题呢？<br>采用序列号机制：发送方给每个分组增加序列号，接收方丢弃重复分组<br>发送方：<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/4.png" alt="4"><br>接收方：<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/5.png" alt="5"><br>采用了0、1两个序列号就够用了，采用的是停-等协议<br>比较好理解，简单描述下过程：<br>开始发送方发给接收方序号为0的分组，发完后，发送方要等待序号为0的分组的ack/nak，此时接收方收到消息，有几种情况：</p>
+<p>第三个方法是计算机领域常用的方法，如何解决重复分组问题呢？<br>采用序列号机制：发送方给每个分组增加序列号，接收方丢弃重复分组<br>发送方：<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/4.png" alt="4"><br>接收方：<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/5.png" alt="5"><br>采用了0、1两个序列号就够用了，采用的是停-等协议<br>比较好理解，简单描述下过程：<br>开始发送方发给接收方序号为0的分组，发完后，发送方要等待序号为0的分组的ack/nak，此时接收方收到消息，有几种情况：</p>
 <ol>
 <li>接收的消息校验和正确，此时发送ack，此时接收端想要接收的分组的序号设为1，并且ack正确传输，发送方接收到消息后，知道成功了，接着发送序号为1的分组</li>
 <li>接收的消息校验和正确，此时发送ack，此时接收端想要接收的分组的序号设为1，但是ack没有正确传输，此时发送方重传序号为0的分组，但是接收端知道是重发了，所以不接受，并且重新发一个ack给发送方告知其之前的已经成功</li>
 <li>接收的消息校验和错误，此时发送nak，此时接收端想要接收的分组的序号仍然设为0，并且nak正确传输，发送方再重发序号为0的分组</li>
 <li>接收的消息校验和错误，此时发送nak，此时接收端想要接收的分组的序号仍然设为0，但是nak没有正确传输，此时发送方再重发序号为0的分组，若此时传输正确了，接收方给发送方发送ack，将想要接收的分组序号改变为1</li>
 </ol>
-<h1 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h1><p>真得ack/nak都需要吗？取消nak<br>如何实现？<br>接收方在ACK消息中显式地加入被确认分组的序列号，通过ack告知发送方最后一个被正确接收的分组的序号是多少<br>比如，发送方给接收方发送了一个序号为1的分组，但是接收方接收到的分组的校验和不对，此时接收方给发送方发送一个序号为0的ACK，发送方一看不一样哇，就明白了要重发分组<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/6.png" alt="6"></p>
+<h1 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h1><p>真得ack/nak都需要吗？取消nak<br>如何实现？<br>接收方在ACK消息中显式地加入被确认分组的序列号，通过ack告知发送方最后一个被正确接收的分组的序号是多少<br>比如，发送方给接收方发送了一个序号为1的分组，但是接收方接收到的分组的校验和不对，此时接收方给发送方发送一个序号为0的ACK，发送方一看不一样哇，就明白了要重发分组<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/6.png" alt="6"></p>
 <h1 id="rdt3-0"><a href="#rdt3-0" class="headerlink" title="rdt3.0"></a>rdt3.0</h1><p>信道既可能发生错误，也可能丢失分组<br>利用之前的机制，如果发送的分组丢失了，那么发送方和接收方都会陷入等待中<br>方法：发送方等待合理时间</p>
 <ul>
 <li>如果没收到ACK，则重传，重启定时器</li>
 </ul>
-<p>合理的时间很难限定，若ACK因为延迟在合理时间之后才到达，咋办呢？<br>会引起重复，但是有序列号技术，所以不怕<br>需要定时器<br>发送方：<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/7.png" alt="7"><br>下面用时间线的方法，来看几种情况：</p>
-<h2 id="正常接收"><a href="#正常接收" class="headerlink" title="正常接收"></a>正常接收</h2><p><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/8.png" alt="8"></p>
-<h2 id="发送丢失"><a href="#发送丢失" class="headerlink" title="发送丢失"></a>发送丢失</h2><p><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/9.png" alt="9"></p>
-<h2 id="ack丢失"><a href="#ack丢失" class="headerlink" title="ack丢失"></a>ack丢失</h2><p><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/10.png" alt="10"><br>丢掉重复</p>
-<h2 id="ack延后到达"><a href="#ack延后到达" class="headerlink" title="ack延后到达"></a>ack延后到达</h2><p><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/11.png" alt="11"><br>这个时候如果发送端在等待ACK0的时候，又接收到了ACK1，此时根据rdt3.0的状态图可知此时发送方继续等待ACK0，不管ACK1</p>
-<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>性能很差<br>示例：1Gbps链路，15ms端到端传播延迟，1KB分组<br>传输时间：8/10<sup>9</sup>=8us(传输时间指从第一个bit发出到最后一个bit发出的时间差)<br>端到端延迟：15+15=30ms（RTT）<br>发送方利用率：发送方发送时间百分比<br>0.008/30.008=0.00027<br>即1Gbps链路上每30ms才发送一个分组-&gt;33X8kbps<br>网络协议限制了物理资源的使用<br><img src="/images/load.gif" data-original="%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82/12.png" alt="12"></p>
+<p>合理的时间很难限定，若ACK因为延迟在合理时间之后才到达，咋办呢？<br>会引起重复，但是有序列号技术，所以不怕<br>需要定时器<br>发送方：<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/7.png" alt="7"><br>下面用时间线的方法，来看几种情况：</p>
+<h2 id="正常接收"><a href="#正常接收" class="headerlink" title="正常接收"></a>正常接收</h2><p><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/8.png" alt="8"></p>
+<h2 id="发送丢失"><a href="#发送丢失" class="headerlink" title="发送丢失"></a>发送丢失</h2><p><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/9.png" alt="9"></p>
+<h2 id="ack丢失"><a href="#ack丢失" class="headerlink" title="ack丢失"></a>ack丢失</h2><p><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/10.png" alt="10"><br>丢掉重复</p>
+<h2 id="ack延后到达"><a href="#ack延后到达" class="headerlink" title="ack延后到达"></a>ack延后到达</h2><p><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/11.png" alt="11"><br>这个时候如果发送端在等待ACK0的时候，又接收到了ACK1，此时根据rdt3.0的状态图可知此时发送方继续等待ACK0，不管ACK1</p>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>性能很差<br>示例：1Gbps链路，15ms端到端传播延迟，1KB分组<br>传输时间：8/10<sup>9</sup>=8us(传输时间指从第一个bit发出到最后一个bit发出的时间差)<br>端到端延迟：15+15=30ms（RTT）<br>发送方利用率：发送方发送时间百分比<br>0.008/30.008=0.00027<br>即1Gbps链路上每30ms才发送一个分组-&gt;33X8kbps<br>网络协议限制了物理资源的使用<br><img src="/images/load.gif" data-original="/2020/03/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E4%BA%8C/12.png" alt="12"></p>
 
       
     </div>
